@@ -1,0 +1,16 @@
+-Delimitar el uso por perfil de usuario (LISTO)
+-Ordenar Pestañas y enlaces (LISTO)
+-Realizar Filtros (LISTO)
+-Añadir Paginador (LISTO)
+-Añadir número de ticket al comprobante (LISTO)
+-Definir si el pago es cancelado o a credito (LISTO) -> SOLO CANCELA EL PEDIDO y colocar filtro de "situacion"
+-cambiar el precio de producto en lista por el precio mayor (LISTO)
+-Rellenar nueva base de datos (LISTO)
+-Añadir Abastecimiento de Productos (Listo)
+-Mejorar Consultas SQL para mejorar rendimiento de memoria - Identificación de consultas:
+    CIUDAD, TIENDA, FAMILIA, LINEA, MARCA, USUARIO (Listo)
+
+-Añadir 2 filtros y paginadores más
+-Mejorar botones de interfaz
+-Añadir los 3 precios al carrito
+-Instalacion de Servidor Web (Apache + Php + MariaDb-Mysql).
