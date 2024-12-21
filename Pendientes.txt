@@ -8,7 +8,8 @@
 -Rellenar nueva base de datos (LISTO)
 -Añadir Abastecimiento de Productos (Listo)
 -Mejorar Consultas SQL para mejorar rendimiento de memoria - Identificación de consultas:
-    CIUDAD, TIENDA, FAMILIA, LINEA, MARCA, USUARIO (Listo)
+    Modelos-> CIUDAD, TIENDA, FAMILIA, LINEA, MARCA, USUARIO, (Listo)
+    Controladores-> CIUDAD, TIENDA, FAMILIA, LINEA, MARCA, USUARIO, (Listo)
 
 -Añadir 2 filtros y paginadores más
 -Mejorar botones de interfaz

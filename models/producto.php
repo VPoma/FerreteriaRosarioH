@@ -192,6 +192,7 @@ class producto{
     //
 
     //Consultas
+     //Guardar Registro de Productos
     public function save(){
         $sql = "INSERT INTO producto VALUES(NULL, {$this->getId_tienda()}, {$this->getId_familia()}, {$this->getId_linea()}, {$this->getId_marca()}, 1, '{$this->getNombre()}', '{$this->getMedida()}', {$this->getCantidad()}, {$this->getPaquete()}, '{$this->getImagen()}', {$this->getPreciob()}, {$this->getPreciof()}, {$this->getPrecioc()}, 'H');";
         $save = $this->db->query($sql);
@@ -254,7 +255,8 @@ class producto{
 
         return $result;
     }
-
+    
+    //MOSTRAR PRODUCTO UNITARIAMENTE
     public function getOnever(){
         $sql = "SELECT p.id, p.nombre, p.medida, p.imagen, p.preciof, p.preciob, p.precioc, l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
                 . "INNER JOIN linea l ON l.id = p.id_linea "
@@ -264,7 +266,7 @@ class producto{
         return $producto->fetch_object();
     }
 
-    //listado de productos imagenes
+    //Mostrar listado de productos con imagenes (para el carrito)
     public function getRandom(){
         $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
                 . "INNER JOIN marca m ON m.id = p.id_marca "
@@ -273,6 +275,7 @@ class producto{
         return $producto;
     }
 
+    //Mostrar listado de productos con imagenes CON FILTRO (para el carrito)
     public function getfillRandom(){
         $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
                 . "INNER JOIN marca m ON m.id = p.id_marca INNER JOIN linea l ON l.id = p.id_linea "

@@ -4,7 +4,7 @@ require_once 'models/producto.php';
 
 Class productoController{
     public function index(){
-        //Paginador
+        //Mostrar listado de productos con imagenes (para el carrito)
         if(isset($_GET['pag'])){
             $pag = $_GET['pag'];
         }else{
@@ -29,6 +29,7 @@ Class productoController{
     }
 
     public function filtroindex(){
+        //Mostrar listado de productos con imagenes CON FILTRO (para el carrito)
         if(isset($_POST)){
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
@@ -56,6 +57,7 @@ Class productoController{
     }
 
     public function ver(){
+        //MOSTRAR PRODUCTO UNITARIAMENTE
         if(isset($_GET['id'])){
             $id = $_GET['id'];
 
@@ -73,6 +75,7 @@ Class productoController{
         require_once 'views/producto/registropr.php';
     }
 
+    //Guardar Registro de Productos
     public function save(){
         if(isset($_POST)){
             $tienda = isset($_POST['tienda']) ? $_POST['tienda'] : false;
