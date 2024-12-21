@@ -325,6 +325,64 @@ class producto{
         return $result;
     }
 
+    //PRECIO Controller
+    //Para inserción de precios Fierro selecciona los fierro - 11
+    public function getFierro(){
+        $sql = "SELECT p.id as 'id', p.paquete as 'paquete' from producto P "
+                . "INNER JOIN marca m ON m.id = p.id_marca INNER JOIN linea l ON l.id = p.id_linea "
+                . "WHERE p.id_marca = {$this->getId_marca()};";
+        $producto = $this->db->query($sql);
+        return $producto;
+    }
+
+    //Muestra Tabla de Precios de productos - 12
+    public function gettablaprecio(){
+        $sql = "SELECT po.id, m.nombre as 'marca', l.nombre as 'linea', po.nombre, po.medida, po.preciob, po.preciof, po.precioc FROM producto po "
+                . "INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE po.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
+        $producto = $this->db->query($sql);
+        return $producto;
+    }
+
+    //Muestra Tabla de Precios de productos FILTRO - 13
+    public function gettablapreciofill(){
+        $sql = "SELECT po.id, m.nombre as 'marca', l.nombre as 'linea',po.nombre, po.preciob, po.medida, po.preciof, po.precioc FROM producto po "
+                . "INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE m.nombre like '%{$this->getMarca()}%' AND po.est = 'H' ORDER BY id DESC;";
+        $producto = $this->db->query($sql);
+        return $producto;
+    }
+
+    //Busca un producto para modificar el precio - 14
+    public function getOne_precio(){
+        $producto = $this->db->query("SELECT p.id, p.nombre, p.medida, p.preciob, p.preciof, p.precioc, l.nombre as 'linea', m.nombre as 'marca' FROM producto p INNER JOIN linea l ON l.id = p.id_linea INNER JOIN marca m ON m.id = p.id_marca WHERE p.id = {$this->getId()} ORDER BY id DESC;");
+        return $producto->fetch_object();
+    }
+    
+    //modificar el precio - 15
+    public function edit_precio(){
+        $sql = "UPDATE producto SET preciob = {$this->getPreciob()}, preciof = {$this->getPreciof()}, precioc = {$this->getPrecioc()} WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+    
+    //modificar el precio del fierro - 16
+    public function edit_pfierro(){
+        $sql = "UPDATE producto SET preciob = {$this->getPreciob()}, preciof = {$this->getPreciof()}, precioc = {$this->getPrecioc()} WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
     ////
     public function getAll_simple(){
         $producto = $this->db->query("SELECT * FROM producto WHERE est = 'H' ORDER BY id DESC;");
@@ -343,59 +401,6 @@ class producto{
                 . "WHERE p.est = 'H' ORDER BY RAND() LIMIT $limit;";
         $producto = $this->db->query($sql);
         return $producto;
-    }
-
-    //PRECIO
-    //para inserción de precios Fierro
-    public function getFierro(){
-        $sql = "SELECT p.id as 'id', p.paquete as 'paquete' from producto P "
-                . "INNER JOIN marca m ON m.id = p.id_marca INNER JOIN linea l ON l.id = p.id_linea "
-                . "WHERE p.id_marca = {$this->getId_marca()};";
-        $producto = $this->db->query($sql);
-        return $producto;
-    }
-
-    public function edit_pfierro(){
-        $sql = "UPDATE producto SET preciob = {$this->getPreciob()}, preciof = {$this->getPreciof()}, precioc = {$this->getPrecioc()} WHERE id = {$this->getId()};";
-        $save = $this->db->query($sql);
-
-        $result = false;
-        if($save){
-            $result = true;
-        }
-
-        return $result;
-    }
-
-    public function gettablaprecio(){
-        $sql = "SELECT po.id, m.nombre as 'marca', l.nombre as 'linea', po.nombre, po.medida, po.preciob, po.preciof, po.precioc FROM producto po "
-                . "INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE po.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
-        $producto = $this->db->query($sql);
-        return $producto;
-    }
-
-    public function gettablapreciofill(){
-        $sql = "SELECT po.id, m.nombre as 'marca', l.nombre as 'linea',po.nombre, po.preciob, po.medida, po.preciof, po.precioc FROM producto po "
-                . "INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE m.nombre like '%{$this->getMarca()}%' AND po.est = 'H' ORDER BY id DESC;";
-        $producto = $this->db->query($sql);
-        return $producto;
-    }
-
-    public function edit_precio(){
-        $sql = "UPDATE producto SET preciob = {$this->getPreciob()}, preciof = {$this->getPreciof()}, precioc = {$this->getPrecioc()} WHERE id = {$this->getId()};";
-        $save = $this->db->query($sql);
-
-        $result = false;
-        if($save){
-            $result = true;
-        }
-
-        return $result;
-    }
-
-    public function getOne_precio(){
-        $producto = $this->db->query("SELECT p.id, p.nombre, p.medida, p.preciob, p.preciof, p.precioc, l.nombre as 'linea', m.nombre as 'marca' FROM producto p INNER JOIN linea l ON l.id = p.id_linea INNER JOIN marca m ON m.id = p.id_marca WHERE p.id = {$this->getId()} ORDER BY id DESC;");
-        return $producto->fetch_object();
     }
 
 }

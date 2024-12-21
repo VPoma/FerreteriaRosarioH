@@ -22,6 +22,7 @@ class precioController{
             $toneladaf = isset($_POST['toneladaf']) ? $_POST['toneladaf'] : false;
             $toneladac = isset($_POST['toneladac']) ? $_POST['toneladac'] : false;
             
+            //Para inserción de precios Fierro selecciona los fierro - 11
             if($marca && $tipocam && $toneladab && $toneladaf && $toneladac){
                 $producto = new Producto();
                 $producto->setId_marca($marca);
@@ -47,7 +48,8 @@ class precioController{
                 }else{
                     $_SESSION['register'] = "failed";
                 }
-
+                
+                //modificar el precio del fierro - 16
                 $pfierro = $precio->getpfierro();
                 while($pf = $pfierro->fetch_object()){
                     $producto->setId($pf->id_producto);
@@ -94,6 +96,7 @@ class precioController{
         $limite = 10;
         $offset = ($pag-1)*$limite;
 
+        //Muestra Tabla de Precios de productos - 12
         $precio = new producto();
         $precio->setOffset($offset);
         $precio->setLimite($limite);
@@ -115,6 +118,7 @@ class precioController{
 
             $precio = new producto();
 
+            //Muestra Tabla de Precios de productos FILTRO - 13
             if(strlen(trim($marca)) == 0){
 
                 echo '<script>window.location="'.base_url.'precio/tabla"</script>';
@@ -139,6 +143,7 @@ class precioController{
                 $producto->setId_marca($marca);
                 $prod = $producto->getFierro();
 
+                //Para inserción de precios Fierro selecciona los fierro - 11
                 $precio = new Precio();
                 while($pr = $prod->fetch_object()){
                     $precio->setId_producto($pr->id);
@@ -168,6 +173,7 @@ class precioController{
             $id = $_GET['id'];
             $edit = true;
 
+            //Busca un producto para modificar el precio - 14
             $precio = new Producto();
             $precio->setId($id);
             
@@ -180,6 +186,7 @@ class precioController{
     }
 
     public function editprecio(){
+        //modificar el precio - 15
         if(isset($_POST)){
             $preciob = isset($_POST['preciob']) ? $_POST['preciob'] : false;
             $preciof = isset($_POST['preciof']) ? $_POST['preciof'] : false;
