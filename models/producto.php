@@ -192,7 +192,45 @@ class producto{
     //
 
     //Consultas
-     //Guardar Registro de Productos
+
+    //Producto Controller
+
+    //Saca la cantidad de lineas - 0
+    public function getAlltotal(){
+        $producto  = $this->db->query("SELECT * FROM producto WHERE est = 'H'");
+        return $producto->num_rows;
+    }
+
+    //Mostrar listado de productos con imagenes (para el carrito) - 1
+    public function getRandom(){
+        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
+                . "INNER JOIN marca m ON m.id = p.id_marca "
+                . "WHERE p.est = 'H' ORDER BY p.nombre LIMIT {$this->getOffset()},{$this->getLimite()};";
+        $producto = $this->db->query($sql);
+        return $producto;
+    }
+
+    //Mostrar listado de productos con imagenes CON FILTRO (para el carrito) - 2
+    public function getfillRandom(){
+        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
+                . "INNER JOIN marca m ON m.id = p.id_marca INNER JOIN linea l ON l.id = p.id_linea "
+                . "WHERE l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
+                . "AND p.nombre like '%{$this->getNombre()}%' AND p.est = 'H' ORDER BY p.nombre;";
+        $producto = $this->db->query($sql);
+        return $producto;
+    }
+
+    //MOSTRAR PRODUCTO UNITARIAMENTE - 3
+    public function getOnever(){
+        $sql = "SELECT p.id, p.nombre, p.medida, p.imagen, p.preciof, p.preciob, p.precioc, l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
+                . "INNER JOIN linea l ON l.id = p.id_linea "
+                . "INNER JOIN marca m ON m.id = p.id_marca "
+                . "WHERE p.id = {$this->getId()};";
+        $producto = $this->db->query($sql);
+        return $producto->fetch_object();
+    }
+
+    //Guardar Registro de Productos - 4
     public function save(){
         $sql = "INSERT INTO producto VALUES(NULL, {$this->getId_tienda()}, {$this->getId_familia()}, {$this->getId_linea()}, {$this->getId_marca()}, 1, '{$this->getNombre()}', '{$this->getMedida()}', {$this->getCantidad()}, {$this->getPaquete()}, '{$this->getImagen()}', {$this->getPreciob()}, {$this->getPreciof()}, {$this->getPrecioc()}, 'H');";
         $save = $this->db->query($sql);
@@ -204,12 +242,7 @@ class producto{
         return $result;
     }
 
-    public function getAll_simple(){
-        $producto = $this->db->query("SELECT * FROM producto WHERE est = 'H' ORDER BY id DESC;");
-        return $producto;
-    }
-
-    //MUESTRA TODOS LOS REGISTROS SIN FILTRO - LISTADO
+    //MUESTRA TODOS LOS REGISTROS SIN FILTRO - LISTADO - 5
     public function getAll(){
         $sql = "SELECT p.*, t.nombre as 'tienda', f.nombre as 'familia', l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
                 . "INNER JOIN tienda t ON t.id = p.id_tienda "
@@ -220,13 +253,8 @@ class producto{
         $producto = $this->db->query($sql);
         return $producto;
     }
-    
-    public function getOne(){
-        $producto = $this->db->query("SELECT * FROM producto WHERE id = {$this->getId()} ORDER BY id DESC;");
-        return $producto->fetch_object();
-    }
 
-    //EDITA LOS REGISTROS DE PRODUCTOS
+    //EDITA LOS REGISTROS DE PRODUCTOS - 6
     public function edit(){
         $sql = "UPDATE producto SET id_tienda = {$this->getId_tienda()}, id_familia = {$this->getId_familia()}, id_linea = {$this->getId_linea()}, id_marca = {$this->getId_marca()}, nombre = '{$this->getNombre()}', medida = '{$this->getMedida()}', cantidad = {$this->getCantidad()}, paquete = {$this->getPaquete()}, preciob = {$this->getPreciob()}, preciof = {$this->getPreciof()}, precioc = {$this->getPrecioc()} ";
         
@@ -246,7 +274,7 @@ class producto{
         return $result;
     }
 
-    //EDITA LOS REGISTROS DE OCULTAR PRODUCTOS
+    //EDITA LOS REGISTROS DE OCULTAR PRODUCTOS - 7
     public function edit_oculta(){
         $sql = "UPDATE producto SET est = 'D' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -259,38 +287,14 @@ class producto{
         return $result;
     }
 
-    //MOSTRAR PRODUCTO UNITARIAMENTE
-    public function getOnever(){
-        $sql = "SELECT p.id, p.nombre, p.medida, p.imagen, p.preciof, p.preciob, p.precioc, l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
-                . "INNER JOIN linea l ON l.id = p.id_linea "
-                . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE p.id = {$this->getId()};";
-        $producto = $this->db->query($sql);
+    public function getAll_simple(){
+        $producto = $this->db->query("SELECT * FROM producto WHERE est = 'H' ORDER BY id DESC;");
+        return $producto;
+    }
+
+    public function getOne(){
+        $producto = $this->db->query("SELECT * FROM producto WHERE id = {$this->getId()} ORDER BY id DESC;");
         return $producto->fetch_object();
-    }
-
-    //Mostrar listado de productos con imagenes (para el carrito) - 1
-    public function getRandom(){
-        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
-                . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE p.est = 'H' ORDER BY p.nombre LIMIT {$this->getOffset()},{$this->getLimite()};";
-        $producto = $this->db->query($sql);
-        return $producto;
-    }
-
-    //Mostrar listado de productos con imagenes CON FILTRO (para el carrito)
-    public function getfillRandom(){
-        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
-                . "INNER JOIN marca m ON m.id = p.id_marca INNER JOIN linea l ON l.id = p.id_linea "
-                . "WHERE l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
-                . "AND p.nombre like '%{$this->getNombre()}%' AND p.est = 'H' ORDER BY p.nombre;";
-        $producto = $this->db->query($sql);
-        return $producto;
-    }
-
-    public function getAlltotal(){
-        $producto  = $this->db->query("SELECT * FROM producto WHERE est = 'H'");
-        return $producto->num_rows;
     }
 
     //backup
