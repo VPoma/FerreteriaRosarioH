@@ -194,7 +194,6 @@ class producto{
     //Consultas
 
     //Producto Controller
-
     //Saca la cantidad de lineas - 0
     public function getAlltotal(){
         $producto  = $this->db->query("SELECT * FROM producto WHERE est = 'H'");
@@ -287,6 +286,46 @@ class producto{
         return $result;
     }
 
+    //Abastecer Controller
+
+    //Muestra todos los productos para ABASTECER - 8
+    public function getAllab(){
+        $sql = "SELECT p.*, f.nombre as 'familia', l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
+                . "INNER JOIN familia f ON f.id = p.id_familia "
+                . "INNER JOIN linea l ON l.id = p.id_linea "
+                . "INNER JOIN marca m ON m.id = p.id_marca "
+                . "WHERE p.est = 'H' ORDER BY p.id LIMIT {$this->getOffset()},{$this->getLimite()};";
+        $producto = $this->db->query($sql);
+        return $producto;
+    }
+
+    //Muestra todos los productos para ABASTECER FILTRADO  - 9
+    public function getFillab(){
+        $sql = "SELECT p.*, f.nombre as 'familia', l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
+                . "INNER JOIN familia f ON f.id = p.id_familia "
+                . "INNER JOIN linea l ON l.id = p.id_linea "
+                . "INNER JOIN marca m ON m.id = p.id_marca "
+                . "WHERE l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
+                . "AND p.nombre like '%{$this->getNombre()}%' AND p.est = 'H' ORDER BY p.nombre;";
+        $producto = $this->db->query($sql);
+        return $producto;
+    }
+
+    //Cuaderno Controller - Abastecer Controller
+    //Edita y resta la cantidad de productos  - 10
+    public function salida(){
+        $sql = "UPDATE producto SET cantidad = {$this->getCantidad()} WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    ////
     public function getAll_simple(){
         $producto = $this->db->query("SELECT * FROM producto WHERE est = 'H' ORDER BY id DESC;");
         return $producto;
@@ -357,40 +396,6 @@ class producto{
     public function getOne_precio(){
         $producto = $this->db->query("SELECT p.id, p.nombre, p.medida, p.preciob, p.preciof, p.precioc, l.nombre as 'linea', m.nombre as 'marca' FROM producto p INNER JOIN linea l ON l.id = p.id_linea INNER JOIN marca m ON m.id = p.id_marca WHERE p.id = {$this->getId()} ORDER BY id DESC;");
         return $producto->fetch_object();
-    }
-
-    public function salida(){
-        $sql = "UPDATE producto SET cantidad = {$this->getCantidad()} WHERE id = {$this->getId()};";
-        $save = $this->db->query($sql);
-
-        $result = false;
-        if($save){
-            $result = true;
-        }
-
-        return $result;
-    }
-
-    //Muestra todos los productos para ABASTECER
-    public function getAllab(){
-        $sql = "SELECT p.*, f.nombre as 'familia', l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
-                . "INNER JOIN familia f ON f.id = p.id_familia "
-                . "INNER JOIN linea l ON l.id = p.id_linea "
-                . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE p.est = 'H' ORDER BY p.id LIMIT {$this->getOffset()},{$this->getLimite()};";
-        $producto = $this->db->query($sql);
-        return $producto;
-    }
-
-    public function getFillab(){
-        $sql = "SELECT p.*, f.nombre as 'familia', l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
-                . "INNER JOIN familia f ON f.id = p.id_familia "
-                . "INNER JOIN linea l ON l.id = p.id_linea "
-                . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
-                . "AND p.nombre like '%{$this->getNombre()}%' AND p.est = 'H' ORDER BY p.nombre;";
-        $producto = $this->db->query($sql);
-        return $producto;
     }
 
 }

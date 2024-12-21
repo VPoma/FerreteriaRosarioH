@@ -4,6 +4,7 @@ require_once 'models/producto.php';
 require_once 'models/abastecer.php';
 
 class abastecerController{
+    //Muestra todos los productos para ABASTECER - 8
     public function index(){
         //Paginador
         if(isset($_GET['pag'])){
@@ -20,7 +21,8 @@ class abastecerController{
         $producto->setLimite($limite);
 
         $prod = $producto->getAllab();
-
+        
+        //Saca la cantidad de lineas - 0
         $total = $producto->getAlltotal();
 
         $totalP = ceil($total/$limite);
@@ -29,6 +31,7 @@ class abastecerController{
         require_once  'views/abastecer/gestionab.php';
     }
 
+    //Muestra todos los productos para ABASTECER FILTRADO  - 9
     public function filtroindex(){
         if(isset($_POST)){
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
@@ -415,6 +418,7 @@ class abastecerController{
                 $producto_abastecer = new Abastecer();
                 $prodabs = $producto_abastecer->getProdByabs_suma($id_abastecer);
 
+                //Edita y resta la cantidad de productos  - 10
                 $producto = new producto();
                 while($pr = $prodabs->fetch_object()){
                     $producto->setId($pr->id);

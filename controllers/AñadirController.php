@@ -32,6 +32,7 @@ class AñadirController{
 
         }
 
+        //MOSTRAR PRODUCTO UNITARIAMENTE - 3
         if(!isset($counter) || $counter == 0){
             //Conseguir producto
             $producto = new Producto();
