@@ -384,6 +384,9 @@ class producto{
     }
 
     ////
+    ////
+    ////
+    
     public function getAll_simple(){
         $producto = $this->db->query("SELECT * FROM producto WHERE est = 'H' ORDER BY id DESC;");
         return $producto;

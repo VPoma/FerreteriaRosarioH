@@ -131,6 +131,17 @@ class precio{
     //  
 
     //Consultas
+
+    //Precio Controller
+    //muestra todos los registros de precio- 1precio
+    public function getAll(){
+        $sql = "select pe.id, l.nombre as 'linea', m.nombre as 'marca', po.nombre, po.medida, po.paquete, pe.toneladab, pe.toneladaf, pe.toneladac, pe.tipocam, pe.preciob, pe.preciof, pe.precioc, pe.fecha "
+                . "from precio pe INNER JOIN producto po ON po.id = pe.id_producto INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea ORDER BY id DESC;";
+        $precio = $this->db->query($sql);
+        return $precio;
+    }
+
+    //Guardar Precios - 2precio
     public function save(){
         $sql = "INSERT INTO precio VALUES(NULL, {$this->getId_producto()}, {$this->getTipocam()}, {$this->getToneladab()}, {$this->getToneladaf()}, {$this->getToneladac()}, {$this->getPreciob()}, {$this->getPreciof()}, {$this->getPrecioc()}, CURDATE(), 'H');";
         $save = $this->db->query($sql);
@@ -141,21 +152,8 @@ class precio{
 
         return $result;
     }
-
-    public function getAll(){
-        $sql = "select pe.id, l.nombre as 'linea', m.nombre as 'marca', po.nombre, po.medida, po.paquete, pe.toneladab, pe.toneladaf, pe.toneladac, pe.tipocam, pe.preciob, pe.preciof, pe.precioc, pe.fecha "
-                . "from precio pe INNER JOIN producto po ON po.id = pe.id_producto INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea ORDER BY id DESC;";
-        $precio = $this->db->query($sql);
-        return $precio;
-    }
-
-    public function getAlltabla(){
-        $sql = "select pe.id, l.nombre as 'linea', m.nombre as 'marca', po.nombre, po.medida, po.paquete, pe.toneladab, pe.toneladaf, pe.toneladac, pe.tipocam, pe.preciob, pe.preciof, pe.precioc, pe.fecha "
-                . "from precio pe INNER JOIN producto po ON po.id = pe.id_producto INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE pe.fecha like '%{$this->getFecha()}%' ORDER BY id DESC;";
-        $precio = $this->db->query($sql);
-        return $precio;
-    }
-
+    
+    //Eliminar precio fierro - 3precio
     public function delete(){
         $sql = "DELETE FROM precio WHERE id_producto = {$this->getId_producto()} AND fecha = '{$this->getFecha()}'";
         $delete = $this->db->query($sql);
@@ -168,8 +166,20 @@ class precio{
         return $result;
     }
 
+    //Muestra precio fierro - 4precio
     public function getpfierro(){
         $sql = "SELECT id_producto, preciob, preciof, precioc FROM precio WHERE fecha = CURDATE();";
+        $precio = $this->db->query($sql);
+        return $precio;
+    }
+
+    ////
+    ////
+    ////
+
+    public function getAlltabla(){
+        $sql = "select pe.id, l.nombre as 'linea', m.nombre as 'marca', po.nombre, po.medida, po.paquete, pe.toneladab, pe.toneladaf, pe.toneladac, pe.tipocam, pe.preciob, pe.preciof, pe.precioc, pe.fecha "
+                . "from precio pe INNER JOIN producto po ON po.id = pe.id_producto INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE pe.fecha like '%{$this->getFecha()}%' ORDER BY id DESC;";
         $precio = $this->db->query($sql);
         return $precio;
     }

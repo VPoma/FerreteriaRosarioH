@@ -27,7 +27,8 @@ class precioController{
                 $producto = new Producto();
                 $producto->setId_marca($marca);
                 $prod = $producto->getFierro();
-
+            
+                //Guardar Precios - 2precio
                 $precio = new Precio();
                 while($pr = $prod->fetch_object()){
                         $precio->setId_producto($pr->id);
@@ -49,13 +50,14 @@ class precioController{
                     $_SESSION['register'] = "failed";
                 }
                 
-                //modificar el precio del fierro - 16
+                //Muestra precio fierro - 4precio
                 $pfierro = $precio->getpfierro();
                 while($pf = $pfierro->fetch_object()){
                     $producto->setId($pf->id_producto);
                     $producto->setPreciob($pf->preciob);
                     $producto->setPreciof($pf->preciof);
                     $producto->setPrecioc($pf->precioc);
+                    //modificar el precio del fierro - 16
                     $update = $producto->edit_pfierro();
 
                 }
@@ -78,6 +80,7 @@ class precioController{
         echo '<script>window.location="'.base_url.'precio/gestion"</script>';
     }
 
+    //muestra todos los registros de precio- 1precio
     public function gestion(){
         $precio = new precio();
         $prec = $precio->getAll();
@@ -139,11 +142,12 @@ class precioController{
             $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
             
             if($marca && $fecha){
+                //Para inserción de precios Fierro selecciona los fierro - 11
                 $producto = new Producto();
                 $producto->setId_marca($marca);
                 $prod = $producto->getFierro();
 
-                //Para inserción de precios Fierro selecciona los fierro - 11
+                //Eliminar precio fierro - 3precio
                 $precio = new Precio();
                 while($pr = $prod->fetch_object()){
                     $precio->setId_producto($pr->id);
