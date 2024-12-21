@@ -209,6 +209,7 @@ class producto{
         return $producto;
     }
 
+    //MUESTRA TODOS LOS REGISTROS SIN FILTRO - LISTADO
     public function getAll(){
         $sql = "SELECT p.*, t.nombre as 'tienda', f.nombre as 'familia', l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
                 . "INNER JOIN tienda t ON t.id = p.id_tienda "
@@ -225,6 +226,7 @@ class producto{
         return $producto->fetch_object();
     }
 
+    //EDITA LOS REGISTROS DE PRODUCTOS
     public function edit(){
         $sql = "UPDATE producto SET id_tienda = {$this->getId_tienda()}, id_familia = {$this->getId_familia()}, id_linea = {$this->getId_linea()}, id_marca = {$this->getId_marca()}, nombre = '{$this->getNombre()}', medida = '{$this->getMedida()}', cantidad = {$this->getCantidad()}, paquete = {$this->getPaquete()}, preciob = {$this->getPreciob()}, preciof = {$this->getPreciof()}, precioc = {$this->getPrecioc()} ";
         
@@ -244,6 +246,7 @@ class producto{
         return $result;
     }
 
+    //EDITA LOS REGISTROS DE OCULTAR PRODUCTOS
     public function edit_oculta(){
         $sql = "UPDATE producto SET est = 'D' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -255,7 +258,7 @@ class producto{
 
         return $result;
     }
-    
+
     //MOSTRAR PRODUCTO UNITARIAMENTE
     public function getOnever(){
         $sql = "SELECT p.id, p.nombre, p.medida, p.imagen, p.preciof, p.preciob, p.precioc, l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
@@ -266,7 +269,7 @@ class producto{
         return $producto->fetch_object();
     }
 
-    //Mostrar listado de productos con imagenes (para el carrito)
+    //Mostrar listado de productos con imagenes (para el carrito) - 1
     public function getRandom(){
         $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
                 . "INNER JOIN marca m ON m.id = p.id_marca "

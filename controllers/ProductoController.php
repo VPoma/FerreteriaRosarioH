@@ -3,8 +3,8 @@
 require_once 'models/producto.php';
 
 Class productoController{
+    //Mostrar listado de productos con imagenes (para el carrito) - 1
     public function index(){
-        //Mostrar listado de productos con imagenes (para el carrito)
         if(isset($_GET['pag'])){
             $pag = $_GET['pag'];
         }else{
@@ -28,8 +28,8 @@ Class productoController{
         require_once  'views/producto/listadopr.php';
     }
 
+    //Mostrar listado de productos con imagenes CON FILTRO (para el carrito)
     public function filtroindex(){
-        //Mostrar listado de productos con imagenes CON FILTRO (para el carrito)
         if(isset($_POST)){
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
@@ -56,8 +56,8 @@ Class productoController{
         require_once  'views/producto/listadopr.php';
     }
 
+    //MOSTRAR PRODUCTO UNITARIAMENTE
     public function ver(){
-        //MOSTRAR PRODUCTO UNITARIAMENTE
         if(isset($_GET['id'])){
             $id = $_GET['id'];
 
@@ -70,8 +70,8 @@ Class productoController{
         }
     }
 
+    //LLAMA LA INTERFAS DE REGISTRO DE PRODUCTO
     public function registro(){
-        
         require_once 'views/producto/registropr.php';
     }
 
@@ -147,6 +147,7 @@ Class productoController{
         
     }
 
+    //MUESTRA TODOS LOS REGISTROS SIN FILTRO - LISTADO
     public function gestion(){
         $producto = new Producto();
         $prod = $producto->getAll();
@@ -154,8 +155,8 @@ Class productoController{
         require_once 'views/producto/gestionpr.php';
     }
 
+    //EDITA LOS REGISTROS DE PRODUCTOS
     public function editar(){
-
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $edit = true;
@@ -171,8 +172,8 @@ Class productoController{
         }
     }
 
+    //EDITA LOS REGISTROS DE OCULTAR PRODUCTOS
     public function eliminar(){
-
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $delete = true;
@@ -190,8 +191,8 @@ Class productoController{
 
     }
 
+    //EDITA LOS REGISTROS DE OCULTAR PRODUCTOS
     public function delete(){
-
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $producto = new Producto();
