@@ -159,14 +159,14 @@ class abastecerController{
                 $abastecer->setImporte($importe);
                 $resto = $total - $importe;
                 $abastecer->setResto($resto);
-                //Guardar Cuaderno
+                //Guardar Registro de Abastecimiento - 1abastece
                 $save = $abastecer->save();
 
                 /*
                 var_dump($abastecer);
                 die;
                 */
-                //Guardar Producto_Cuaderno
+                //Guardar listado de Abastecimiento de un proveedor - 2abastece
                 $save_pa = $abastecer->save_pa();
 
                 if($save && $save_pa){
@@ -204,17 +204,20 @@ class abastecerController{
         $abastecer->setLimite($limite);
 
         if(isset($_SESSION['admin'])){
-        //sacar los pedidos totales
+        //Muestra todos los registros de abastecimiento - 3abastece
         $abast = $abastecer->getAllabas();
 
+        //Muestra el total de registros de abastecer - 4abastece
         $total = $abastecer->getAlltotal();
         }else{
         //Sacar los pedidos del usuario
         $usuario = $_SESSION['identity']->id;
         $abastecer->setId_Usuario($usuario);
-
+        
+        //Muestra el total de registros segun usuario - 5abastece
         $abast = $abastecer->getAllByUser();
         
+        //Muestra el total de registros de abastecer segun usuario  - 6abastece
         $total = $abastecer->getAlltotalu();
         }
 
@@ -240,9 +243,11 @@ class abastecerController{
 
                 if(isset($_SESSION['admin'])){
                     //sacar los pedidos totales
+                    //Filtra la busqueda de abastecimiento - 9abastecer
                     $abast = $abastecer->getfillabas();
                 }else{    
                     //Sacar los pedidos del usuario
+                    //Filtra la busqueda de abastecimiento por usuario - 10abastecer
                     $abastecer->setId_Usuario($usuario);
                     $abast = $abastecer->getfillabasus();
                 }
@@ -257,12 +262,12 @@ class abastecerController{
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             
-            //Sacar Datos del Cuaderno
             $abastecer = new Abastecer();
             $abastecer->setId($id);
+            //Saca datos del registro de cuaderno en base a un id - 11abastecer
             $abs = $abastecer->getOne();
 
-            //Sacar Productos del Cuaderno
+            //Sacar Productos del Cuaderno - 12abastecer
             $producto_abastecer= new Abastecer();
             $prodabs = $producto_abastecer->getProductosByabastecer($id);
 
@@ -296,6 +301,7 @@ class abastecerController{
             $id = $_GET['id'];
             $abastecer = new Abastecer();
             $abastecer->setId($id);
+            //Edita para olcutar registro - 13abastecer
             $delete = $abastecer->edit_oculta(); 
             
             if($delete){
@@ -325,8 +331,10 @@ class abastecerController{
         $abastecer->setOffset($offset);
         $abastecer->setLimite($limite);
         
+        //Muestra el total de registros anulados segun usuario - 7abastece
         $abast = $abastecer->getAllByUserA();
 
+        //Muestra el total de registros de abastecer anulados segun usuario  - 8abastece
         $total = $abastecer->getAlltotalA();
         
         $totalPa = ceil($total/$limite);
@@ -366,6 +374,7 @@ class abastecerController{
                 $abastecer->setImporte($importe);
                 $resto = 0.00;
                 $abastecer->setResto($resto);
+                //Cambia la situacion del pago por abastecer - 14abastecer
                 $save = $abastecer->pagar();
 
                 if($save){
@@ -406,6 +415,7 @@ class abastecerController{
             if($id_abastecer){
                 $abastecer = New Abastecer();
                 $abastecer->setId($id_abastecer);
+                //cambia el estado de ingreso de productos abastecer - 15abastecer
                 $save = $abastecer->recibir();
 
                 if($save){
@@ -414,7 +424,7 @@ class abastecerController{
                     $_SESSION['register'] = "failed";
                 }
 
-
+                //Recibe cantidad de productos a stock - 16abastecer
                 $producto_abastecer = new Abastecer();
                 $prodabs = $producto_abastecer->getProdByabs_suma($id_abastecer);
 

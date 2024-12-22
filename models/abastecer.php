@@ -163,7 +163,9 @@ class abastecer{
     }
     //
 
-    //Consultas 
+    //Consultas
+
+    //Guardar Registro de Abastecimiento - 1abastece
     public function save(){
         $sql = "INSERT INTO abastecer VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, {$this->getId_proveedor()}, '{$this->getDescripcion()}', {$this->getTotal()}, '{$this->getSituacion()}', {$this->getImporte()}, {$this->getResto()}, CURDATE(), CURRENT_TIME(), NULL, NULL, 'ADQUIRIDO', 'H');";
         $save = $this->db->query($sql);
@@ -176,6 +178,7 @@ class abastecer{
         return $result;
     }
 
+    //Guardar listado de Abastecimiento de un proveedor - 2abastece
     public function save_pa(){
         $sql = "SELECT LAST_INSERT_ID() as 'abastecer';";
         $query = $this->db->query($sql);
@@ -196,51 +199,60 @@ class abastecer{
         return $result;
     }
 
+    //Muestra todos los registros de abastecimiento - 3abastece
     public function getAllabas(){
         $sql = "SELECT ab.*, pv.nombrecom, pv.numruc FROM abastecer ab INNER JOIN proveedor pv on ab.id_proveedor = pv.id WHERE ab.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
         $cuaderno = $this->db->query($sql);
         return $cuaderno;
     }
 
+    //Muestra el total de registros de abastecer - 4abastece
     public function getAlltotal(){
         $cuaderno  = $this->db->query("SELECT * FROM abastecer WHERE est = 'H'");
         return $cuaderno->num_rows;
     }
     
+    //Muestra el total de registros segun usuario - 5abastece
     public function getAllByUser(){
         $sql = "SELECT ab.*, pv.nombrecom, pv.numruc FROM abastecer ab INNER JOIN proveedor pv on ab.id_proveedor = pv.id WHERE ab.id_usuario = {$this->getId_Usuario()} AND ab.est = 'H' ORDER BY ab.id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
         $cuaderno = $this->db->query($sql);
         return $cuaderno;
     }
 
+    //Muestra el total de registros de abastecer segun usuario  - 6abastece
     public function getAlltotalu(){
         $cuaderno  = $this->db->query("SELECT * FROM abastecer WHERE id_usuario = {$this->getId_Usuario()} AND est = 'H'");
         return $cuaderno->num_rows;
     }
 
+    //Muestra el total de registros anulados segun usuario - 7abastece
     public function getAllByUserA(){
         $sql = "SELECT ab.*, pv.nombrecom FROM abastecer ab INNER JOIN proveedor pv on ab.id_proveedor = pv.id WHERE ab.est = 'D' ORDER BY ab.id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
         $pedido = $this->db->query($sql);
         return $pedido;
     }
 
+    //Muestra el total de registros de abastecer anulados segun usuario  - 8abastece
     public function getAlltotalA(){
         $cuaderno  = $this->db->query("SELECT * FROM abastecer WHERE est = 'D'");
         return $cuaderno->num_rows;
     }
 
+    //Filtra la busqueda de abastecimiento - 9abastecer
     public function getfillabas(){
         $sql = "SELECT ab.*, pv.nombrecom, pv.numruc FROM abastecer ab INNER JOIN proveedor pv on ab.id_proveedor = pv.id WHERE ab.fecha like '%{$this->getFecha()}%' AND ab.est = 'H' ORDER BY id DESC;";
         $pedido = $this->db->query($sql);
         return $pedido;
     }
 
+    //Filtra la busqueda de abastecimiento por usuario - 10abastecer
     public function getfillabasus(){
         $sql = "SELECT ab.*, pv.nombrecom, pv.numruc FROM abastecer ab INNER JOIN proveedor pv on ab.id_proveedor = pv.id WHERE ab.fecha like '%{$this->getFecha()}%' AND ab.id_usuario = {$this->getId_Usuario()} AND ab.est = 'H' ORDER BY id DESC;";
         $pedido = $this->db->query($sql);
         return $pedido;
     }
 
+    //Saca datos del registro de cuaderno en base a un id - 11abastecer
     public function getOne(){
         $sql = "SELECT ab.*, pv.nombrecom, ti.nombre as 'tienda', u.nombre, u.apellidos FROM abastecer ab "
                 . "INNER JOIN proveedor pv on ab.id_proveedor = pv.id INNER JOIN usuario u on ab.id_usuario = u.id "
@@ -249,6 +261,7 @@ class abastecer{
         return $cuaderno->fetch_object();
     }
 
+    //Sacar Productos del Cuaderno - 12abastecer
     public function getProductosByabastecer($id){
         $sql = "SELECT p.*, pa.precio, pa.cantidad, m.nombre as 'marca' FROM producto p "
                 . "INNER JOIN producto_abastecer pa ON p.id = pa.id_producto "
@@ -258,6 +271,7 @@ class abastecer{
         return $producto;
     }
 
+    //Edita para olcutar registro - 13abastecer
     public function edit_oculta(){
         $sql = "UPDATE abastecer SET estado = 'ANULADO', est = 'D' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -270,6 +284,7 @@ class abastecer{
         return $result;
     }
 
+    //Cambia la situacion del pago por abastecer - 14abastecer
     public function pagar(){
         $sql = "UPDATE abastecer SET situacion = '{$this->getSituacion()}', importe = {$this->getImporte()}, resto = {$this->getResto()} WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -282,6 +297,7 @@ class abastecer{
         return $result;
     }
 
+    //cambia el estado de ingreso de productos abastecer - 15abastecer
     public function recibir(){
         $sql = "UPDATE abastecer SET fecha_ent = CURDATE(), hora_ent = CURRENT_TIME(), estado = 'INGRESADO' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -294,6 +310,7 @@ class abastecer{
         return $result;
     }
 
+    //Recibe cantidad de productos a stock - 16abastecer
     public function getProdByabs_suma($id){
         $sql = "SELECT p.id, p.cantidad, pa.cantidad as 'cantisuma' FROM producto p "
                 . "INNER JOIN producto_abastecer pa ON p.id = pa.id_producto "
