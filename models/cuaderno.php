@@ -163,7 +163,9 @@ class cuaderno{
     }
     //  
 
-    //Consultas 
+    //Consultas
+    
+    //Guardar Cuaderno - 1cuaderno
     public function save(){
         $sql = "INSERT INTO cuaderno VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, {$this->getId_cliente()}, '{$this->getDescripcion()}', {$this->getTotal()}, '{$this->getSituacion()}', {$this->getImporte()}, {$this->getResto()}, CURDATE(), CURRENT_TIME(), NULL, NULL, 'VENDIDO', 'H');";
         $save = $this->db->query($sql);
@@ -175,7 +177,39 @@ class cuaderno{
 
         return $result;
     }
+    
+    //Busca en base a un usuario - 2cuaderno
+    public function getOneByUser(){
+        $sql = "SELECT id, total, situacion, importe, resto, fecha, estado FROM cuaderno WHERE id_usuario = {$this->getId_usuario()} ORDER BY id DESC LIMIT 1;";
+        $cuaderno = $this->db->query($sql);
+        return $cuaderno->fetch_object();
+    }
 
+    //Busca los productos del listado del cuaderno - 3cuaderno
+    public function getProductosBycuaderno($id){
+        $sql = "SELECT p.*, pc.precio, pc.cantidad, m.nombre as 'marca' FROM producto p "
+                . "INNER JOIN producto_cuaderno pc ON p.id = pc.id_producto "
+                . "INNER JOIN marca m ON m.id = p.id_marca "
+                . "WHERE pc.id_cuaderno ={$id};";
+        $producto = $this->db->query($sql);
+        return $producto;
+    }
+
+    //Busca todos los resultados de cuaderno - 4cuaderno
+    public function getAllcuad(){
+        $sql = "SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
+        $cuaderno = $this->db->query($sql);
+        return $cuaderno;
+    }
+
+    //Busca y saca los pedidos de los usuarios - 5cuaderno
+    public function getAllByUser(){
+        $sql = "SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.id_usuario = {$this->getId_Usuario()} AND cu.est = 'H' ORDER BY cu.id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
+        $cuaderno = $this->db->query($sql);
+        return $cuaderno;
+    }
+
+    //Guardar listado de productos de un comprador - 6cuaderno
     public function save_pc(){
         $sql = "SELECT LAST_INSERT_ID() as 'cuaderno';";
         $query = $this->db->query($sql);
@@ -196,11 +230,21 @@ class cuaderno{
         return $result;
     }
 
-    public function getAll(){
-        $cuaderno = $this->db->query("SELECT * FROM cuaderno ORDER BY id DESC;");
-        return $cuaderno;
+    //Busca un registro de cuaderno en base al filtro, busca todos - 7cuaderno
+    public function getfillcuad(){
+        $sql = "SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.fecha like '%{$this->getFecha()}%' AND cu.est = 'H' ORDER BY id DESC;";
+        $pedido = $this->db->query($sql);
+        return $pedido;
     }
 
+    //Busca un registro de cuaderno en base al filtro, busca solo de usuario - 8cuaderno
+    public function getfillcuadus(){
+        $sql = "SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.fecha like '%{$this->getFecha()}%' AND cu.id_usuario = {$this->getId_Usuario()} AND cu.est = 'H' ORDER BY id DESC;";
+        $pedido = $this->db->query($sql);
+        return $pedido;
+    }
+
+    //Busca un solo registro a travez de id - 9cuaderno
     public function getOne(){
         $sql = "SELECT cu.*, ci.nombrecom, ti.nombre as 'tienda', u.nombre, u.apellidos FROM cuaderno cu "
                 . "INNER JOIN cliente ci on cu.id_cliente = ci.id INNER JOIN usuario u on cu.id_usuario = u.id "
@@ -209,66 +253,7 @@ class cuaderno{
         return $cuaderno->fetch_object();
     }
 
-    public function getOneByUser(){
-        $sql = "SELECT id, total, situacion, importe, resto, fecha, estado FROM cuaderno WHERE id_usuario = {$this->getId_usuario()} ORDER BY id DESC LIMIT 1;";
-        $cuaderno = $this->db->query($sql);
-        return $cuaderno->fetch_object();
-    }
-
-    public function getProductosBycuaderno($id){
-        $sql = "SELECT p.*, pc.precio, pc.cantidad, m.nombre as 'marca' FROM producto p "
-                . "INNER JOIN producto_cuaderno pc ON p.id = pc.id_producto "
-                . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE pc.id_cuaderno ={$id};";
-        $producto = $this->db->query($sql);
-        return $producto;
-    }
-
-    public function getAllcuad(){
-        $sql = "SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
-        $cuaderno = $this->db->query($sql);
-        return $cuaderno;
-    }
-
-    public function getAllByUser(){
-        $sql = "SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.id_usuario = {$this->getId_Usuario()} AND cu.est = 'H' ORDER BY cu.id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
-        $cuaderno = $this->db->query($sql);
-        return $cuaderno;
-    }
-
-    public function getfillcuad(){
-        $sql = "SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.fecha like '%{$this->getFecha()}%' AND cu.est = 'H' ORDER BY id DESC;";
-        $pedido = $this->db->query($sql);
-        return $pedido;
-    }
-
-    public function getfillcuadus(){
-        $sql = "SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.fecha like '%{$this->getFecha()}%' AND cu.id_usuario = {$this->getId_Usuario()} AND cu.est = 'H' ORDER BY id DESC;";
-        $pedido = $this->db->query($sql);
-        return $pedido;
-    }
-
-    public function getAlltotal(){
-        $cuaderno  = $this->db->query("SELECT * FROM cuaderno WHERE est = 'H'");
-        return $cuaderno->num_rows;
-    }
-
-    public function getAlltotalu(){
-        $cuaderno  = $this->db->query("SELECT * FROM cuaderno WHERE id_usuario = {$this->getId_Usuario()} AND est = 'H'");
-        return $cuaderno->num_rows;
-    }
-
-    public function getAllByUserA(){
-        $sql = "SELECT cu.*, ci.nombrecom FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.est = 'D' ORDER BY cu.id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
-        $pedido = $this->db->query($sql);
-        return $pedido;
-    }
-
-    public function getAlltotalA(){
-        $cuaderno  = $this->db->query("SELECT * FROM cuaderno WHERE est = 'D'");
-        return $cuaderno->num_rows;
-    }
-
+    //Edita para olcutar registro- 10cuaderno
     public function edit_oculta(){
         $sql = "UPDATE cuaderno SET estado = 'ANULADO', est = 'D' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -281,6 +266,20 @@ class cuaderno{
         return $result;
     }
 
+    //Busca todos los registros anulados - 11cuaderno
+    public function getAllByUserA(){
+        $sql = "SELECT cu.*, ci.nombrecom FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.est = 'D' ORDER BY cu.id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
+        $pedido = $this->db->query($sql);
+        return $pedido;
+    }
+
+    //Saca la cantidad total de registros anulados - 12cuaderno
+    public function getAlltotalA(){
+        $cuaderno  = $this->db->query("SELECT * FROM cuaderno WHERE est = 'D'");
+        return $cuaderno->num_rows;
+    }
+
+    //Cambiar el estado a Entregado - 13cuaderno
     public function entregar(){
         $sql = "UPDATE cuaderno SET fecha_sal = CURDATE(), hora_sal = CURRENT_TIME(), estado = 'ENTREGADO' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -293,6 +292,7 @@ class cuaderno{
         return $result;
     }
 
+    //Busca los datos para restar la cantodad de stock - 14cuaderno
     public function getProdBycuad_resta($id){
         $sql = "SELECT p.id, p.cantidad, pc.cantidad as 'cantiresta' FROM producto p "
                 . "INNER JOIN producto_cuaderno pc ON p.id = pc.id_producto "
@@ -301,6 +301,7 @@ class cuaderno{
         return $producto;
     }
 
+    //Cambia el estaddo de la situacion del pago - 15cuaderno
     public function pagar(){
         $sql = "UPDATE cuaderno SET situacion = '{$this->getSituacion()}', importe = {$this->getImporte()}, resto = {$this->getResto()} WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -311,6 +312,27 @@ class cuaderno{
         }
 
         return $result;
+    }
+
+    //busca todo los registros - 16cuaderno
+    public function getAlltotal(){
+        $cuaderno  = $this->db->query("SELECT * FROM cuaderno WHERE est = 'H'");
+        return $cuaderno->num_rows;
+    }
+
+    //busca todo los registros de un usuario - 17cuaderno
+    public function getAlltotalu(){
+        $cuaderno  = $this->db->query("SELECT * FROM cuaderno WHERE id_usuario = {$this->getId_Usuario()} AND est = 'H'");
+        return $cuaderno->num_rows;
+    }
+
+    ///
+    ///
+    ///
+    
+    public function getAll(){
+        $cuaderno = $this->db->query("SELECT * FROM cuaderno ORDER BY id DESC;");
+        return $cuaderno;
     }
 
 }

@@ -101,6 +101,7 @@ Class cuadernoController{
             $stats = utils::statsCarrito();
             $total = $stats['total'];
 
+            //Guardar Cuaderno - 1cuaderno
             if($tienda && $usuario && $cliente && $total){
                 $cuaderno = new Cuaderno();
                 $cuaderno->setId_tienda($tienda);
@@ -134,6 +135,7 @@ Class cuadernoController{
                 $save = $cuaderno->save();
 
                 //Guardar Producto_Cuaderno
+                //Guardar listado de productos de un comprador - 6cuaderno
                 $save_pc = $cuaderno->save_pc();
 
                 if($save && $save_pc){
@@ -159,9 +161,11 @@ Class cuadernoController{
             $identity = $_SESSION['identity'];
             $cuaderno = new Cuaderno();
             $cuaderno->setId_Usuario($identity->id);
+            //Busca en base a un usuario - 2cuaderno
             $cua = $cuaderno->getOneByUser();
             
             $producto_cuaderno = new Cuaderno();
+            //Busca los productos del listado del cuaderno - 3cuaderno
             $prodcua = $producto_cuaderno->getProductosBycuaderno($cua->id);
 
         }
@@ -169,7 +173,6 @@ Class cuadernoController{
     }
 
     public function registroscuaderno(){
-
         //Paginador
         if(isset($_GET['pag'])){
             $pag = $_GET['pag'];
@@ -186,16 +189,21 @@ Class cuadernoController{
 
         if(isset($_SESSION['admin'])){
         //sacar los pedidos totales
+
+        //Busca todos los resultados de cuaderno - 4cuaderno
         $cuad = $cuaderno->getAllcuad();
 
+        //busca todo los registros - 16cuaderno
         $total = $cuaderno->getAlltotal();
         }else{
         //Sacar los pedidos del usuario
         $usuario = $_SESSION['identity']->id;
         $cuaderno->setId_Usuario($usuario);
 
+        //Busca y saca los pedidos de los usuarios - 5cuaderno
         $cuad = $cuaderno->getAllByUser();
         
+        //busca todo los registros de un usuario - 17cuaderno
         $total = $cuaderno->getAlltotalu();
         }
 
@@ -221,9 +229,11 @@ Class cuadernoController{
 
                 if(isset($_SESSION['admin'])){
                     //sacar los pedidos totales
+                    //Busca un registro de cuaderno en base al filtro, busca todos - 7cuaderno
                     $cuad = $cuaderno->getfillcuad();
                 }else{    
                     //Sacar los pedidos del usuario
+                    //Busca un registro de cuaderno en base al filtro, busca solo de usuario - 8cuaderno
                     $cuaderno->setId_Usuario($usuario);
                     $cuad = $cuaderno->getfillcuadus();
                 }
@@ -239,11 +249,13 @@ Class cuadernoController{
             $id = $_GET['id'];
             
             //Sacar Datos del Cuaderno
+            //Busca un solo registro a travez de id - 9cuaderno
             $cuaderno = new Cuaderno();
             $cuaderno->setId($id);
             $cua = $cuaderno->getOne();
 
             //Sacar Productos del Cuaderno
+            //Busca los productos del listado del cuaderno - 3cuaderno
             $producto_cuaderno = new Cuaderno();
             $prodcua = $producto_cuaderno->getProductosBycuaderno($id);
 
@@ -272,7 +284,7 @@ Class cuadernoController{
     }
 
     public function delete(){
-
+        //Edita para olcutar registro- 10cuaderno
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $cuaderno = new Cuaderno();
@@ -305,9 +317,11 @@ Class cuadernoController{
         $cuaderno = new Cuaderno();
         $cuaderno->setOffset($offset);
         $cuaderno->setLimite($limite);
-        
+
+        //Busca todos los registros anulados - 11cuaderno
         $cuad = $cuaderno->getAllByUserA();
 
+        //Saca la cantidad total de registros anulados - 12cuaderno
         $total = $cuaderno->getAlltotalA();
         
         $totalPa = ceil($total/$limite);
@@ -339,6 +353,7 @@ Class cuadernoController{
             $id_cuaderno = isset($_POST['cuaderno']) ? $_POST['cuaderno'] : false;
 
             if($id_cuaderno){
+                //Cambiar el estado a Entregado - 13cuaderno
                 $cuaderno = New cuaderno();
                 $cuaderno->setId($id_cuaderno);
                 $save = $cuaderno->entregar();
@@ -349,7 +364,7 @@ Class cuadernoController{
                     $_SESSION['register'] = "failed";
                 }
 
-
+                //Busca los datos para restar la cantodad de stock - 14cuaderno
                 $producto_cuaderno = new Cuaderno();
                 $prodcua = $producto_cuaderno->getProdBycuad_resta($id_cuaderno);
 
@@ -403,6 +418,7 @@ Class cuadernoController{
             $total = isset($_POST['total']) ? $_POST['total'] : false;
             $situacion = "CANCELADO";
 
+            //Cambia el estaddo de la situacion del pago - 15cuaderno
             if($id_cuaderno){
                 $cuaderno = New cuaderno();
                 $cuaderno->setId($id_cuaderno);
