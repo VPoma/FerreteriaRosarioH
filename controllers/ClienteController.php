@@ -33,8 +33,10 @@ class clienteCOntroller{
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
                     $cliente->setId($id);
+                    //Edita Registro Cliente - 0cliente
                     $save = $cliente->edit();
                 }else{
+                    //Guardar cliente - 1cliente
                     $save = $cliente->save();
 
                 }
@@ -70,8 +72,10 @@ class clienteCOntroller{
         $cliente->setOffset($offset);
         $cliente->setLimite($limite);
 
+        //Mostrar todos los registros - 2cliente
         $clie = $cliente->getAll();
 
+        //Saca la cantidad de lineas - 3cliente
         $total = $cliente->getAlltotal();
 
         $totalP = ceil($total/$limite);
@@ -93,6 +97,7 @@ class clienteCOntroller{
 
             }else{
 
+            //Filtro de registros - 4cliente
             $cliente->setNumdoc($numdoc);
             $cliente->setNombrecom($nombrecom);
             $clie = $cliente->getFiltro();
@@ -111,6 +116,7 @@ class clienteCOntroller{
             $cliente = new Cliente();
             $cliente->setId($id);
             
+            //Muestra un solo registro en base a un id - 5cliente
             $cli = $cliente->getOne();
 
             require_once 'views/cliente/registroci.php';
@@ -144,7 +150,8 @@ class clienteCOntroller{
 
             $cliente = new Cliente();
             $cliente->setId($id);
-
+            
+            //Edita para ocultar un registro - 6cliente
             $delete = $cliente->edit_oculta(); 
             
             if($delete){

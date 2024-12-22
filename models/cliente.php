@@ -100,49 +100,11 @@ class cliente{
     }
     //   
     
-     //Consultas
-    public function save(){
-        $sql = "INSERT INTO cliente VALUES(NULL, {$this->getId_ciudad()}, {$this->getId_tipodoc()}, '{$this->getNumdoc()}', '{$this->getNombrecom()}', '{$this->getDireccion()}', '{$this->getNumcel()}', 'H');";
-        $save = $this->db->query($sql);
-        $result = false;
-        if($save){
-            $result = true;
-        }
+    //Consultas
 
-        return $result;
-    }
+    //Cliente Controller
 
-    public function getAll(){
-        $cliente = $this->db->query("SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c INNER JOIN tipodoc td ON td.id = c.id_tipodoc INNER JOIN ciudad ci ON ci.id = c.id_ciudad WHERE c.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};");
-        return $cliente;
-    }
-
-    public function getAllc(){
-        $cliente = $this->db->query("SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c INNER JOIN tipodoc td ON td.id = c.id_tipodoc INNER JOIN ciudad ci ON ci.id = c.id_ciudad WHERE c.est = 'H' ORDER BY id DESC;");
-        return $cliente;
-    }
-
-    //FILTRO
-    public function getFiltro(){
-        $sql = "SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c " 
-                . "INNER JOIN tipodoc td ON td.id = c.id_tipodoc " 
-                . "INNER JOIN ciudad ci ON ci.id = c.id_ciudad "
-                . "WHERE c.numdoc like '%{$this->getNumdoc()}%' "
-                . "AND c.nombrecom like '%{$this->getNombrecom()}%' AND c.est = 'H' ORDER BY id DESC;";
-        $ticket = $this->db->query($sql);
-        return $ticket;
-    }
-
-    public function getAlltotal(){
-        $cliente  = $this->db->query("SELECT * FROM cliente WHERE est = 'H'");
-        return $cliente->num_rows;
-    }
-
-    public function getone(){
-        $cliente = $this->db->query("SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c INNER JOIN tipodoc td ON td.id = c.id_tipodoc INNER JOIN ciudad ci ON ci.id = c.id_ciudad WHERE c.id = {$this->getId()} ORDER BY id DESC;");
-        return $cliente->fetch_object();
-    }    
-
+    //Edita Registro Cliente - 0cliente
     public function edit(){
         $sql = "UPDATE cliente SET id_ciudad = {$this->getId_ciudad()}, id_tipodoc = {$this->getId_tipodoc()}, numdoc = '{$this->getNumdoc()}', nombrecom = '{$this->getNombrecom()}', direccion = '{$this->getDireccion()}', numcel = '{$this->getNumcel()}' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -155,6 +117,49 @@ class cliente{
         return $result;
     }
 
+    //Guardar cliente - 1cliente
+    public function save(){
+        $sql = "INSERT INTO cliente VALUES(NULL, {$this->getId_ciudad()}, {$this->getId_tipodoc()}, '{$this->getNumdoc()}', '{$this->getNombrecom()}', '{$this->getDireccion()}', '{$this->getNumcel()}', 'H');";
+        $save = $this->db->query($sql);
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    //Mostrar todos los registros - 2cliente
+    public function getAll(){
+        $cliente = $this->db->query("SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c INNER JOIN tipodoc td ON td.id = c.id_tipodoc INNER JOIN ciudad ci ON ci.id = c.id_ciudad WHERE c.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};");
+        return $cliente;
+    }
+
+    //Saca la cantidad de lineas - 3cliente
+    public function getAlltotal(){
+        $cliente  = $this->db->query("SELECT * FROM cliente WHERE est = 'H'");
+        return $cliente->num_rows;
+    }
+
+    //FILTRO
+    //Filtro de registros - 4cliente
+    public function getFiltro(){
+        $sql = "SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c " 
+                . "INNER JOIN tipodoc td ON td.id = c.id_tipodoc " 
+                . "INNER JOIN ciudad ci ON ci.id = c.id_ciudad "
+                . "WHERE c.numdoc like '%{$this->getNumdoc()}%' "
+                . "AND c.nombrecom like '%{$this->getNombrecom()}%' AND c.est = 'H' ORDER BY id DESC;";
+        $ticket = $this->db->query($sql);
+        return $ticket;
+    }
+
+    //Muestra un solo registro en base a un id - 5cliente
+    public function getone(){
+        $cliente = $this->db->query("SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c INNER JOIN tipodoc td ON td.id = c.id_tipodoc INNER JOIN ciudad ci ON ci.id = c.id_ciudad WHERE c.id = {$this->getId()} ORDER BY id DESC;");
+        return $cliente->fetch_object();
+    }
+    
+    //Edita para ocultar un registro - 6cliente
     public function edit_oculta(){
         $sql = "UPDATE cliente SET est = 'D' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -167,13 +172,20 @@ class cliente{
         return $result;
     }
 
-    //Busqueda despues de crear para registro de Cuaderno
+    //Cuaderno Controller
+    
+    //Saca todos los clientes para el controlador cuaderno - 7cliente
+    public function getAllc(){
+        $cliente = $this->db->query("SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c INNER JOIN tipodoc td ON td.id = c.id_tipodoc INNER JOIN ciudad ci ON ci.id = c.id_ciudad WHERE c.est = 'H' ORDER BY id DESC;");
+        return $cliente;
+    }
+
+    //Busqueda despues de crear para registro de Cuaderno - 8cliente
     public function getclienregcuad(){
         $cliente = $this->db->query("SELECT * FROM cliente WHERE numdoc = {$this->getNumdoc()} ORDER BY id DESC;");
         return $cliente->fetch_object();
     }
 
 }
-
 
 ?>

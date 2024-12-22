@@ -10,6 +10,7 @@ Class cuadernoController{
     }
 
     public function eligcliente(){
+        //Saca todos los clientes para el controlador cuaderno - 7cliente
         $cliente = new Cliente();
         $clie = $cliente->getAllc();
 
@@ -68,6 +69,7 @@ Class cuadernoController{
         }
 
         $cliente->setNumdoc($numdoc);
+        //Busqueda despues de crear para registro de Cuaderno - 8cliente
         $clien = $cliente->getclienregcuad();
         $cid=$clien->id;
 
