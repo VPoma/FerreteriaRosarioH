@@ -22,7 +22,7 @@ class precioController{
             $toneladaf = isset($_POST['toneladaf']) ? $_POST['toneladaf'] : false;
             $toneladac = isset($_POST['toneladac']) ? $_POST['toneladac'] : false;
             
-            //Para inserción de precios Fierro selecciona los fierro - 11
+            //Para inserción de precios Fierro selecciona los fierro - 11producto
             if($marca && $tipocam && $toneladab && $toneladaf && $toneladac){
                 $producto = new Producto();
                 $producto->setId_marca($marca);
@@ -57,7 +57,7 @@ class precioController{
                     $producto->setPreciob($pf->preciob);
                     $producto->setPreciof($pf->preciof);
                     $producto->setPrecioc($pf->precioc);
-                    //modificar el precio del fierro - 16
+                    //modificar el precio del fierro - 16producto
                     $update = $producto->edit_pfierro();
 
                 }
@@ -99,7 +99,7 @@ class precioController{
         $limite = 10;
         $offset = ($pag-1)*$limite;
 
-        //Muestra Tabla de Precios de productos - 12
+        //Muestra Tabla de Precios de productos - 12producto
         $precio = new producto();
         $precio->setOffset($offset);
         $precio->setLimite($limite);
@@ -121,7 +121,7 @@ class precioController{
 
             $precio = new producto();
 
-            //Muestra Tabla de Precios de productos FILTRO - 13
+            //Muestra Tabla de Precios de productos FILTRO - 13producto
             if(strlen(trim($marca)) == 0){
 
                 echo '<script>window.location="'.base_url.'precio/tabla"</script>';
@@ -142,7 +142,7 @@ class precioController{
             $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
             
             if($marca && $fecha){
-                //Para inserción de precios Fierro selecciona los fierro - 11
+                //Para inserción de precios Fierro selecciona los fierro - 11producto
                 $producto = new Producto();
                 $producto->setId_marca($marca);
                 $prod = $producto->getFierro();
@@ -177,7 +177,7 @@ class precioController{
             $id = $_GET['id'];
             $edit = true;
 
-            //Busca un producto para modificar el precio - 14
+            //Busca un producto para modificar el precio - 14producto
             $precio = new Producto();
             $precio->setId($id);
             
@@ -190,7 +190,7 @@ class precioController{
     }
 
     public function editprecio(){
-        //modificar el precio - 15
+        //modificar el precio - 15producto
         if(isset($_POST)){
             $preciob = isset($_POST['preciob']) ? $_POST['preciob'] : false;
             $preciof = isset($_POST['preciof']) ? $_POST['preciof'] : false;

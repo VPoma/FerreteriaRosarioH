@@ -8,6 +8,7 @@ Class descuentoController{
 
     public function gestion(){
         $descuento = new Descuento();
+        //Muestra todos los registros de descuento -1descuento
         $desc = $descuento->getAll();
 
         require_once 'views/descuento/gestionds.php';
@@ -21,7 +22,7 @@ Class descuentoController{
 
             $descuento = new Descuento();
             $descuento->setId($id);
-            
+            //Muestra un solo registro a partir del id -2descuento
             $des = $descuento->getOne();
 
             require_once 'views/descuento/actualizads.php';
@@ -41,6 +42,7 @@ Class descuentoController{
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
                     $descuento->setId($id);
+                    //Edita descuento -3descuento
                     $save = $descuento->edit();
                 }
                 

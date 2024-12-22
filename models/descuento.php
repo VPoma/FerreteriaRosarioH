@@ -35,21 +35,20 @@ class descuento{
     }
 
     //Consultas
+
+    //Muestra todos los registros de descuento -1descuento
     public function getAll(){
         $descuento = $this->db->query("SELECT * FROM descuento WHERE est = 'H' ORDER BY id DESC;");
         return $descuento;
     }
 
-    public function getAllpor(){
-        $descuento = $this->db->query("SELECT * FROM descuento WHERE est = 'H' ORDER BY id DESC;");
-        return $descuento->fetch_object();
-    }
-
+    //Muestra un solo registro a partir del id -2descuento
     public function getone(){
         $descuento = $this->db->query("SELECT * FROM descuento WHERE id = {$this->getId()} ORDER BY id DESC;");
         return $descuento->fetch_object();
     }
 
+    //Edita descuento -3descuento
     public function edit(){
         $sql = "UPDATE descuento SET porcentaje = '{$this->getPorcentaje()}' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
@@ -60,6 +59,12 @@ class descuento{
         }
 
         return $result;
+    }
+
+    //Envía el descuento para calculo - 4descuento
+    public function getAllpor(){
+        $descuento = $this->db->query("SELECT * FROM descuento WHERE est = 'H' ORDER BY id DESC;");
+        return $descuento->fetch_object();
     }
 }
 

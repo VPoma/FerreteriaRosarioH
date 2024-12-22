@@ -370,7 +370,7 @@ Class cuadernoController{
                 $producto_cuaderno = new Cuaderno();
                 $prodcua = $producto_cuaderno->getProdBycuad_resta($id_cuaderno);
 
-                //Edita y resta la cantidad de productos  - 10
+                //Edita y resta la cantidad de productos  - 10producto
                 $producto = new producto();
                 while($pr = $prodcua->fetch_object()){
                     $producto->setId($pr->id);

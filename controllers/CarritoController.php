@@ -37,6 +37,7 @@ Class carritoController{
             //Conseguir producto
             $producto = new Producto();
             $producto->setId($producto_id);
+            //MOSTRAR PRODUCTO UNITARIAMENTE - 3producto
             $producto = $producto->getOnever();
 
             //añadir al carrito
@@ -75,6 +76,7 @@ Class carritoController{
             unset($_SESSION['carrito'][$index]);
         }
 
+        //Envía el descuento para calculo - 4descuento
         $descuento = new Descuento();
         $desc = $descuento->getAllpor();
         $porcent = floatval($desc->porcentaje);
@@ -89,6 +91,7 @@ Class carritoController{
                 $id = $_SESSION['carrito'][$index]['producto']->id;
                 $producto = new Producto();
                 $producto->setId($id);
+                //MOSTRAR PRODUCTO UNITARIAMENTE - 3producto
                 $prod = $producto->getOnever();
             }
 

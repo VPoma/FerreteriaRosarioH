@@ -3,7 +3,7 @@
 require_once 'models/producto.php';
 
 Class productoController{
-    //Mostrar listado de productos con imagenes (para el carrito) - 1
+    //Mostrar listado de productos con imagenes (para el carrito) - 1producto
     public function index(){
         if(isset($_GET['pag'])){
             $pag = $_GET['pag'];
@@ -20,7 +20,7 @@ Class productoController{
 
         $product = $producto->getRandom();
     
-    //Saca la cantidad de lineas - 0
+    //Saca la cantidad de lineas - 0producto
         $total = $producto->getAlltotal();
 
         $totalP = ceil($total/$limite);
@@ -29,7 +29,7 @@ Class productoController{
         require_once  'views/producto/listadopr.php';
     }
 
-    //Mostrar listado de productos con imagenes CON FILTRO (para el carrito) - 2
+    //Mostrar listado de productos con imagenes CON FILTRO (para el carrito) - 2producto
     public function filtroindex(){
         if(isset($_POST)){
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
@@ -57,7 +57,7 @@ Class productoController{
         require_once  'views/producto/listadopr.php';
     }
 
-    //MOSTRAR PRODUCTO UNITARIAMENTE - 3
+    //MOSTRAR PRODUCTO UNITARIAMENTE - 3producto
     public function ver(){
         if(isset($_GET['id'])){
             $id = $_GET['id'];
@@ -76,7 +76,7 @@ Class productoController{
         require_once 'views/producto/registropr.php';
     }
 
-    //Guardar Registro de Productos - 4
+    //Guardar Registro de Productos - 4producto
     public function save(){
         if(isset($_POST)){
             $tienda = isset($_POST['tienda']) ? $_POST['tienda'] : false;
@@ -148,7 +148,7 @@ Class productoController{
         
     }
 
-    //MUESTRA TODOS LOS REGISTROS SIN FILTRO - LISTADO - 5
+    //MUESTRA TODOS LOS REGISTROS SIN FILTRO - LISTADO - 5producto
     public function gestion(){
         $producto = new Producto();
         $prod = $producto->getAll();
@@ -156,7 +156,7 @@ Class productoController{
         require_once 'views/producto/gestionpr.php';
     }
 
-    //EDITA LOS REGISTROS DE PRODUCTOS - 6
+    //EDITA LOS REGISTROS DE PRODUCTOS - 6producto
     public function editar(){
         if(isset($_GET['id'])){
             $id = $_GET['id'];
@@ -191,7 +191,7 @@ Class productoController{
 
     }
 
-    //EDITA LOS REGISTROS DE OCULTAR PRODUCTOS - 7 
+    //EDITA LOS REGISTROS DE OCULTAR PRODUCTOS - 7producto
     public function delete(){
         if(isset($_GET['id'])){
             $id = $_GET['id'];

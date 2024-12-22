@@ -4,7 +4,7 @@ require_once 'models/producto.php';
 require_once 'models/abastecer.php';
 
 class abastecerController{
-    //Muestra todos los productos para ABASTECER - 8
+    //Muestra todos los productos para ABASTECER - 8producto
     public function index(){
         //Paginador
         if(isset($_GET['pag'])){
@@ -31,7 +31,7 @@ class abastecerController{
         require_once  'views/abastecer/gestionab.php';
     }
 
-    //Muestra todos los productos para ABASTECER FILTRADO  - 9
+    //Muestra todos los productos para ABASTECER FILTRADO  - 9producto
     public function filtroindex(){
         if(isset($_POST)){
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
