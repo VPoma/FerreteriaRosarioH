@@ -8,8 +8,8 @@
 -Rellenar nueva base de datos (LISTO)
 -Añadir Abastecimiento de Productos (Listo)
 -Mejorar Consultas SQL para mejorar rendimiento de memoria - Identificación de consultas:
-    Modelos->ABASTECER, CIUDAD, CLIENTE, CUADERNO, DESCUENTO, FAMILIA, LINEA, MARCA, PRECIO, PRODUCTO, PROVEEDOR, TIENDA, USUARIO (Listo)
-    Falta: Tipodoc
+    Modelos->ABASTECER, CIUDAD, CLIENTE, CUADERNO, DESCUENTO, FAMILIA, LINEA, MARCA, PRECIO, TIPODOC
+    PRODUCTO, PROVEEDOR, TIENDA, USUARIO (Listo)
 -Añadir 2 filtros y paginadores más
 -Mejorar botones de interfaz
 -Añadir los 3 precios al carrito

@@ -330,9 +330,10 @@ class cuaderno{
     ///
     ///
     
+    /*
     public function getAll(){
         $cuaderno = $this->db->query("SELECT * FROM cuaderno ORDER BY id DESC;");
         return $cuaderno;
     }
-
+    */
 }
