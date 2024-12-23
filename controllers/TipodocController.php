@@ -22,8 +22,10 @@ class tipodocController{
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
                     $tipodoc->setId($id);
+                    //Edita el registro de tipodoc - 4tipodoc
                     $save = $tipodoc->edit();
                 }else{
+                    //Registra tipo de documento - 1tipodoc
                     $save = $tipodoc->save();
 
                 }
@@ -46,6 +48,7 @@ class tipodocController{
 
     public function gestion(){
         $tipodoc = new Tipodoc();
+        //Busca registros de tipo doc - 2tipodoc
         $tipo = $tipodoc->getAll();
 
         require_once 'views/tipodoc/gestiontd.php';
@@ -59,7 +62,7 @@ class tipodocController{
 
             $tipodoc = new Tipodoc();
             $tipodoc->setId($id);
-            
+            //Busca un registro de tipo doc a partir de un id - 3tipodoc
             $tip = $tipodoc->getOne();
 
             require_once 'views/tipodoc/registrotd.php';
@@ -76,7 +79,7 @@ class tipodocController{
 
             $tipodoc = new Tipodoc();
             $tipodoc->setId($id);
-            
+            //Busca un registro de tipo doc a partir de un id - 3tipodoc
             $tip = $tipodoc->getOne();
 
             require_once 'views/tipodoc/eliminartd.php';
@@ -93,6 +96,7 @@ class tipodocController{
             $id = $_GET['id'];
             $tipodoc = new Tipodoc();
             $tipodoc->setId($id);
+            //Edita el registro a fin de ocultar registro - 5tipodoc
             $delete = $tipodoc->edit_oculta(); 
             
             if($delete){

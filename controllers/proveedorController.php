@@ -31,8 +31,10 @@ class proveedorController{
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
                     $proveedor->setId($id);
+                    //Edita al Proveedor - 6proveedor
                     $save = $proveedor->edit();
                 }else{
+                    //Registra Proveedor -1proveedor
                     $save = $proveedor->save();
 
                 }               
@@ -65,9 +67,11 @@ class proveedorController{
         $proveedor = new Proveedor();
         $proveedor->setOffset($offset);
         $proveedor->setLimite($limite);
-
+        
+        //Muestra los dotos de todos Proveedores -2proveedor
         $prove = $proveedor->getAll();
 
+        //Muestra la cantidad de filas de la tabla proveedor -3proveedor
         $total = $proveedor->getAlltotal();
 
         $totalP = ceil($total/$limite);
@@ -91,6 +95,7 @@ class proveedorController{
 
             $proveedor->setNumruc($numruc);
             $proveedor->setNombrecom($nombrecom);
+            //FILTRO - 4proveedor
             $prove = $proveedor->getFiltro();
             }
         }
@@ -106,7 +111,8 @@ class proveedorController{
 
             $proveedor = new Proveedor();
             $proveedor->setId($id);
-            
+
+            //Muestra a un proveedor buscado a partir de su "ID" - 5proveedor
             $pvd = $proveedor->getOne();
 
             require_once 'views/proveedor/registropv.php';
@@ -123,7 +129,8 @@ class proveedorController{
 
             $proveedor = new Proveedor();
             $proveedor->setId($id);
-            
+
+            //Muestra a un proveedor buscado a partir de su "ID" - 5proveedor
             $pvd = $proveedor->getOne();
 
             require_once 'views/proveedor/eliminarpv.php';
@@ -140,7 +147,8 @@ class proveedorController{
 
             $proveedor = new Proveedor();
             $proveedor->setId($id);
-
+            
+            //Edita para ocultar al Proveedor - 7proveedor
             $delete = $proveedor->edit_oculta(); 
             
             if($delete){

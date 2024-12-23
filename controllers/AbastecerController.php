@@ -61,6 +61,7 @@ class abastecerController{
 
     public function eligprovee(){
         $proveedor = new Proveedor();
+        //Busca y muestra a todos los proveedores - 8proveedor
         $provee = $proveedor->getAllp();
 
         require_once 'views/abastecer/eligeprove.php';
@@ -116,6 +117,7 @@ class abastecerController{
         }
 
         $proveedor->setNumruc($ruc);
+        //Busqueda despues de crear para registro de abastecimiento - 9proveedor
         $prove = $proveedor->getprovregabs();
         $prv=$prove->id;
 
