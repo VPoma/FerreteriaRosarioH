@@ -1,16 +1,23 @@
--Delimitar el uso por perfil de usuario (LISTO)
--Ordenar Pestañas y enlaces (LISTO)
--Realizar Filtros (LISTO)
--Añadir Paginador (LISTO)
--Añadir número de ticket al comprobante (LISTO)
--Definir si el pago es cancelado o a credito (LISTO) -> SOLO CANCELA EL PEDIDO y colocar filtro de "situacion"
--cambiar el precio de producto en lista por el precio mayor (LISTO)
--Rellenar nueva base de datos (LISTO)
--Añadir Abastecimiento de Productos (Listo)
+Tareas:
+
+Pendientes:
+-Realizar Modulo de Arqueo de Ingresos (Revisar Requerimientos).
+-Añadir 2 filtros y paginadores más.
+-Mejorar botones de interfaz.
+-Añadir los 3 precios al carrito.
+
+Culminadas:
+-Invertir el logo del ticket que imprime por refrendadora. (invertir Colores) (LISTO).
 -Mejorar Consultas SQL para mejorar rendimiento de memoria - Identificación de consultas:
     Modelos->ABASTECER, CIUDAD, CLIENTE, CUADERNO, DESCUENTO, FAMILIA, LINEA, MARCA, PRECIO, TIPODOC
-    PRODUCTO, PROVEEDOR, TIENDA, USUARIO (Listo)
--Añadir 2 filtros y paginadores más
--Mejorar botones de interfaz
--Añadir los 3 precios al carrito
--Instalacion de Servidor Web (Apache + Php + MariaDb-Mysql).
+    PRODUCTO, PROVEEDOR, TIENDA, USUARIO (Listo).
+-Instalacion de Servidor Web (Apache + Php + MariaDb-Mysql). - Realizar con XAMPP o LARAGON (Listo - Por el momento).
+-Añadir Abastecimiento de Productos (Listo).
+-Rellenar nueva base de datos (LISTO).
+-cambiar el precio de producto en lista por el precio mayor (LISTO).
+-Definir si el pago es cancelado o a credito (LISTO) -> SOLO CANCELA EL PEDIDO y colocar filtro de "situacion".
+-Añadir número de ticket al comprobante (LISTO).
+-Añadir Paginador (LISTO).
+-Realizar Filtros (LISTO).
+-Ordenar Pestañas y enlaces (LISTO).
+-Delimitar el uso por perfil de usuario (LISTO).

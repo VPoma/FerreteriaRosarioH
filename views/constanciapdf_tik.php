@@ -62,7 +62,7 @@ $tab2 = mysqli_query($db, "SELECT pa.id_producto, pa.precio, pa.cantidad, p.nomb
     <body>
         <div class="b">
             <div>
-                <img class="imgcabe" src="../assets/images/logo.jpg">
+                <img class="imgcabe" src="../assets/images/logo_inv.jpg">
             </div>
             <div>
                 <table class="rostik">
