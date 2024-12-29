@@ -126,6 +126,7 @@ Class productoController{
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
                     $producto->setId($id);
+                    //EDITA LOS REGISTROS DE PRODUCTOS - 6producto
                     $save = $producto->edit();
                 }else{
                     $save = $producto->save();
@@ -156,7 +157,6 @@ Class productoController{
         require_once 'views/producto/gestionpr.php';
     }
 
-    //EDITA LOS REGISTROS DE PRODUCTOS - 6producto
     public function editar(){
         if(isset($_GET['id'])){
             $id = $_GET['id'];
@@ -165,6 +165,7 @@ Class productoController{
             $producto = new Producto();
             $producto->setId($id);
             
+            //Busca un registro de producto a partir del id - 17producto
             $pro = $producto->getOne();
 
             require_once 'views/producto/registropr.php';
@@ -181,6 +182,7 @@ Class productoController{
             $producto = new Producto();
             $producto->setId($id);
             
+            //Busca un registro de producto a partir del id - 17producto
             $pro = $producto->getOne();
 
             require_once 'views/producto/eliminarpr.php';

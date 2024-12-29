@@ -383,6 +383,12 @@ class producto{
         return $result;
     }
 
+    //Busca un registro de producto a partir del id - 17producto
+    public function getOne(){
+        $producto = $this->db->query("SELECT * FROM producto WHERE id = {$this->getId()} ORDER BY id DESC;");
+        return $producto->fetch_object();
+    }
+
     ////
     ////
     ////
@@ -391,11 +397,6 @@ class producto{
     public function getAll_simple(){
         $producto = $this->db->query("SELECT * FROM producto WHERE est = 'H' ORDER BY id DESC;");
         return $producto;
-    }
-
-    public function getOne(){
-        $producto = $this->db->query("SELECT * FROM producto WHERE id = {$this->getId()} ORDER BY id DESC;");
-        return $producto->fetch_object();
     }
 
     //backup

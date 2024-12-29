@@ -1,6 +1,7 @@
 Tareas:
 
 Pendientes:
+-Modulo de Egresos
 -Realizar Modulo de Arqueo de Ingresos (Revisar Requerimientos).
 -Añadir 2 filtros y paginadores más.
 -Mejorar botones de interfaz.

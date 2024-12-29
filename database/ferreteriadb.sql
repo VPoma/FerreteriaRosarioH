@@ -211,6 +211,22 @@ CONSTRAINT pk_producto_abastecer PRIMARY KEY(id),
 CONSTRAINT fk_producto_abastecer_abastecer FOREIGN KEY(id_abastecer) REFERENCES abastecer(id),
 CONSTRAINT fk_producto_abastecer_producto FOREIGN KEY(id_producto) REFERENCES producto(id)
 )ENGINE=InnoDb;
+
+CREATE TABLE Egreso(
+id              INT(255) AUTO_INCREMENT NOT NULL,
+id_tienda       INT(255) NOT NULL,
+id_usuario      INT(255) NOT NULL,
+descripcion     VARCHAR(250),
+monto           FLOAT(200,2) NOT NULL,
+fecha           DATE,
+hora            TIME,
+turno           CHAR(6),
+est             CHAR(1) NOT NULL,
+CONSTRAINT pk_egreso PRIMARY KEY(id),
+CONSTRAINT fk_egreso_tienda FOREIGN KEY(id_tienda) REFERENCES tienda(id),
+CONSTRAINT fk_egreso_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id)
+)ENGINE=InnoDb;
+
 ###INGRESAR DATOS:
 
 ###Usuario

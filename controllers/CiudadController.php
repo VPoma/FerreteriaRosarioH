@@ -8,7 +8,6 @@ class ciudadController{
     }
 
     public function registro(){
-
         require_once 'views/ciudad/registroc.php';
     }
 
