@@ -184,6 +184,15 @@
                             <li><a class="button separa" href="<?=base_url?>precio/gestion">Gestión de Precio Fierro</a></li>
                             <li><a class="button separa" href="<?=base_url?>descuento/gestion">Gestión Descuento</a></li
                         <?Php endif;?>
+
+                    <?Php elseif( $nombre_controlador == "egresocontroller"): ?>
+
+                        <?Php if(isset($_SESSION['admin'])): ?>
+                            <h3>Panel Egresos</h3>
+
+                            <li><a class="button separa" href="<?=base_url?>egreso/registro">Registrar Egreso de Caja Chica</a></li>
+                            <li><a class="button separa" href="<?=base_url?>egreso/gestion">Gestión Egresos de Caja Chica</a></li>
+                        <?Php endif;?>
                         
                     <?Php else: ?>
                         <h1>Seguimos probando</h1>

@@ -20,7 +20,7 @@ Class egresoController{
             $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
             $monto = isset($_POST['monto']) ? $_POST['monto'] : false;
 
-            if($tienda && $usuario && $descripcion && $monto){
+            if($descripcion && $monto){
                 $egreso = new Egreso;
                 $egreso->setId_Tienda($tienda);
                 $egreso->setId_Usuario($usuario);
@@ -40,13 +40,14 @@ Class egresoController{
 
                 $egreso->setTurno($turno);
                 
-                $save = $egreso->save();
-
+                
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
                     $egreso->setId($id);
-                    //$save = $egreso->edit();
+                    //Editar registro de egreso - 4Egreso
+                    $save = $egreso->edit();
                 }else{
+                    //Guardar Registro de Egresos - 1Egreso
                     $save = $egreso->save();
                 }
                 
@@ -62,8 +63,74 @@ Class egresoController{
         }else{
             $_SESSION['register'] = "failed";
         }
-        echo '<script>window.location="'.base_url.'egreso/registro"</script>';
+        echo '<script>window.location="'.base_url.'egreso/gestion"</script>';
     }
+
+    public function gestion(){
+        $egreso = new Egreso();
+        //Muestra todos los registros de Egreso - 2Egreso
+        $egre = $egreso->getAll();
+
+        require_once 'views/egreso/gestione.php';
+    }
+
+    public function editar(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $edit = true;
+
+            $egreso = new Egreso();
+            $egreso->setId($id);
+            
+            //Busca un solo registro de egreso a travez de id - 3Egreso
+            $egr = $egreso->getOne();
+
+            require_once 'views/egreso/registroe.php';
+        }else{
+            echo '<script>window.location="'.base_url.'egreso/gestion"</script>';
+        }
+    }
+
+    public function eliminar(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $delete = true;
+
+            $egreso = new Egreso();
+            $egreso->setId($id);
+            
+            //Busca un solo registro de egreso a travez de id - 3Egreso
+            $egr = $egreso->getOne();
+
+            require_once 'views/egreso/eliminare.php';
+        }else{
+            echo '<script>window.location="'.base_url.'egreso/gestion"</script>';
+        }
+
+    }
+
+    public function delete(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+
+            $egreso = new Egreso();
+            $egreso->setId($id);
+            
+            //Edita para ocultar un registro - 6cliente
+            $delete = $egreso->edit_oculta(); 
+            
+            if($delete){
+                $_SESSION['delete'] = 'complete';
+            }else{
+                $_SESSION['delete'] = 'failed';
+            }
+        }else{
+            $_SESSION['delete'] = 'failed';
+        }
+
+        echo '<script>window.location="'.base_url.'egreso/gestion"</script>';
+    }
+
 }
 
 ?>

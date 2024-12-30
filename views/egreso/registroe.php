@@ -1,5 +1,5 @@
 <?Php if(isset($edit) && isset($egr) && is_object($egr)):?>
-    <h1>Editar Egreso: <?=$egr->nombre?></h1>
+    <h1>Editar Egreso: <?=$egr->descripcion?></h1>
     <?Php $url_action = base_url."egreso/save&id=".$egr->id;?>
 <?Php else:?>
     <h1>Nuevo Egreso</h1>
@@ -12,7 +12,7 @@
     <?Php $tiendas = utils::showTienda(); ?>
     <select name="tienda" id="">
         <?Php while($tie = $tiendas->fetch_object()): ?>
-            <option value="<?=$tie->id?>" <?=isset($egr) && is_object($egr) && $tie->id == $egr->id_tienda ? 'selected' : ''; ?>>
+            <option value="<?=$tie->id?>" <?=isset($egr) && is_object($egr) && $tie->id == $egr->tienda ? 'selected' : ''; ?>>
                 <?=$tie->nombre?>
             </option>
         <?Php endwhile; ?>
@@ -24,7 +24,7 @@
     <input type="text" name="descripcion" value="<?=isset($egr) && is_object($egr) ? $egr->descripcion : ''; ?>" required/>
 
     <label class="frm" for="monto">Monto</label>
-    <input type="number" step="any" name="monto" value="0.00"/>
+    <input type="number" step="any" name="monto" value="<?=isset($egr) && is_object($egr) ? $egr->monto : ''; ?>" required/>
 
     <input type="submit" value="Guardar">
 

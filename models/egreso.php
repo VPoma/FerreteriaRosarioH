@@ -89,8 +89,7 @@ Class egreso{
     }
 
     //Consutas
-
-    //Guardar Registro de Productos - 4producto
+    //Guardar Registro de Egresos - 1Egreso
     public function save(){
         $sql = "INSERT INTO egreso VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, '{$this->getDescripcion()}', {$this->getMonto()}, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', 'H');";
         $save = $this->db->query($sql);
@@ -102,9 +101,52 @@ Class egreso{
         return $result;
     }
 
+    //Muestra todos los registros de Egreso - 2Egreso
+    Public function getall(){
+        $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
+                . "INNER JOIN tienda t on t.id = e.id_tienda "
+                . "INNER JOIN usuario u on u.id = e.id_usuario "
+                . "WHERE e.est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
 
+    //Busca un solo registro de egreso a travez de id - 3Egreso
+    public function getOne(){
+        $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
+                . "INNER JOIN tienda t on t.id = e.id_tienda "
+                . "INNER JOIN usuario u on u.id = e.id_usuario "
+                . "WHERE e.id = {$this->getId()};";
+        $cuaderno = $this->db->query($sql);
+        return $cuaderno->fetch_object();
+    }
 
-    //
+    //Editar registro de egreso - 4Egreso
+    public function edit(){
+        $sql = "UPDATE egreso SET descripcion = '{$this->getDescripcion()}', monto = {$this->getMonto()} WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    //Editar A fin de Ocultar - 5Egreso
+    public function edit_oculta(){
+        $sql = "UPDATE egreso SET est = 'D' WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
 }
 
 ?>
