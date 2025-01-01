@@ -959,6 +959,9 @@ ALTER TABLE producto MODIFY id_descuento INT(255) NOT NULL;
 
 ALTER TABLE producto ADD FOREIGN KEY(id_descuento) REFERENCES descuento(id);
 
+ALTER TABLE cuaderno drop tipopago;
+ALTER TABLE cuaderno drop turno;
+
 ### MODIFICAR TABLA ###
 INSERT INTO descuento VALUES(NULL, 0.05, 'H');
 ##Busqueda de Productos por linea y marca
