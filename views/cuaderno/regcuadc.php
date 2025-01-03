@@ -24,12 +24,10 @@
 
         <label class="frm"  for="cliente">Cliente</label>
         <input type="text" value="<?=$cli->nombrecom?>" readonly/>
-
         
         <?Php $stats = Utils::statsCarrito();?>
         <?Php $a = $stats['total']?>
         <?Php $total = number_format($a, 2)?>
-
 
         <label class="frm"  for="total">Total</label>
         <input type="text" value="<?=$total?>" readonly/>
@@ -43,6 +41,12 @@
 
         <label class="frm"  for="importe">Importe</label>
         <input type="number" id="texto" step="any" name="importe" value="0.00" disabled/>
+
+        <label class="frm" for="tipopago">Tipo de Pago</label>
+        <select name="tipopago" id="">
+            <option value="EFECTIVO">EFECTIVO</option>
+            <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+        </select>
 
         <label class="frm"  for="descripcion">Descripción (Opcional)</label>
         <textarea id="caja4" name="descripcion">N/A</textarea>

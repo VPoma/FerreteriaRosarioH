@@ -18,13 +18,15 @@ Class egresoController{
             $tienda = isset($_POST['tienda']) ? $_POST['tienda'] : false;
             $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : false;
             $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
+            $tipopago = isset($_POST['tipopago']) ? $_POST['tipopago'] : false;
             $monto = isset($_POST['monto']) ? $_POST['monto'] : false;
 
-            if($descripcion && $monto){
+            if($descripcion && $tipopago && $monto){
                 $egreso = new Egreso;
                 $egreso->setId_Tienda($tienda);
                 $egreso->setId_Usuario($usuario);
                 $egreso->setDescripcion($descripcion);
+                $egreso->setTipopago($tipopago);
                 $egreso->setMonto($monto);
 
                 date_default_timezone_set('America/Lima');
@@ -67,9 +69,28 @@ Class egresoController{
     }
 
     public function gestion(){
+        //Paginador
+        if(isset($_GET['pag'])){
+            $pag = $_GET['pag'];
+        }else{
+            $pag = 1;
+        }
+
+        $limite = 6;
+        $offset = ($pag-1)*$limite;
+
         $egreso = new Egreso();
+        $egreso->setOffset($offset);
+        $egreso->setLimite($limite);
+
         //Muestra todos los registros de Egreso - 2Egreso
         $egre = $egreso->getAll();
+
+        //Saca la cantidad de lineas - 3egreso
+        $total = $egreso->getAlltotal();
+
+        $totalP = ceil($total/$limite);
+        $totalPag = $totalP;
 
         require_once 'views/egreso/gestione.php';
     }

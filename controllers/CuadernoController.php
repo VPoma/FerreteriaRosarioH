@@ -2,7 +2,7 @@
 require_once 'models/cliente.php';
 require_once 'models/cuaderno.php';
 require_once 'models/producto.php';
-
+require_once 'models/ingreso.php';
 Class cuadernoController{
     public function index(){
         require_once 'views/prueba.php';
@@ -98,12 +98,13 @@ Class cuadernoController{
             $importe = isset($_POST['importe']) ? $_POST['importe'] : false;
             $situacion = isset($_POST['situacion']) ? $_POST['situacion'] : false;
             $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
+            $tipopago = isset($_POST['tipopago']) ? $_POST['tipopago'] : false;
             $cero = 00.00;
             $stats = utils::statsCarrito();
             $total = $stats['total'];
 
-            //Guardar Cuaderno - 1cuaderno
             if($tienda && $usuario && $cliente && $total){
+                //Guardar Cuaderno
                 $cuaderno = new Cuaderno();
                 $cuaderno->setId_tienda($tienda);
                 $cuaderno->setId_Usuario($usuario);
@@ -115,13 +116,6 @@ Class cuadernoController{
                     $cuaderno->setResto($resto);
                 }elseif($situacion == "A CUENTA"){
                     $cuaderno->setImporte($importe);
-                    /*
-                    if($importe < $total){
-                        $cuaderno->setImporte($importe);
-                    }else{
-                        $cuaderno->setImporte($total);
-                    }
-                    */
                     $resto = $total - $importe;
                     $cuaderno->setResto($resto);
                 }elseif($situacion == "CANCELADO"){
@@ -132,14 +126,38 @@ Class cuadernoController{
                 $cuaderno->setdescripcion($descripcion);
                 $cuaderno->setTotal($total);
 
-                //Guardar Cuaderno
+                //Guardar Cuaderno - 1cuaderno
                 $save = $cuaderno->save();
+
+                $cua = $cuaderno->getidcuadulty();
+                $id_cuaderno = $cua->id;
 
                 //Guardar Producto_Cuaderno
                 //Guardar listado de productos de un comprador - 6cuaderno
-                $save_pc = $cuaderno->save_pc();
+                $save_pc = $cuaderno->save_pc($id_cuaderno);
 
-                if($save && $save_pc){
+                //Guarda en la tabla de Ingreso
+                $ingreso = new Ingreso();
+                $ingreso->setId_tienda($tienda);
+                $ingreso->setId_cliente($cliente);
+                $ingreso->setId_cuaderno($id_cuaderno);
+                if($situacion == "POR COBRAR"){
+                    $ingreso->setIngreso($cero);
+                    $resto = $total;
+                    $ingreso->setDeuda($resto);
+                }elseif($situacion == "A CUENTA"){
+                    $ingreso->setIngreso($importe);
+                    $resto = $total - $importe;
+                    $ingreso->setDeuda($resto);
+                }elseif($situacion == "CANCELADO"){
+                    $ingreso->setIngreso($total);
+                    $resto = 00.00;
+                    $ingreso->setDeuda($resto);
+                }
+                $ingreso->setTipopago($tipopago);
+                $save_ingreso = $ingreso->save();
+
+                if($save && $save_pc && $save_ingreso){
                     $_SESSION['pedido'] = "complete";
                 }else{
                     $_SESSION['pedido'] = "failed";

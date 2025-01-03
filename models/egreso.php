@@ -5,11 +5,16 @@ Class egreso{
     private $id_tienda;
     private $id_usuario;
     private $descripcion;
+    private $tipopago;
     private $monto;
     private $fecha;
     private $hora;
     private $turno;
     private $est;
+    //variables extra
+    private $limite;
+    private $offset;
+    //
     private $db;
 
     public function __construct(){
@@ -32,6 +37,10 @@ Class egreso{
         return $this->descripcion;
     }
 
+    function getTipopago(){
+        return $this->tipopago;
+    }
+
     function getMonto(){
         return $this->monto;
     }
@@ -51,7 +60,15 @@ Class egreso{
     function getEst(){
         return $this->est;
     }
+    //variables extra
+    function getLimite(){
+        return $this->limite;
+    }
 
+    function getOffset(){
+        return $this->offset;
+    }
+    //
     function setId($id){
         $this->id = $id;
     }
@@ -64,8 +81,12 @@ Class egreso{
         $this->id_usuario = $id_usuario;
     }
 
-    function setdescripcion($descripcion){
+    function setDescripcion($descripcion){
         $this->descripcion = $this->db->real_escape_string($descripcion);
+    }
+
+    function setTipopago($tipopago){
+        $this->tipopago = $this->db->real_escape_string($tipopago);
     }
 
     function setMonto($monto){
@@ -76,7 +97,7 @@ Class egreso{
         $this->fecha = $fecha;
     }
 
-    function sethora($hora){
+    function setHora($hora){
         $this->hora = $hora;
     }
 
@@ -87,11 +108,20 @@ Class egreso{
     function setEst($est){
         $this->est = $this->db->real_escape_string($est);
     }
+    //variables extra
+    function setLimite($limite){
+        $this->limite = $limite;
+    }
+
+    function setOffset($offset){
+        $this->offset = $offset;
+    }
+    //
 
     //Consutas
     //Guardar Registro de Egresos - 1Egreso
     public function save(){
-        $sql = "INSERT INTO egreso VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, '{$this->getDescripcion()}', {$this->getMonto()}, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', 'H');";
+        $sql = "INSERT INTO egreso VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, '{$this->getDescripcion()}', '{$this->getTipopago()}', {$this->getMonto()}, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', 'H');";
         $save = $this->db->query($sql);
         $result = false;
         if($save){
@@ -106,7 +136,7 @@ Class egreso{
         $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, e.tipopago, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
                 . "INNER JOIN tienda t on t.id = e.id_tienda "
                 . "INNER JOIN usuario u on u.id = e.id_usuario "
-                . "WHERE e.est = 'H' ORDER BY id DESC;";
+                . "WHERE e.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
         $egreso = $this->db->query($sql);
         return $egreso;
     }
@@ -123,7 +153,7 @@ Class egreso{
 
     //Editar registro de egreso - 4Egreso
     public function edit(){
-        $sql = "UPDATE egreso SET descripcion = '{$this->getDescripcion()}', monto = {$this->getMonto()} WHERE id = {$this->getId()};";
+        $sql = "UPDATE egreso SET descripcion = '{$this->getDescripcion()}', tipopago = '{$this->getTipopago()}', monto = {$this->getMonto()} WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
 
         $result = false;
@@ -145,6 +175,12 @@ Class egreso{
         }
 
         return $result;
+    }
+
+    //Saca la cantidad de lineas - 6egreso
+    public function getAlltotal(){
+        $egreso  = $this->db->query("SELECT * FROM egreso WHERE est = 'H'");
+        return $egreso->num_rows;
     }
 
 }

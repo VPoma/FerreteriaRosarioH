@@ -135,8 +135,8 @@ class precio{
     //Precio Controller
     //muestra todos los registros de precio- 1precio
     public function getAll(){
-        $sql = "select pe.id, l.nombre as 'linea', m.nombre as 'marca', po.nombre, po.medida, po.paquete, pe.toneladab, pe.toneladaf, pe.toneladac, pe.tipocam, pe.preciob, pe.preciof, pe.precioc, pe.fecha "
-                . "from precio pe INNER JOIN producto po ON po.id = pe.id_producto INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea ORDER BY id DESC;";
+        $sql = "select pe.id, m.nombre as 'marca', po.nombre, po.medida, po.paquete, pe.toneladab, pe.toneladaf, pe.toneladac, pe.tipocam, pe.preciob, pe.preciof, pe.precioc, pe.fecha "
+                . "from precio pe INNER JOIN producto po ON po.id = pe.id_producto INNER JOIN marca m ON m.id = po.id_marca ORDER BY id DESC;";
         $precio = $this->db->query($sql);
         return $precio;
     }

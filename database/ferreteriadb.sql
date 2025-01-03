@@ -1040,3 +1040,5 @@ SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p
 SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p
                 INNER JOIN marca m ON m.id = p.id_marca INNER JOIN linea l ON l.id = p.id_linea
                 WHERE l.nombre like '%fierro%' AND m.nombre like '%%' AND p.est = 'H' ORDER BY id DESC;
+
+SELECT id FROM cuaderno ORDER BY id DESC;

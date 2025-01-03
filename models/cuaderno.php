@@ -210,6 +210,23 @@ class cuaderno{
     }
 
     //Guardar listado de productos de un comprador - 6cuaderno
+    public function save_pc($idc){
+        foreach($_SESSION['carrito'] as $elemento){
+            $producto = $elemento['producto'];
+
+            $insert = "INSERT INTO producto_cuaderno Values(NULL, {$idc}, {$producto->id}, {$elemento['precio']}, {$elemento['unidades']}, 'H')";
+            $save = $this->db->query($insert);
+        }
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    /*
     public function save_pc(){
         $sql = "SELECT LAST_INSERT_ID() as 'cuaderno';";
         $query = $this->db->query($sql);
@@ -229,6 +246,7 @@ class cuaderno{
 
         return $result;
     }
+     */
 
     //Busca un registro de cuaderno en base al filtro, busca todos - 7cuaderno
     public function getfillcuad(){
@@ -324,6 +342,14 @@ class cuaderno{
     public function getAlltotalu(){
         $cuaderno  = $this->db->query("SELECT * FROM cuaderno WHERE id_usuario = {$this->getId_Usuario()} AND est = 'H'");
         return $cuaderno->num_rows;
+    }
+
+    //Busca el id del ultimo registro generado - 18cuaderno
+    public function getidcuadulty(){
+        $sql = "SELECT LAST_INSERT_ID() as 'id';";
+        //$sql = "SELECT id FROM cuaderno ORDER BY id DESC limit 1;";
+        $cuaderno = $this->db->query($sql);
+        return $cuaderno->fetch_object();
     }
 
     ////

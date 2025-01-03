@@ -20,8 +20,14 @@
 
     <input type="hidden" value="<?=$_SESSION['identity']->id?>" name="usuario"/>
 
-    <label class="frm" for="Descripcion">Descripción</label>
+    <label class="frm" for="descripcion">Descripción</label>
     <input type="text" name="descripcion" value="<?=isset($egr) && is_object($egr) ? $egr->descripcion : ''; ?>" required/>
+
+    <label class="frm" for="tipopago">Tipo de Pago</label>
+    <select name="tipopago" id="">
+        <option value="EFECTIVO" <?=isset($egr) && is_object($egr) && $egr->tipopago == "EFECTIVO" ?  'selected' : ''; ?>> EFECTIVO</option>
+        <option value="TRANSFERENCIA" <?=isset($egr) && is_object($egr) && $egr->tipopago == "TRANSFERENCIA" ?  'selected' : ''; ?>> TRANSFERENCIA</option>
+    </select>
 
     <label class="frm" for="monto">Monto</label>
     <input type="number" step="any" name="monto" value="<?=isset($egr) && is_object($egr) ? $egr->monto : ''; ?>" required/>
@@ -29,7 +35,7 @@
     <input type="submit" value="Guardar">
 
     <div class="fila-2">
-        <a href="<?=base_url?>producto/gestion" class="button extrae-colort">
+        <a href="<?=base_url?>egreso/gestion" class="button extrae-colort">
             Regresar
         </a>
     </div>

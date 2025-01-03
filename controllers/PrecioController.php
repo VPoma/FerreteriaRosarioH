@@ -68,8 +68,6 @@ class precioController{
                     $_SESSION['register'] = "failed";
                 }
 
-
-
             }else{
                 $_SESSION['register'] = "failed";
             }
