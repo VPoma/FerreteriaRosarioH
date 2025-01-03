@@ -4,7 +4,6 @@ require_once 'models/cuaderno.php';
 require_once 'models/producto.php';
 
 Class cuadernoController{
-
     public function index(){
         require_once 'views/prueba.php';
     }

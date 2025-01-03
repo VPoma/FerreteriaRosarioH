@@ -19,10 +19,11 @@
         <th style="width: 20px;">ID</th>
         <th style="width: 60px;">TIENDA</th>
         <th style="width: 150px;">DESCRIPCIÓN</th>
+        <th style="width: 60px;">TIPO DE PAGO</th>
         <th style="width: 50px;">MONTO</th>
         <th style="width: 70px;">USUARIO</th>
         <th style="width: 50px;">TURNO</th>
-        <th style="width: 55px;">FECHA</th>
+        <th style="width: 65px;">FECHA</th>
         <th style="width: 30px;">ACCIONES</th>
     </tr>
     <?Php while($eg = $egre->fetch_object()): ?>
@@ -30,10 +31,11 @@
         <td style="width: 20px;"><?=$eg->id?></td>
         <td style="width: 60px;"><?=$eg->tienda?></td>
         <td style="width: 150px;"><?=$eg->descripcion?></td>
+        <td style="width: 60px;"><?=$eg->tipopago?></td>
         <td style="width: 50px;"><?=$eg->monto?></td>
         <td style="width: 70px;"><?=$eg->usuario?></td>
         <td style="width: 50px;"><?=$eg->turno?></td>
-        <td style="width: 55px;"><?=$eg->fecha?></td>
+        <td style="width: 65px;"><?=$eg->fecha?></td>
         <td style="width: 30px;">
             <a href="<?=base_url?>egreso/editar&id=<?=$eg->id?>" class="button solid-colort">Editar</a>
             <a href="<?=base_url?>egreso/eliminar&id=<?=$eg->id?>" class="button extra-colort">Eliminar</a>

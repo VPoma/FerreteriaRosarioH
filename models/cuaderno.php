@@ -326,9 +326,9 @@ class cuaderno{
         return $cuaderno->num_rows;
     }
 
-    ///
-    ///
-    ///
+    ////
+    ////
+    ////
     
     /*
     public function getAll(){

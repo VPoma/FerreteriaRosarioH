@@ -103,7 +103,7 @@ Class egreso{
 
     //Muestra todos los registros de Egreso - 2Egreso
     Public function getall(){
-        $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
+        $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, e.tipopago, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
                 . "INNER JOIN tienda t on t.id = e.id_tienda "
                 . "INNER JOIN usuario u on u.id = e.id_usuario "
                 . "WHERE e.est = 'H' ORDER BY id DESC;";
@@ -113,7 +113,7 @@ Class egreso{
 
     //Busca un solo registro de egreso a travez de id - 3Egreso
     public function getOne(){
-        $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
+        $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, e.tipopago, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
                 . "INNER JOIN tienda t on t.id = e.id_tienda "
                 . "INNER JOIN usuario u on u.id = e.id_usuario "
                 . "WHERE e.id = {$this->getId()};";

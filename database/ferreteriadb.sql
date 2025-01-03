@@ -217,6 +217,7 @@ id              INT(255) AUTO_INCREMENT NOT NULL,
 id_tienda       INT(255) NOT NULL,
 id_usuario      INT(255) NOT NULL,
 descripcion     VARCHAR(250),
+tipopago        char(13),
 monto           FLOAT(200,2) NOT NULL,
 fecha           DATE,
 hora            TIME,
@@ -227,6 +228,23 @@ CONSTRAINT fk_egreso_tienda FOREIGN KEY(id_tienda) REFERENCES tienda(id),
 CONSTRAINT fk_egreso_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id)
 )ENGINE=InnoDb;
 
+CREATE TABLE Ingreso(
+id              INT(255) AUTO_INCREMENT NOT NULL,
+id_tienda       INT(255) NOT NULL,
+id_cliente      INT(255) NOT NULL,
+id_cuaderno     INT(255) NOT NULL,
+tipopago        char(13),
+ingreso         FLOAT(200,2),
+deuda           FLOAT(200,2),
+fecha           DATE,
+hora            TIME,
+turno           CHAR(6),
+est             CHAR(1) NOT NULL,
+CONSTRAINT pk_ingreso PRIMARY KEY(id),
+CONSTRAINT fk_ingreso_tienda FOREIGN KEY(id_tienda) REFERENCES tienda(id),
+CONSTRAINT fk_ingreso_cliente FOREIGN KEY(id_cliente) REFERENCES cliente(id),
+CONSTRAINT fk_ingreso_cuaderno FOREIGN KEY(id_cuaderno) REFERENCES cuaderno(id)
+)ENGINE=InnoDb;
 ###INGRESAR DATOS:
 
 ###Usuario
@@ -949,6 +967,8 @@ ALTER TABLE producto ADD preciof FLOAT(100,2) NULL after preciob;
 ALTER TABLE producto ADD precioc FLOAT(100,2) NULL after preciof;
 ALTER TABLE cuaderno ADD situacion VARCHAR(50) NULL after total;
 ALTER TABLE cuaderno ADD resto FLOAT(100,2) NULL after importe;
+
+ALTER TABLE egreso ADD tipopago CHAR(13) NOT NULL after descripcion;
 
 ALTER TABLE cuaderno CHANGE COLUMN resto importe FLOAT(100,2) NULL;
 ALTER TABLE producto_cuaderno ADD precio FLOAT(100,2) NULL after id_producto;
