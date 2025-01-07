@@ -109,19 +109,23 @@ Class cuadernoController{
                 $cuaderno->setId_tienda($tienda);
                 $cuaderno->setId_Usuario($usuario);
                 $cuaderno->setId_Cliente($cliente);
-                $cuaderno->setSituacion($situacion);
                 if($situacion == "POR COBRAR"){
                     $cuaderno->setImporte($cero);
                     $resto = $total;
                     $cuaderno->setResto($resto);
-                }elseif($situacion == "A CUENTA"){
+                    $cuaderno->setSituacion($situacion);
+                }elseif($situacion == "A CUENTA" && 0 < $importe && $importe < $total){
                     $cuaderno->setImporte($importe);
                     $resto = $total - $importe;
                     $cuaderno->setResto($resto);
+                    $cuaderno->setSituacion($situacion);
                 }elseif($situacion == "CANCELADO"){
                     $cuaderno->setImporte($total);
-                    $resto = 00.00;
-                    $cuaderno->setResto($resto);
+                    $cuaderno->setResto($cero);
+                    $cuaderno->setSituacion($situacion);
+                }else{
+                    //echo '<script>window.location="'.base_url.'cuaderno/eligcliente"</script>';
+                    echo '<script>window.location="'.base_url.'cuaderno/registrocuad&id='.$cliente.'"</script>';
                 }
                 $cuaderno->setdescripcion($descripcion);
                 $cuaderno->setTotal($total);
@@ -142,19 +146,33 @@ Class cuadernoController{
                 $ingreso->setId_cliente($cliente);
                 $ingreso->setId_cuaderno($id_cuaderno);
                 if($situacion == "POR COBRAR"){
-                    $ingreso->setIngreso($cero);
+                    $ingreso->setIngresos($cero);
                     $resto = $total;
-                    $ingreso->setDeuda($resto);
+                    $ingreso->setDeudas($resto);
                 }elseif($situacion == "A CUENTA"){
-                    $ingreso->setIngreso($importe);
+                    $ingreso->setIngresos($importe);
                     $resto = $total - $importe;
-                    $ingreso->setDeuda($resto);
+                    $ingreso->setDeudas($resto);
                 }elseif($situacion == "CANCELADO"){
-                    $ingreso->setIngreso($total);
+                    $ingreso->setIngresos($total);
                     $resto = 00.00;
-                    $ingreso->setDeuda($resto);
+                    $ingreso->setDeudas($resto);
                 }
                 $ingreso->setTipopago($tipopago);
+
+                date_default_timezone_set('America/Lima');
+                $horaturno = (int)date("H");
+
+                if ($horaturno >= 7 && $horaturno < 13) {
+                    $turno = "MAÑANA";
+                } elseif ($horaturno >= 14 && $horaturno < 18) {
+                    $turno = "TARDE";
+                } else {
+                    $turno = "NOCHE";
+                }
+                $ingreso->setTurno($turno);
+                
+                //Guardar Registro de Ingresos - 1Ingreso
                 $save_ingreso = $ingreso->save();
 
                 if($save && $save_pc && $save_ingreso){
@@ -434,21 +452,81 @@ Class cuadernoController{
     public function pagocua(){
         if(isset($_POST)){
             $id_cuaderno = isset($_POST['cuaderno']) ? $_POST['cuaderno'] : false;
+            $tienda = isset($_POST['tienda']) ? $_POST['tienda'] : false;
+            $cliente = isset($_POST['cliente']) ? $_POST['cliente'] : false;
             $total = isset($_POST['total']) ? $_POST['total'] : false;
-            $situacion = "CANCELADO";
-
-            //Cambia el estaddo de la situacion del pago - 15cuaderno
+            $importe_c = isset($_POST['importe_c']) ? $_POST['importe_c'] : false;
+            $importe = isset($_POST['importe']) ? $_POST['importe'] : false;
+            $situacion = isset($_POST['situacion']) ? $_POST['situacion'] : false;
+            $tipopago = isset($_POST['tipopago']) ? $_POST['tipopago'] : false;
+            $cero = 00.00;
+            
             if($id_cuaderno){
                 $cuaderno = New cuaderno();
                 $cuaderno->setId($id_cuaderno);
-                $cuaderno->setSituacion($situacion);
-                $importe = $total;
-                $cuaderno->setImporte($importe);
-                $resto = 0.00;
-                $cuaderno->setResto($resto);
+                if($situacion == "A CUENTA" && 0 < $importe && $importe <= $total){
+                    $importe_a = $importe_c + $importe;
+                    if($importe_a < $total){
+                        $cuaderno->setImporte($importe_a);
+                        $resto = $total - ($importe + $importe_c);
+                        $cuaderno->setResto($resto);
+                        $cuaderno->setSituacion($situacion);
+                    }elseif($importe_a == $total){
+                        $cuaderno->setImporte($total);
+                        $cuaderno->setResto($cero);
+                        $cuaderno->setSituacion("CANCELADO");
+                    }
+                    else{
+                        echo '<script>window.location="'.base_url.'cuaderno/pago&id='.$id_cuaderno.'"</script>';
+                    }
+                }elseif($situacion == "CANCELADO"){
+                    $cuaderno->setImporte($total);
+                    $cuaderno->setResto($cero);
+                    $cuaderno->setSituacion($situacion);
+                }else{
+                    echo '<script>window.location="'.base_url.'cuaderno/pago&id='.$id_cuaderno.'"</script>';
+                }
+                //Cambia el estaddo de la situacion del pago - 15cuaderno
                 $save = $cuaderno->pagar();
 
-                if($save){
+                //Guarda en la tabla de Ingreso
+                $ingreso = new Ingreso();
+                $ingreso->setId_tienda($tienda);
+                $ingreso->setId_cliente($cliente);
+                $ingreso->setId_cuaderno($id_cuaderno);
+                if($situacion == "A CUENTA" && 0 < $importe && $importe <= $total){
+                    $importe_a = $importe_c + $importe;
+                    if($importe_a < $total){
+                        $ingreso->setIngresos($importe);
+                        $resto = $total - ($importe + $importe_c);
+                        $ingreso->setDeudas($resto);
+                    }elseif($importe_a == $total){
+                        $ingreso->setIngresos($importe);
+                        $ingreso->setDeudas($cero);
+                    }
+                }elseif($situacion == "CANCELADO"){
+                    $importecancel = $total - $importe_c;
+                    $ingreso->setIngresos($importecancel);
+                    $ingreso->setDeudas($cero);
+                }
+                $ingreso->setTipopago($tipopago);
+
+                date_default_timezone_set('America/Lima');
+                $horaturno = (int)date("H");
+
+                if ($horaturno >= 7 && $horaturno < 13) {
+                    $turno = "MAÑANA";
+                } elseif ($horaturno >= 14 && $horaturno < 18) {
+                    $turno = "TARDE";
+                } else {
+                    $turno = "NOCHE";
+                }
+                $ingreso->setTurno($turno);
+                
+                //Guardar Registro de Ingresos - 1Ingreso
+                $save_ingreso = $ingreso->save();
+
+                if($save && $save_ingreso){
                     $_SESSION['register'] = "complete";
                 }else{
                     $_SESSION['register'] = "failed";

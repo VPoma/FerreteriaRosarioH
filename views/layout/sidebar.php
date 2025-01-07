@@ -193,6 +193,14 @@
                             <li><a class="button separa" href="<?=base_url?>egreso/registro">Registrar Egreso de Caja Chica</a></li>
                             <li><a class="button separa" href="<?=base_url?>egreso/gestion">Gestión Egresos de Caja Chica</a></li>
                         <?Php endif;?>
+
+                    <?Php elseif( $nombre_controlador == "ingresocontroller"): ?>
+
+                        <?Php if(isset($_SESSION['admin'])): ?>
+                            <h3>Panel Ingresos</h3>
+
+                            <li><a class="button separa" href="<?=base_url?>ingreso/gestion">Gestión Ingresos de Caja Chica</a></li>
+                        <?Php endif;?>
                         
                     <?Php else: ?>
                         <h1>Seguimos probando</h1>

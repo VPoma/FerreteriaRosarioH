@@ -6,8 +6,8 @@ Class ingreso{
     private $id_cliente;
     private $id_cuaderno;
     private $tipopago;
-    private $ingreso;
-    private $deuda;
+    private $ingresos;
+    private $deudas;
     private $fecha;
     private $hora;
     private $turno;
@@ -42,12 +42,12 @@ Class ingreso{
         return $this->tipopago;
     }
 
-    function getIngreso(){
-        return $this->ingreso;
+    function getIngresos(){
+        return $this->ingresos;
     }
 
-    function getDeuda(){
-        return $this->deuda;
+    function getDeudas(){
+        return $this->deudas;
     }
 
     function getFecha(){
@@ -94,12 +94,12 @@ Class ingreso{
         $this->tipopago = $this->db->real_escape_string($tipopago);
     }
 
-    function setIngreso($ingreso){
-        $this->ingreso = $ingreso;
+    function setIngresos($ingresos){
+        $this->ingresos = $ingresos;
     }
 
-    function setDeuda($deuda){
-        $this->deuda = $deuda;
+    function setDeudas($deudas){
+        $this->deudas = $deudas;
     }
 
     function setFecha($fecha){
@@ -128,9 +128,9 @@ Class ingreso{
     //
 
     //Consutas
-    //Guardar Registro de Egresos - 1Egreso
+    //Guardar Registro de Ingresos - 1Egreso
     public function save(){
-        $insert = "INSERT INTO ingreso VALUES(NULL, {$this->getId_tienda()}, {$this->getId_cliente()}, {$this->getId_cuaderno()}, '{$this->getTipopago()}', {$this->getIngreso()}, {$this->getDeuda()}, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', 'H');";
+        $insert = "INSERT INTO ingreso VALUES(NULL, {$this->getId_tienda()}, {$this->getId_cliente()}, {$this->getId_cuaderno()}, '{$this->getTipopago()}', {$this->getIngresos()}, {$this->getDeudas()}, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', 'H');";
         $save = $this->db->query($insert);
         $result = false;
         if($save){
@@ -138,6 +138,23 @@ Class ingreso{
         }
 
         return $result;
+    }
+
+    //Muestra todos los registros de Ingreso - 2Ingreso
+    Public function getall(){
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno' FROM ingreso i "
+                . "INNER JOIN tienda t on t.id = i.id_tienda "
+                . "INNER JOIN cliente c on c.id = i.id_cliente "
+                . "INNER JOIN cuaderno cu on cu.id = i.id_cuaderno "
+                . "WHERE i.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
+    //Saca la cantidad de lineas - 3Ingreso
+    public function getAlltotal(){
+        $egreso  = $this->db->query("SELECT * FROM ingreso WHERE est = 'H'");
+        return $egreso->num_rows;
     }
 
 
