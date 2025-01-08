@@ -176,16 +176,16 @@ Class cuadernoController{
                 $save_ingreso = $ingreso->save();
 
                 if($save && $save_pc && $save_ingreso){
-                    $_SESSION['pedido'] = "complete";
+                    $_SESSION['register'] = "complete";
                 }else{
-                    $_SESSION['pedido'] = "failed";
+                    $_SESSION['register'] = "failed";
                 }
 
             }else{
-                $_SESSION['pedido'] = "failed";
+                $_SESSION['register'] = "failed";
             }
         }else{
-            $_SESSION['pedido'] = "failed";
+            $_SESSION['register'] = "failed";
         }
 
         echo '<script>window.location="'.base_url.'cuaderno/vrealizada"</script>';

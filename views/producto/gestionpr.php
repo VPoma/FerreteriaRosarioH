@@ -1,11 +1,5 @@
 <h1>Gestión de Productos</h1>
 
-<!--
-<a href="<?//=base_url?>usuario/registro" class="button solid-color">
-    Agregar Nuevo
-</a>
--->
-
 <?Php if(isset($_SESSION['register']) && $_SESSION['register'] == 'complete'): ?>
     <strong class="alert_green">Registro ingresado/modificado Correctamente</strong>
 <?Php elseif(isset($_SESSION['register']) && $_SESSION['register'] != 'complete'): ?>
@@ -49,4 +43,16 @@
         </td>
     </tr>
     <?Php endwhile; ?>
+</table>
+<table>
+    <tr>
+        <!--Paginador-->
+        <td class="text-center" colspan="11">
+        <?Php if(isset($totalPag)): ?>
+            <?Php for($i=1; $i<=$totalPag; $i++): ?>
+                <a href="<?=base_url?>producto/gestion&pag=<?=$i?>"><?=$i?></a> -
+            <?Php endfor; ?>
+        <?Php endif; ?>
+        </td>
+    </tr>
 </table>

@@ -7,6 +7,7 @@ Pendientes:
 -Añadir los 3 precios al carrito.
 
 Culminadas:
+-Modulo de Ingresos (LISTO).
 -Modulo de Egresos (LISTO).
 -Invertir el logo del ticket que imprime por refrendadora. (invertir Colores) (LISTO).
 -Mejorar Consultas SQL para mejorar rendimiento de memoria - Identificación de consultas:

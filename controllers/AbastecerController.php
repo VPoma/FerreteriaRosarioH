@@ -147,6 +147,7 @@ class abastecerController{
             $importe = isset($_POST['importe']) ? $_POST['importe'] : false;
             $situacion = isset($_POST['situacion']) ? $_POST['situacion'] : false;
             $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
+            $cero = 00.00;
             $stats = utils::statsAñadir();
             $total = $stats['total'];
 
@@ -155,33 +156,43 @@ class abastecerController{
                 $abastecer->setId_tienda($tienda);
                 $abastecer->setId_Usuario($usuario);
                 $abastecer->setId_proveedor($proveedor);
-                $abastecer->setSituacion($situacion);
+                if($situacion == "POR COBRAR"){
+                    $abastecer->setImporte($cero);
+                    $resto = $total;
+                    $abastecer->setResto($resto);
+                    $abastecer->setSituacion($situacion);
+                }elseif($situacion == "A CUENTA" && 0 < $importe && $importe < $total){
+                    $abastecer->setImporte($importe);
+                    $resto = $total - $importe;
+                    $abastecer->setResto($resto);
+                    $abastecer->setSituacion($situacion);
+                }elseif($situacion == "CANCELADO"){
+                    $abastecer->setImporte($total);
+                    $abastecer->setResto($cero);
+                    $abastecer->setSituacion($situacion);
+                }else{
+                    //echo '<script>window.location="'.base_url.'cuaderno/eligcliente"</script>';
+                    echo '<script>window.location="'.base_url.'cuaderno/registroabs&id='.$proveedor.'"</script>';
+                }
                 $abastecer->setDescripcion($descripcion);
                 $abastecer->setTotal($total);
-                $abastecer->setImporte($importe);
-                $resto = $total - $importe;
-                $abastecer->setResto($resto);
                 //Guardar Registro de Abastecimiento - 1abastece
                 $save = $abastecer->save();
 
-                /*
-                var_dump($abastecer);
-                die;
-                */
                 //Guardar listado de Abastecimiento de un proveedor - 2abastece
                 $save_pa = $abastecer->save_pa();
 
                 if($save && $save_pa){
-                    $_SESSION['abastece'] = "complete";
+                    $_SESSION['register'] = "complete";
                 }else{
-                    $_SESSION['abastece'] = "failed";
+                    $_SESSION['register'] = "failed";
                 }
                 
             }else{
-                $_SESSION['abastece'] = "failed";
+                $_SESSION['register'] = "failed";
             }
         }else{
-            $_SESSION['abastece'] = "failed";
+            $_SESSION['register'] = "failed";
         }
 
         echo '<script>window.location="'.base_url.'abastecer/registrosabastecer"</script>';
@@ -366,16 +377,36 @@ class abastecerController{
         if(isset($_POST)){
             $id_abastecer = isset($_POST['abastecer']) ? $_POST['abastecer'] : false;
             $total = isset($_POST['total']) ? $_POST['total'] : false;
-            $situacion = "CANCELADO";
+            $importe_c = isset($_POST['importe_c']) ? $_POST['importe_c'] : false;
+            $importe = isset($_POST['importe']) ? $_POST['importe'] : false;
+            $situacion = isset($_POST['situacion']) ? $_POST['situacion'] : false;
+            $cero = 00.00;
 
             if($id_abastecer){
                 $abastecer = New Abastecer();
                 $abastecer->setId($id_abastecer);
-                $abastecer->setSituacion($situacion);
-                $importe = $total;
-                $abastecer->setImporte($importe);
-                $resto = 0.00;
-                $abastecer->setResto($resto);
+                if($situacion == "A CUENTA" && 0 < $importe && $importe <= $total){
+                    $importe_a = $importe_c + $importe;
+                    if($importe_a < $total){
+                        $abastecer->setImporte($importe_a);
+                        $resto = $total - ($importe + $importe_c);
+                        $abastecer->setResto($resto);
+                        $abastecer->setSituacion($situacion);
+                    }elseif($importe_a == $total){
+                        $abastecer->setImporte($total);
+                        $abastecer->setResto($cero);
+                        $abastecer->setSituacion("CANCELADO");
+                    }
+                    else{
+                        echo '<script>window.location="'.base_url.'abastecer/pago&id='.$id_abastecer.'"</script>';
+                    }
+                }elseif($situacion == "CANCELADO"){
+                    $abastecer->setImporte($total);
+                    $abastecer->setResto($cero);
+                    $abastecer->setSituacion($situacion);
+                }else{
+                    echo '<script>window.location="'.base_url.'abastecer/pago&id='.$id_abastecer.'"</script>';
+                }
                 //Cambia la situacion del pago por abastecer - 14abastecer
                 $save = $abastecer->pagar();
 

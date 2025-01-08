@@ -33,7 +33,7 @@
         <input type="text" value="<?=$total?>" readonly/>
 
         <label class="frm"  for="situacion">Situación</label>
-            <select name="situacion" id="opcion" onchange="actualizarEstado()">
+        <select name="situacion" id="opcion" onchange="actualizarEstado()">
             <option value="POR COBRAR">Por Cobrar</option>
             <option value="A CUENTA">A cuenta</option>
             <option value="CANCELADO">Cancelado</option>

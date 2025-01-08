@@ -149,10 +149,28 @@ Class productoController{
         
     }
 
-    //MUESTRA TODOS LOS REGISTROS SIN FILTRO - LISTADO - 5producto
     public function gestion(){
+        //Paginador
+        if(isset($_GET['pag'])){
+            $pag = $_GET['pag'];
+        }else{
+            $pag = 1;
+        }
+
+        $limite = 10;
+        $offset = ($pag-1)*$limite;
+
+        //MUESTRA TODOS LOS REGISTROS SIN FILTRO - LISTADO - 5producto
         $producto = new Producto();
+        $producto->setOffset($offset);
+        $producto->setLimite($limite);
+
         $prod = $producto->getAll();
+
+        $total = $producto->getAlltotal();
+
+        $totalP = ceil($total/$limite);
+        $totalPag = $totalP;
 
         require_once 'views/producto/gestionpr.php';
     }

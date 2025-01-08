@@ -17,7 +17,7 @@
 <table class="tablita">
     <tr>
         <th>N°</th>
-        <th style="width: 200px;">CLIENTE</th>
+        <th style="width: 200px;">PROVEEDOR</th>
         <th>DESCRIPCIÓN</th>
         <th>TOTAL</th>
         <th style="width: 100px;">FECHA</th>

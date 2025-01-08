@@ -22,7 +22,7 @@
         <label class="frm"  for="documento">Ruc</label>
         <input type="text" value="<?=$prv->numruc?>" readonly/>
 
-        <label class="frm"  for="cliente">Cliente</label>
+        <label class="frm"  for="proveedor">Proveedor</label>
         <input type="text" value="<?=$prv->nombrecom?>" readonly/>
 
         
@@ -35,14 +35,14 @@
         <input type="text" value="<?=$total?>" readonly/>
 
         <label class="frm"  for="situacion">Situación</label>
-        <select name="situacion" id="">
+        <select name="situacion" id="opcion" onchange="actualizarEstado()">
             <option value="POR COBRAR">Por Cobrar</option>
             <option value="A CUENTA">A cuenta</option>
             <option value="CANCELADO">Cancelado</option>
         </select>
 
         <label class="frm"  for="importe">Importe</label>
-        <input type="number" step="any" name="importe" value="0.00" required/>
+        <input type="number" id="texto" step="any" name="importe" value="0.00" disabled/>
 
         <label class="frm"  for="descripcion">Descripción (Opcional)</label>
         <textarea id="caja4" name="descripcion">N/A</textarea>
@@ -65,3 +65,18 @@
         <h1>Logueese Primero!!!</h1>
         <p>Necesitas estar logueado en la WEB para poder realizar tu pedido</p>
 <?Php endif;?>
+
+<script>
+    function actualizarEstado() {
+        // Obtener el valor seleccionado
+        const select = document.getElementById('opcion');
+        const inputTexto = document.getElementById('texto');
+
+        // Deshabilitar o habilitar según la opción seleccionada
+        if (select.value === 'A CUENTA') {
+            inputTexto.disabled = false;
+        } else {
+            inputTexto.disabled = true;
+        }
+    }
+</script>

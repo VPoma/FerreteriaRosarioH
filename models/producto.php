@@ -248,7 +248,7 @@ class producto{
                 . "INNER JOIN familia f ON f.id = p.id_familia "
                 . "INNER JOIN linea l ON l.id = p.id_linea "
                 . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE p.est = 'H' ORDER BY id DESC;";
+                . "WHERE p.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
         $producto = $this->db->query($sql);
         return $producto;
     }

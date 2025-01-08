@@ -36,7 +36,7 @@
         <th>N°</th>
         <th style="width: 100px;">FECHA</th>
         <th>Doc</th>
-        <th style="width: 200px;">CLIENTE</th>
+        <th style="width: 130px;">PROVEEDOR</th>
         <th>TOTAL</th>
         <th>ESTADO</th>
         <th>SITUACIÓN</th>

@@ -110,7 +110,6 @@ class precioController{
         $totalPag = $totalP;
 
         require_once 'views/precio/tablape.php';
-
     }
 
     public function filtrotabla(){
