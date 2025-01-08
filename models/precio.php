@@ -136,7 +136,7 @@ class precio{
     //muestra todos los registros de precio- 1precio
     public function getAll(){
         $sql = "select pe.id, m.nombre as 'marca', po.nombre, po.medida, po.paquete, pe.toneladab, pe.toneladaf, pe.toneladac, pe.tipocam, pe.preciob, pe.preciof, pe.precioc, pe.fecha "
-                . "from precio pe INNER JOIN producto po ON po.id = pe.id_producto INNER JOIN marca m ON m.id = po.id_marca ORDER BY id DESC;";
+                . "from precio pe INNER JOIN producto po ON po.id = pe.id_producto INNER JOIN marca m ON m.id = po.id_marca ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
         $precio = $this->db->query($sql);
         return $precio;
     }
@@ -171,6 +171,12 @@ class precio{
         $sql = "SELECT id_producto, preciob, preciof, precioc FROM precio WHERE fecha = CURDATE();";
         $precio = $this->db->query($sql);
         return $precio;
+    }
+
+    //Saca la cantidad de lineas - 5precio
+    public function getAlltotal(){
+        $producto  = $this->db->query("SELECT * FROM precio WHERE est = 'H'");
+        return $producto->num_rows;
     }
 
     ////

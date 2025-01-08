@@ -78,10 +78,29 @@ class precioController{
         echo '<script>window.location="'.base_url.'precio/gestion"</script>';
     }
 
-    //muestra todos los registros de precio- 1precio
     public function gestion(){
+        //Paginador
+        if(isset($_GET['pag'])){
+            $pag = $_GET['pag'];
+        }else{
+            $pag = 1;
+        }
+
+        $limite = 18;
+        $offset = ($pag-1)*$limite;
+
+        //muestra todos los registros de precio- 1precio
         $precio = new precio();
+        $precio->setOffset($offset);
+        $precio->setLimite($limite);
+
         $prec = $precio->getAll();
+
+        //Saca la cantidad de lineas - 5precio
+        $total = $precio->getAlltotal();
+
+        $totalP = ceil($total/$limite);
+        $totalPag = $totalP;
 
         require_once 'views/precio/gestionfpe.php';
     }
