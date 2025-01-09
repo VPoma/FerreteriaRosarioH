@@ -1,12 +1,12 @@
 Tareas:
 
 Pendientes:
--Realizar Modulo de Arqueo de Ingresos (Revisar Requerimientos).
 -Añadir 2 filtros y paginadores más.
 -Mejorar botones de interfaz.
 -Añadir los 3 precios al carrito.
 
 Culminadas:
+-Realizar Modulo de Arqueo de Ingresos (Revisar Requerimientos)(LISTO).
 -Modulo de Ingresos (LISTO).
 -Modulo de Egresos (LISTO).
 -Invertir el logo del ticket que imprime por refrendadora. (invertir Colores) (LISTO).
