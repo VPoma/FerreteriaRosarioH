@@ -201,6 +201,14 @@
 
                             <li><a class="button separa" href="<?=base_url?>ingreso/gestion">Gestión Ingresos de Caja Chica</a></li>
                         <?Php endif;?>
+
+                    <?Php elseif( $nombre_controlador == "arqueocontroller"): ?>
+
+                        <?Php if(isset($_SESSION['admin'])): ?>
+                            <h3>Panel Arqueo</h3>
+
+                            <li><a class="button separa" href="<?=base_url?>arqueo/index">Generar Arqueo de Caja Chica</a></li>
+                        <?Php endif;?>
                         
                     <?Php else: ?>
                         <h1>Seguimos probando</h1>

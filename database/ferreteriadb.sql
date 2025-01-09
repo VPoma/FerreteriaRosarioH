@@ -1042,3 +1042,11 @@ SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p
                 WHERE l.nombre like '%fierro%' AND m.nombre like '%%' AND p.est = 'H' ORDER BY id DESC;
 
 SELECT id FROM cuaderno ORDER BY id DESC;
+
+SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno' FROM ingreso i
+                INNER JOIN tienda t on t.id = i.id_tienda
+                INNER JOIN cliente c on c.id = i.id_cliente
+                INNER JOIN cuaderno cu on cu.id = i.id_cuaderno
+                WHERE i.est = 'H' AND i.fecha LIKE '%2025-01-08%' ORDER BY id DESC;
+
+SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.fecha like '%2025-01-08%' AND cu.est = 'H' ORDER BY id DESC;

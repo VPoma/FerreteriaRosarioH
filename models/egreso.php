@@ -183,6 +183,30 @@ Class egreso{
         return $egreso->num_rows;
     }
 
+    //Muestra todos los registros de Egreso - 2Egreso
+    Public function getall_Are(){
+        $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, e.tipopago, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
+                . "INNER JOIN tienda t on t.id = e.id_tienda "
+                . "INNER JOIN usuario u on u.id = e.id_usuario "
+                . "WHERE e.fecha = '{$this->getFecha()}' AND e.turno = '{$this->getTurno()}' AND e.est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
+    Public function getall_Are_eg_ef(){
+        $sql = "SELECT monto FROM egreso "
+                . "WHERE tipopago = 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
+    Public function getall_Are_eg_tr(){
+        $sql = "SELECT monto FROM egreso "
+                . "WHERE tipopago = 'TRANSFERENCIA'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
 }
 
 ?>

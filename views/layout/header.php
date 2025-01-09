@@ -83,16 +83,16 @@
                                             <li style="width: 115px;"><a href="<?=base_url?>proveedor/gestion">PROVEEDOR</a> </li>
                                             <li><a href="<?=base_url?>usuario/logini"><?=$_SESSION['identity']->usuariof?></a> </li>
                                         </ul>
-                                        <ul style="margin-left: -150px;" class="menu-area-main">
-                                            <li style="width: 70px;"><a href="<?=base_url?>ciudad/gestion">CIUDAD</a></li>
-                                            <li style="width: 70px;"><a href="<?=base_url?>tienda/gestion">TIENDA</a></li>
-                                            <li style="width: 75px;"><a href="<?=base_url?>familia/gestion">FAMILIA</a> </li>
-                                            <li style="width: 55px;"><a href="<?=base_url?>linea/gestion">LINEA</a> </li>
-                                            <li style="width: 70px;"><a href="<?=base_url?>marca/gestion">MARCA</a> </li>
-                                            <li style="width: 80px;"><a href="<?=base_url?>usuario/gestion">USUARIO</a></li>
-                                            <li style="width: 90px;"><a href="<?=base_url?>egreso/gestion">EGRESOS</a></li>
-                                            <li style="width: 90px;"><a href="<?=base_url?>ingreso/gestion">INGRESOS</a></li>
-                                            <li style="width: 90px;"><a href="<?=base_url?>ingreso/gestion">ARQUEO</a></li>
+                                        <ul style="margin-left: -20px;" class="menu-area-main">
+                                            <li style="width: 75px;"><a href="<?=base_url?>ciudad/gestion">CIUDAD</a></li>
+                                            <li style="width: 75px;"><a href="<?=base_url?>tienda/gestion">TIENDA</a></li>
+                                            <li style="width: 80px;"><a href="<?=base_url?>familia/gestion">FAMILIA</a> </li>
+                                            <li style="width: 60px;"><a href="<?=base_url?>linea/gestion">LINEA</a> </li>
+                                            <li style="width: 75px;"><a href="<?=base_url?>marca/gestion">MARCA</a> </li>
+                                            <li style="width: 85px;"><a href="<?=base_url?>usuario/gestion">USUARIO</a></li>
+                                            <li style="width: 95px;"><a href="<?=base_url?>egreso/gestion">EGRESOS</a></li>
+                                            <li style="width: 95px;"><a href="<?=base_url?>ingreso/gestion">INGRESOS</a></li>
+                                            <li style="width: 95px;"><a href="<?=base_url?>arqueo/index">ARQUEO</a></li>
                                         </ul>
                                     <?Php elseif (isset($_SESSION['identity'])): ?>
                                         <ul class="menu-area-main">

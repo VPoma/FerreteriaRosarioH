@@ -147,14 +147,46 @@ Class ingreso{
                 . "INNER JOIN cliente c on c.id = i.id_cliente "
                 . "INNER JOIN cuaderno cu on cu.id = i.id_cuaderno "
                 . "WHERE i.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
-        $egreso = $this->db->query($sql);
-        return $egreso;
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
     }
 
     //Saca la cantidad de lineas - 3Ingreso
     public function getAlltotal(){
-        $egreso  = $this->db->query("SELECT * FROM ingreso WHERE est = 'H'");
-        return $egreso->num_rows;
+        $ingreso  = $this->db->query("SELECT * FROM ingreso WHERE est = 'H'");
+        return $ingreso->num_rows;
+    }
+
+    //Muestra todos los registros de Ingreso para arqueo en base a fecha y turno - 4Ingreso
+    Public function getall_Ari(){
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno' FROM ingreso i "
+                . "INNER JOIN tienda t on t.id = i.id_tienda "
+                . "INNER JOIN cliente c on c.id = i.id_cliente "
+                . "INNER JOIN cuaderno cu on cu.id = i.id_cuaderno "
+                . "WHERE i.fecha = '{$this->getFecha()}' AND i.turno = '{$this->getTurno()}' AND i.est = 'H' ORDER BY id DESC;";
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
+    }
+
+    Public function getall_Ari_in_ef(){
+        $sql = "SELECT ingresos FROM ingreso "
+                . "WHERE tipopago = 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
+    Public function getall_Ari_in_tr(){
+        $sql = "SELECT ingresos FROM ingreso "
+                . "WHERE tipopago = 'TRANSFERENCIA'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
+    Public function getall_Ari_in_deu(){
+        $sql = "SELECT deudas FROM ingreso "
+                . "WHERE fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
     }
 
 

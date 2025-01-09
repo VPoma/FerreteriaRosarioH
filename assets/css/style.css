@@ -2305,6 +2305,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="number"],
+input[type="date"],
 select, textarea{
     display: block;
     width: 95%;
@@ -2317,6 +2318,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="number"],
+input[type="date"],
 select, textarea{
     border: 1px solid #afaeae;
     box-shadow: 0px 0px 2px #b5b5b5 inset;
@@ -2330,6 +2332,7 @@ input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="number"]:focus,
 input[type="email"]:focus,
+input[type="date"]:focus,
 select:focus, textarea:focus{
     border: 1px solid #cd3838;
     color: black;
