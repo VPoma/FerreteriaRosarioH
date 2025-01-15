@@ -7,6 +7,7 @@ class producto{
     private $id_linea;
     private $id_marca;
     private $id_descuento;
+    private $codigo;
     private $nombre;
     private $medida;
     private $cantidad;
@@ -52,6 +53,10 @@ class producto{
 
     function getId_descuento(){
         return $this->id_descuento;
+    }
+
+    function getCodigo(){
+        return $this->codigo;
     }
 
     function getNombre(){
@@ -135,6 +140,10 @@ class producto{
         $this->id_descuento = $id_descuento;
     }
 
+    function setCodigo($codigo){
+        $this->codigo = $this->db->real_escape_string($codigo);
+    }
+
     function setNombre($nombre){
         $this->nombre = $this->db->real_escape_string($nombre);
     }
@@ -202,17 +211,19 @@ class producto{
 
     //Mostrar listado de productos con imagenes (para el carrito) - 1producto
     public function getRandom(){
-        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
+        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca', l.nombre as 'linea' FROM producto p "
+                . "INNER JOIN linea l ON l.id = p.id_linea "        
                 . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE p.est = 'H' ORDER BY p.nombre LIMIT {$this->getOffset()},{$this->getLimite()};";
+                . "WHERE p.est = 'H' ORDER BY CASE WHEN cantidad > 0 THEN 1 ELSE 2 END, p.nombre LIMIT {$this->getOffset()},{$this->getLimite()};";
         $producto = $this->db->query($sql);
         return $producto;
     }
 
     //Mostrar listado de productos con imagenes CON FILTRO (para el carrito) - 2producto
     public function getfillRandom(){
-        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p "
-                . "INNER JOIN marca m ON m.id = p.id_marca INNER JOIN linea l ON l.id = p.id_linea "
+        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca', l.nombre as 'linea' FROM producto p "
+                . "INNER JOIN linea l ON l.id = p.id_linea "
+                . "INNER JOIN marca m ON m.id = p.id_marca "
                 . "WHERE l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
                 . "AND p.nombre like '%{$this->getNombre()}%' AND p.est = 'H' ORDER BY p.nombre;";
         $producto = $this->db->query($sql);
@@ -231,7 +242,7 @@ class producto{
 
     //Guardar Registro de Productos - 4producto
     public function save(){
-        $sql = "INSERT INTO producto VALUES(NULL, {$this->getId_tienda()}, {$this->getId_familia()}, {$this->getId_linea()}, {$this->getId_marca()}, 1, '{$this->getNombre()}', '{$this->getMedida()}', {$this->getCantidad()}, {$this->getPaquete()}, '{$this->getImagen()}', {$this->getPreciob()}, {$this->getPreciof()}, {$this->getPrecioc()}, 'H');";
+        $sql = "INSERT INTO producto VALUES(NULL, {$this->getId_tienda()}, {$this->getId_familia()}, {$this->getId_linea()}, {$this->getId_marca()}, 1, '{$this->getCodigo()}','{$this->getNombre()}', '{$this->getMedida()}', {$this->getCantidad()}, {$this->getPaquete()}, '{$this->getImagen()}', {$this->getPreciob()}, {$this->getPreciof()}, {$this->getPrecioc()}, 'H');";
         $save = $this->db->query($sql);
         $result = false;
         if($save){
@@ -248,7 +259,7 @@ class producto{
                 . "INNER JOIN familia f ON f.id = p.id_familia "
                 . "INNER JOIN linea l ON l.id = p.id_linea "
                 . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE p.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
+                . "WHERE p.est = 'H' ORDER BY CASE WHEN cantidad > 0 THEN 1 ELSE 2 END, p.id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
         $producto = $this->db->query($sql);
         return $producto;
     }

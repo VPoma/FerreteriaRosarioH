@@ -1,6 +1,8 @@
 Tareas:
 
 Pendientes:
+-registrar el Arqueo
+-Dar facilidad para la creación de codigos de productos!!!
 -Añadir 2 filtros y paginadores más.
 -Mejorar botones de interfaz.
 -Añadir los 3 precios al carrito.

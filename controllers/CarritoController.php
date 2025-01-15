@@ -81,8 +81,8 @@ Class carritoController{
         $desc = $descuento->getAllpor();
         $porcent = floatval($desc->porcentaje);
 
-        $preciof = isset($_POST['preciof']) ? $_POST['preciof'] : false;
-        $prec = floatval($preciof);
+        $preciob = isset($_POST['preciob']) ? $_POST['preciob'] : false;
+        $prec = floatval($preciob);
 
         if(isset($_GET['index'])){
             $index = $_GET['index'];
@@ -95,7 +95,7 @@ Class carritoController{
                 $prod = $producto->getOnever();
             }
 
-            $preciobase = floatval($prod->preciof);
+            $preciobase = floatval($prod->preciob);
             $descuent = floatval($preciobase * $porcent);
             $rebaja =  floatval($preciobase - $descuent);
 

@@ -159,8 +159,8 @@
                         <?Php if(isset($_SESSION['admin'])): ?>
                             <h3>Panel Marca de Producto</h3>
 
-                            <li><a class="button separa" href="<?=base_url?>marca/registro">Registrar Linea de Producto</a></li>
-                            <li><a class="button separa" href="<?=base_url?>marca/gestion">Gestión de Linea de Producto</a></li>
+                            <li><a class="button separa" href="<?=base_url?>marca/registro">Registrar Marca de Producto</a></li>
+                            <li><a class="button separa" href="<?=base_url?>marca/gestion">Gestión de Marca de Producto</a></li>
                         <?Php endif;?>
 
                     <?Php elseif( $nombre_controlador == "preciocontroller"): ?>

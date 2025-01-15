@@ -49,6 +49,7 @@
         <?Php else: ?>
             <img src="<?=base_url?>assets/images/ferre.jpg" alt="" />
         <?Php endif; ?>
+        <h4 style="margin-bottom: -20px; margin-top: -20px;"><b><?=$prod->linea?></b></h4>
         <h4 style="margin-bottom: -20px; margin-top: -20px;"><b><?=$prod->marca?></b></h4>
         <h3 style="font-size: 11px; margin-bottom: -10px;"><b><?=$prod->nombre?></b></h3>
         <h4 class="precio" style="margin-bottom: 0px;"><b><?=$prod->medida?></b></h4>

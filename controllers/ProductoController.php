@@ -83,6 +83,7 @@ Class productoController{
             $familia = isset($_POST['familia']) ? $_POST['familia'] : false;
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
+            $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : false;
             $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
             $medida = isset($_POST['medida']) ? $_POST['medida'] : false;
             $cantidad = isset($_POST['cantidad']) ? $_POST['cantidad'] : false;
@@ -98,6 +99,7 @@ Class productoController{
                 $producto->setId_familia($familia);
                 $producto->setId_linea($linea);
                 $producto->setId_marca($marca);
+                $producto->setCodigo($codigo);
                 $producto->setNombre($nombre);
                 $producto->setMedida($medida);
                 $producto->setCantidad($cantidad);

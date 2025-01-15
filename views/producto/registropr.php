@@ -48,6 +48,9 @@
             <?Php endwhile; ?>
         </select>
 
+        <label class="frm" for="codigo">Código de Producto</label>
+        <input type="text" name="codigo" value="<?=isset($pro) && is_object($pro) ? $pro->codigo : ''; ?>" required/>
+
         <label class="frm" for="nombre">Nombre de Producto</label>
         <input type="text" name="nombre" value="<?=isset($pro) && is_object($pro) ? $pro->nombre : ''; ?>" required/>
 

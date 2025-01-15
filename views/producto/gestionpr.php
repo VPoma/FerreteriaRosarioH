@@ -18,25 +18,27 @@
 <table class="tablita">
     <tr>
         <th style="width: 40px;">ID</th>
-        <th style="width: 40px;">TIENDA</th>
+        <th style="width: 40px;">CODIGO</th>
         <th style="width: 40px;">FAMILIA</th>
         <th style="width: 90px;">LINEA</th>
         <th style="width: 90px;">MARCA</th>
         <th style="width: 70px;">NOMBRE</th>
         <th style="width: 70px;">MEDIDA</th>
         <th style="width: 40px;">CANTIDAD</th>
+        <th style="width: 40px;">TIENDA</th>
         <th style="width: 40px;">ACCIONES</th>
     </tr>
     <?Php while($pr = $prod->fetch_object()): ?>
     <tr>
         <td style="width: 40px;"><?=$pr->id?></td>
-        <td style="width: 40px;"><?=$pr->tienda?></td>
+        <td style="width: 40px;"><?=$pr->codigo?></td>
         <td style="width: 90px;"><?=$pr->familia?></td>
         <td style="width: 90px;"><?=$pr->linea?></td>
         <td style="width: 70px;"><?=$pr->marca?></td>
         <td style="width: 70px;"><?=$pr->nombre?></td>
         <td style="width: 70px;"><?=$pr->medida?></td>
         <td style="width: 70px;"><?=$pr->cantidad?></td>
+        <td style="width: 70px;"><?=$pr->tienda?></td>
         <td style="width: 40px;">
             <a href="<?=base_url?>producto/editar&id=<?=$pr->id?>" class="button solid-colort">Editar</a>
             <a href="<?=base_url?>producto/eliminar&id=<?=$pr->id?>" class="button extra-colort">Eliminar</a>

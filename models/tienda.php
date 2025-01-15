@@ -54,9 +54,17 @@ Class tienda{
 
     //Consultas
 
-    //Mostrar todos los registros de la tabla
+    //Mostrar todos los registros de la tabla Tienda - NO BORRAR ESTE COMENTARIO
+    //SERVIRA CUANDO SE MIGRE E INTEGRE EL SISTEMA EN LA WEB!
+    /*
     public function getAll(){
         $tienda = $this->db->query("SELECT * FROM tienda WHERE est = 'H' ORDER BY id DESC;");
+        return $tienda;
+    }
+    */
+    //Mostrar solo la tienda "Azapampa"
+    public function getAll(){
+        $tienda = $this->db->query("SELECT * FROM tienda WHERE id = '1';");
         return $tienda;
     }
 

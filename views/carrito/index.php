@@ -31,7 +31,7 @@
             <td>
                 <form action="<?=base_url?>carrito/cantipreci&index=<?=$indice?>" method="POST" enctype="multipart/form-data">
                 <div class="updown-unidades">
-                    <input class="number" type=numberb step="0.01" name="preciof" value="<?=$elemento['precio']?>" required/>
+                    <input class="number" type=numberb step="0.01" name="preciob" value="<?=$elemento['precio']?>" required/>
                 </div>
             </td>
             <td>
