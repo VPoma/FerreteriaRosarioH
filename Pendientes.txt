@@ -1,13 +1,24 @@
 Tareas:
 
 Pendientes:
--registrar el Arqueo
+
+-registrar el Arqueo(Carga el monto que quedo en caja el día de ayer) Se retiro el monto-opción.
+-GENERAR REPORTES Y ESTADISTICOS.
 -Dar facilidad para la creación de codigos de productos!!!
 -Añadir 2 filtros y paginadores más.
 -Mejorar botones de interfaz.
 -Añadir los 3 precios al carrito.
 
 Culminadas:
+-Mostrar las canidades con decimales solo si se tienen, si no mostrar valor redondeado(LISTO).
+-Aumentar Filtros en los precios(LISTO).
+-Listar las cantidades de productos(LISTO).
+-EL precio para la venta debe aumentar un porcentaje(LISTO).
+-Permitir ingresar cantidades de producto en decimal (productos que se venden por kilo)(LISTO).
+-Aumentar Flitros en la gestion de productos(LISTO).
+-Aumente un poco de estilos (Tienda Azapampa)(LISTO).
+-habilitado pago total en una menta (para redondeos)(LISTO).
+-habilitado modulo de egreso para usuario vendedor(LISTO).
 -Realizar Modulo de Arqueo de Ingresos (Revisar Requerimientos)(LISTO).
 -Modulo de Ingresos (LISTO).
 -Modulo de Egresos (LISTO).

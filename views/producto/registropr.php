@@ -58,16 +58,16 @@
         <input type="text" name="medida" value="<?=isset($pro) && is_object($pro) ? $pro->medida : ''; ?>" required/>
 
         <label class="frm" for="cantidad">Cantidad Unidades</label>
-        <input type="number" name="cantidad" value="<?=isset($pro) && is_object($pro) ? $pro->cantidad : ''; ?>" required/>
+        <input type="number" step="0.01" name="cantidad" value="<?=isset($pro) && is_object($pro) ? $pro->cantidad : ''; ?>" required/>
 
         <label class="frm" for="preciob">Precio Basico</label>
-        <input type="number" step="any" name="preciob" value="<?=isset($pro) && is_object($pro) ? $pro->preciob : '0'; ?>" required/>
+        <input type="number" step="0.01" name="preciob" value="<?=isset($pro) && is_object($pro) ? $pro->preciob : '0'; ?>" required/>
 
         <label class="frm" for="preciof">Precio Ferretera</label>
-        <input type="number" step="any" name="preciof" value="<?=isset($pro) && is_object($pro) ? $pro->preciof : '0'; ?>" required/>
+        <input type="number" step="0.01" name="preciof" value="<?=isset($pro) && is_object($pro) ? $pro->preciof : '0'; ?>" required/>
 
         <label class="frm" for="precioc">Precio Costo</label>
-        <input type="number" step="any" name="precioc" value="<?=isset($pro) && is_object($pro) ? $pro->precioc : '0'; ?>" required/>
+        <input type="number" step="0.01" name="precioc" value="<?=isset($pro) && is_object($pro) ? $pro->precioc : '0'; ?>" required/>
 
         <label class="frm" for="paquete">Paquete</label>
         <input type="number" name="paquete" value="<?=isset($pro) && is_object($pro) ? $pro->paquete : '0'; ?>" required/>

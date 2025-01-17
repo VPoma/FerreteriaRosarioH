@@ -9,11 +9,14 @@
             <?Php endif; ?>
         </div>
         <div class="data">
-            <h2 style="text-align: left; margin-left:-20px; margin-top:15px;"><?=$product->linea?></h2>
-            <h3 style="text-align: left; margin-left:-20px; margin-top:-40px;">Marca: <?=$product->marca?></h3>
-            <p class="price" style="margin-top:-20px;"><b>S/. <?=$product->preciof?></b></p>
+            <h2 style="text-align: left; margin-left:-20px; margin-top:15px;">LINEA: <?=$product->linea?></h2>
+            <h3 style="text-align: left; margin-left:-20px; margin-top:-40px;">MARCA: <?=$product->marca?></h3>
+            <p class="price" style="margin-top:-20px;"><b>PRECIO: S/. <?=$product->preciob?></b></p>
+            <p class="price" style="margin-top:5px;"><b>STOCK: <?=$product->cantidad?></b></p>
             <br>
             <a href="<?=base_url?>carrito/add&id=<?=$product->id?>" class="button blista">Comprar</a>
+            <br><br><br><br><br><br>
+            <a href="<?=base_url?>producto/index" class="button extrae-colort" style="width:200px;" >Regresar</a>
         </div>
     </div>
 <?Php else: ?>

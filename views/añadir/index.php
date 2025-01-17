@@ -38,12 +38,12 @@ die;
             <td>
                 <form action="<?=base_url?>añadir/cantipreci&index=<?=$indice?>" method="POST" enctype="multipart/form-data">
                 <div class="updown-unidades">
-                    <input class="number" type=numberb step="0.01" name="preciof" value="<?=$element['precio']?>" required/>
+                    <input class="number" type="number" step="0.01" name="preciof" value="<?=$element['precio']?>" required/>
                 </div>
             </td>
             <td>
                 <div class="updown-unidades">
-                    <input class="numberC" type=number step=any name="unidades" value="<?=$element['unidades']?>" required/>
+                    <input class="numberC" type="number" step=any name="unidades" value="<?=$element['unidades']?>" required/>
                     <a href="<?=base_url?>añadir/up&index=<?=$indice?>" method="POST" class="button">+</a>
                     <a href="<?=base_url?>añadir/down&index=<?=$indice?>" class="button">-</a>
                 </div>

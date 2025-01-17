@@ -44,7 +44,7 @@ class AñadirController{
                 $_SESSION['añadir'][] = array(
                     "id_producto" => $producto->id,
                     "precio" => 0,
-                    "unidades" => 1,
+                    "unidades" => floatval(1.00),
                     "producto" => $producto
                 );
 
@@ -64,7 +64,7 @@ class AñadirController{
 
     public function cantipreci(){
         $unidades = isset($_POST['unidades']) ? $_POST['unidades'] : false;
-        $unid = intval($unidades);
+        $unid = floatval($unidades);
 
         //unidades
         if(isset($_GET['index'])){

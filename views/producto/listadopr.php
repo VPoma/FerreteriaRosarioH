@@ -3,20 +3,32 @@
 <form action="<?=base_url?>producto/filtroindex" method="POST" enctype="multipart/form-data">
     <table style="width: 75%; text-align: left; border: none;">
         <tr>
-            <th style="width:250px;">
-            <label class="frm" for="linea">Linea de Producto</label>
-            <?Php $lineas = utils::showLinea(); ?>
-            <select name="linea" id="">
-                <option value="">Seleccionar</option>
-                <?Php while($lin = $lineas->fetch_object()): ?>
-                    <option value="<?=$lin->nombre?>">
-                        <?=$lin->nombre?>
-                    </option>
-                <?Php endwhile; ?>
-            </select>
+            <th style="width:200px;">
+            <label class="frm" for="familia">Familia</label>
+                <?Php $familias = utils::showFamilia(); ?>
+                <select name="familia" id="">
+                    <option value="">Seleccionar</option>
+                    <?Php while($fam = $familias->fetch_object()): ?>
+                        <option value="<?=$fam->nombre?>">
+                            <?=$fam->nombre?>
+                        </option>
+                    <?Php endwhile; ?>
+                </select>
             </th>
-            <th style="width:250px;">
-                <label class="frm" for="marca">Marca de Producto</label>
+            <th style="width:200px;">
+                <label class="frm" for="linea">Linea</label>
+                <?Php $lineas = utils::showLinea(); ?>
+                <select name="linea" id="">
+                    <option value="">Seleccionar</option>
+                    <?Php while($lin = $lineas->fetch_object()): ?>
+                        <option value="<?=$lin->nombre?>">
+                            <?=$lin->nombre?>
+                        </option>
+                    <?Php endwhile; ?>
+                </select>
+            </th>
+            <th style="width:200px;">
+                <label class="frm" for="marca">Marca</label>
                 <?Php $marcas = utils::showMarca(); ?>
                 <select name="marca" id="">
                     <option value="">Seleccionar</option>
@@ -27,9 +39,9 @@
                     <?Php endwhile; ?>
                 </select>
             </th>
-            <th style="width:250px;">
-                <label class="frm" style="margin-left:10%;" for="nombre">Producto</label>
-                <input style="margin-left:10%; width:200px;" type="text"  name="nombre" class="fildt"/>
+            <th style="width:200px;">
+                <label class="frm" style="margin-left:5%;" for="nombre">Producto</label>
+                <input style="margin-left:5%; width:150px;" type="text"  name="nombre" class="fildt"/>
             </th>
             <th>
             <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
@@ -55,6 +67,18 @@
         <h4 class="precio" style="margin-bottom: 0px;"><b><?=$prod->medida?></b></h4>
     </a>
     <p style="margin-bottom: 10px;">S/. <?=$prod->precio?></p>
+    <?Php
+        $unidades = $prod->cantidad;
+        // Verifica si el número tiene decimales
+        if (floor($unidades) == $unidades){
+            // Si no tiene decimales, muestra el número sin decimales
+            $cantidad = number_format($unidades, 0);
+        }else{
+            // Si tiene decimales, muestra el número con dos decimales
+            $cantidad = number_format($unidades, 2);
+        }
+    ?>
+    <p>Stock: <?=$cantidad?></p>
     <a href="<?=base_url?>carrito/add&id=<?=$prod->id?>" class="button blista">Agregar</a>
 </div>
 <?Php endwhile; ?>

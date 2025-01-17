@@ -23,7 +23,7 @@ Class carritoController{
         }
 
         if(isset($_SESSION['carrito'])){
-            $counter = 0;
+            $counter = 0.0;
             foreach($_SESSION['carrito'] as $indice => $elemento){
                 if($elemento['id_producto'] == $producto_id){
                     $_SESSION['carrito'][$indice]['unidades']++;
@@ -45,7 +45,7 @@ Class carritoController{
                 $_SESSION['carrito'][] = array(
                     "id_producto" => $producto->id,
                     "precio" => $producto->preciob,
-                    "unidades" => 1,
+                    "unidades" => floatval(1.00),
                     "producto" => $producto
                 );
 
@@ -65,7 +65,7 @@ Class carritoController{
 
     public function cantipreci(){
         $unidades = isset($_POST['unidades']) ? $_POST['unidades'] : false;
-        $unid = intval($unidades);
+        $unid = floatval($unidades);
 
         if(isset($_GET['index'])){
             $index = $_GET['index'];
@@ -98,8 +98,9 @@ Class carritoController{
             $preciobase = floatval($prod->preciob);
             $descuent = floatval($preciobase * $porcent);
             $rebaja =  floatval($preciobase - $descuent);
+            $aument = floatval($preciobase + $descuent);
 
-            if($rebaja <= $prec && $prec <= $preciobase){
+            if($rebaja <= $prec && $prec <= $aument){
                 $_SESSION['carrito'][$index]['precio'] = $prec;
             }else{
                 $_SESSION['carrito'][$index]['precio'] = $preciobase;

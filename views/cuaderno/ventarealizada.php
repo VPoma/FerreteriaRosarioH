@@ -31,7 +31,9 @@
             <table>
                 <tr>
                     <th>Imagen</th>
+                    <th>Marca</th>
                     <th>Nombre</th>
+                    <th>Medida</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
                 </tr>

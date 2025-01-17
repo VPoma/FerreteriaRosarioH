@@ -22,6 +22,7 @@ class producto{
     private $offset;
     //
     //Filtro
+    private $familia;
     private $linea;
     private $marca;
     //
@@ -107,6 +108,10 @@ class producto{
     //
 
     //Filtro
+    function getFamilia(){
+        return $this->familia;
+    }
+
     function getLinea(){
         return $this->linea;
     }
@@ -191,6 +196,10 @@ class producto{
     //
     
     //Filtro
+    function setFamilia($familia){
+        $this->familia = $familia;
+    }
+
     function setLinea($linea){
         $this->linea = $linea;
     }
@@ -211,7 +220,7 @@ class producto{
 
     //Mostrar listado de productos con imagenes (para el carrito) - 1producto
     public function getRandom(){
-        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca', l.nombre as 'linea' FROM producto p "
+        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', p.cantidad, m.nombre as 'marca', l.nombre as 'linea' FROM producto p "
                 . "INNER JOIN linea l ON l.id = p.id_linea "        
                 . "INNER JOIN marca m ON m.id = p.id_marca "
                 . "WHERE p.est = 'H' ORDER BY CASE WHEN cantidad > 0 THEN 1 ELSE 2 END, p.nombre LIMIT {$this->getOffset()},{$this->getLimite()};";
@@ -221,10 +230,11 @@ class producto{
 
     //Mostrar listado de productos con imagenes CON FILTRO (para el carrito) - 2producto
     public function getfillRandom(){
-        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca', l.nombre as 'linea' FROM producto p "
+        $sql = "SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', p.cantidad, m.nombre as 'marca', l.nombre as 'linea' FROM producto p "
+                . "INNER JOIN familia f ON f.id= p.id_familia "
                 . "INNER JOIN linea l ON l.id = p.id_linea "
                 . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
+                . "WHERE f.nombre like '%{$this->getfamilia()}%' AND l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
                 . "AND p.nombre like '%{$this->getNombre()}%' AND p.est = 'H' ORDER BY p.nombre;";
         $producto = $this->db->query($sql);
         return $producto;
@@ -232,7 +242,7 @@ class producto{
 
     //MOSTRAR PRODUCTO UNITARIAMENTE - 3producto
     public function getOnever(){
-        $sql = "SELECT p.id, p.nombre, p.medida, p.imagen, p.preciof, p.preciob, p.precioc, l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
+        $sql = "SELECT p.id, p.nombre, p.medida, p.imagen, p.preciob, p.cantidad, l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
                 . "INNER JOIN linea l ON l.id = p.id_linea "
                 . "INNER JOIN marca m ON m.id = p.id_marca "
                 . "WHERE p.id = {$this->getId()};";
@@ -259,7 +269,7 @@ class producto{
                 . "INNER JOIN familia f ON f.id = p.id_familia "
                 . "INNER JOIN linea l ON l.id = p.id_linea "
                 . "INNER JOIN marca m ON m.id = p.id_marca "
-                . "WHERE p.est = 'H' ORDER BY CASE WHEN cantidad > 0 THEN 1 ELSE 2 END, p.id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
+                . "WHERE p.est = 'H' ORDER BY p.id LIMIT {$this->getOffset()},{$this->getLimite()};";
         $producto = $this->db->query($sql);
         return $producto;
     }
@@ -349,7 +359,7 @@ class producto{
     //Muestra Tabla de Precios de productos - 12producto
     public function gettablaprecio(){
         $sql = "SELECT po.id, m.nombre as 'marca', l.nombre as 'linea', po.nombre, po.medida, po.preciob, po.preciof, po.precioc FROM producto po "
-                . "INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE po.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
+                . "INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE po.est = 'H' ORDER BY id LIMIT {$this->getOffset()},{$this->getLimite()};";
         $producto = $this->db->query($sql);
         return $producto;
     }
@@ -357,7 +367,11 @@ class producto{
     //Muestra Tabla de Precios de productos FILTRO - 13producto
     public function gettablapreciofill(){
         $sql = "SELECT po.id, m.nombre as 'marca', l.nombre as 'linea',po.nombre, po.preciob, po.medida, po.preciof, po.precioc FROM producto po "
-                . "INNER JOIN marca m ON m.id = po.id_marca INNER JOIN linea l ON l.id = po.id_linea WHERE m.nombre like '%{$this->getMarca()}%' AND po.est = 'H' ORDER BY id DESC;";
+                . "INNER JOIN familia f ON f.id= po.id_familia "
+                . "INNER JOIN linea l ON l.id = po.id_linea "
+                . "INNER JOIN marca m ON m.id = po.id_marca "
+                . "WHERE f.nombre like '%{$this->getfamilia()}%' AND l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
+                . "AND po.nombre like '%{$this->getNombre()}%' AND po.est = 'H' ORDER BY po.nombre;";
         $producto = $this->db->query($sql);
         return $producto;
     }
@@ -398,6 +412,19 @@ class producto{
     public function getOne(){
         $producto = $this->db->query("SELECT * FROM producto WHERE id = {$this->getId()} ORDER BY id DESC;");
         return $producto->fetch_object();
+    }
+
+    //MUESTRA TODOS LOS REGISTROS CON FILTRO - LISTADO - 18producto
+    public function getAllfiltro(){
+        $sql = "SELECT p.*, t.nombre as 'tienda', f.nombre as 'familia', l.nombre as 'linea', m.nombre as 'marca' FROM producto p "
+                . "INNER JOIN tienda t ON t.id = p.id_tienda "
+                . "INNER JOIN familia f ON f.id = p.id_familia "
+                . "INNER JOIN linea l ON l.id = p.id_linea "
+                . "INNER JOIN marca m ON m.id = p.id_marca "
+                . "WHERE f.nombre like '%{$this->getfamilia()}%' AND l.nombre like '%{$this->getLinea()}%' AND m.nombre like '%{$this->getMarca()}%' "
+                . "AND p.nombre like '%{$this->getNombre()}%' AND p.est = 'H' ORDER BY p.id;";
+        $producto = $this->db->query($sql);
+        return $producto;
     }
 
     ////

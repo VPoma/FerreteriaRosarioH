@@ -32,18 +32,20 @@ Class productoController{
     //Mostrar listado de productos con imagenes CON FILTRO (para el carrito) - 2producto
     public function filtroindex(){
         if(isset($_POST)){
+            $familia = isset($_POST['familia']) ? $_POST['familia'] : false;
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
             $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
 
             $producto = new producto();
 
-            if(strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
+            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
                 
                 echo '<script>window.location="'.base_url.'producto/index"</script>';
 
             }else{
 
+            $producto->setFamilia($familia);
             $producto->setLinea($linea); 
             $producto->setMarca($marca);
             $producto->setNombre($nombre);
@@ -102,7 +104,7 @@ Class productoController{
                 $producto->setCodigo($codigo);
                 $producto->setNombre($nombre);
                 $producto->setMedida($medida);
-                $producto->setCantidad($cantidad);
+                $producto->setCantidad(floatval($cantidad));
                 $producto->setPaquete($paquete);
                 $producto->setPreciob($preciob);
                 $producto->setPreciof($preciof);
@@ -173,6 +175,35 @@ Class productoController{
 
         $totalP = ceil($total/$limite);
         $totalPag = $totalP;
+
+        require_once 'views/producto/gestionpr.php';
+    }
+
+    public function filtrogestion(){
+        if(isset($_POST)){
+            $familia = isset($_POST['familia']) ? $_POST['familia'] : false;
+            $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
+            $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
+            $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
+
+            $producto = new producto();
+
+            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
+                
+                echo '<script>window.location="'.base_url.'producto/gestion"</script>';
+
+            }else{
+
+            $producto->setFamilia($familia);
+            $producto->setLinea($linea); 
+            $producto->setMarca($marca);
+            $producto->setNombre($nombre);
+            //MUESTRA TODOS LOS REGISTROS CON FILTRO - LISTADO - 18producto
+            $prod = $producto->getAllfiltro();
+
+            }
+
+        }
 
         require_once 'views/producto/gestionpr.php';
     }

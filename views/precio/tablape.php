@@ -3,17 +3,45 @@
 <form action="<?=base_url?>precio/filtrotabla" method="POST" enctype="multipart/form-data">
     <table style="width: 75%; text-align: left; border: none;">
         <tr>
-            <th style="width:250px;">
-                <label class="frm" for="marca">Marca de Producto</label>
+            <th style="width:200px;">
+            <label class="frm" for="familia">Familia</label>
+                <?Php $familias = utils::showFamilia(); ?>
+                <select name="familia" id="">
+                    <option value="">Seleccionar</option>
+                    <?Php while($fam = $familias->fetch_object()): ?>
+                        <option value="<?=$fam->nombre?>">
+                            <?=$fam->nombre?>
+                        </option>
+                    <?Php endwhile; ?>
+                </select>
+            </th>
+            <th style="width:200px;">
+                <label class="frm" for="linea">Linea</label>
+                <?Php $lineas = utils::showLinea(); ?>
+                <select name="linea" id="">
+                    <option value="">Seleccionar</option>
+                    <?Php while($lin = $lineas->fetch_object()): ?>
+                        <option value="<?=$lin->nombre?>">
+                            <?=$lin->nombre?>
+                        </option>
+                    <?Php endwhile; ?>
+                </select>
+            </th>
+            <th style="width:200px;">
+                <label class="frm" for="marca">Marca</label>
                 <?Php $marcas = utils::showMarca(); ?>
-                    <select name="marca" id="">
-                        <option value="">Seleccionar</option>
-                        <?Php while($mar = $marcas->fetch_object()): ?>
-                            <option value="<?=$mar->nombre?>">
-                                <?=$mar->nombre?>
-                            </option>
-                        <?Php endwhile; ?>
-                    </select>
+                <select name="marca" id="">
+                    <option value="">Seleccionar</option>
+                    <?Php while($mar = $marcas->fetch_object()): ?>
+                        <option value="<?=$mar->nombre?>">
+                            <?=$mar->nombre?>
+                        </option>
+                    <?Php endwhile; ?>
+                </select>
+            </th>
+            <th style="width:200px;">
+                <label class="frm" style="margin-left:5%;" for="nombre">Producto</label>
+                <input style="margin-left:5%; width:150px;" type="text"  name="nombre" class="fildt"/>
             </th>
             <th>
             <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
@@ -23,7 +51,6 @@
         </tr>
     </table>
 </form>
-
 <br>
 
 <?Php if(isset($_SESSION['register']) && $_SESSION['register'] == 'complete'): ?>
@@ -55,15 +82,15 @@
     </tr>
     <?Php while($pr = $prec->fetch_object()): ?>
     <tr>
-        <td style="width: 20px;"><?=$pr->id?></td>
-        <td style="width: 40px;"><?=$pr->marca?></td>
-        <td style="width: 40px;"><?=$pr->nombre?></td>
-        <td style="width: 40px;"><?=$pr->medida?></td>
-        <td style="width: 40px;"><?=$pr->preciob?></td>
+        <td><?=$pr->id?></td>
+        <td><?=$pr->marca?></td>
+        <td><?=$pr->nombre?></td>
+        <td><?=$pr->medida?></td>
+        <td><b><?=$pr->preciob?></b></td>
         <?Php if(isset($_SESSION['admin'])): ?>
-        <td style="width: 40px;"><?=$pr->preciof?></td>
-        <td style="width: 40px;"><?=$pr->precioc?></td>
-        <td style="width: 40px;">
+        <td><?=$pr->preciof?></td>
+        <td><?=$pr->precioc?></td>
+        <td>
             <a href="<?=base_url?>precio/editar&id=<?=$pr->id?>" class="button solid-colort">E. Precio</a>
         </td>
         <?Php endif;?>

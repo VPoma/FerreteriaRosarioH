@@ -99,9 +99,8 @@ Class cuadernoController{
             $situacion = isset($_POST['situacion']) ? $_POST['situacion'] : false;
             $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
             $tipopago = isset($_POST['tipopago']) ? $_POST['tipopago'] : false;
+            $total = isset($_POST['total']) ? $_POST['total'] : false;
             $cero = 00.00;
-            $stats = utils::statsCarrito();
-            $total = $stats['total'];
 
             if($tienda && $usuario && $cliente && $total){
                 //Guardar Cuaderno
@@ -163,7 +162,7 @@ Class cuadernoController{
                 date_default_timezone_set('America/Lima');
                 $horaturno = (int)date("H");
 
-                if ($horaturno >= 7 && $horaturno < 13) {
+                if ($horaturno >= 7 && $horaturno < 14) {
                     $turno = "MAÑANA";
                 } elseif ($horaturno >= 14 && $horaturno < 18) {
                     $turno = "TARDE";

@@ -1,33 +1,4 @@
-<h1>Gestión de Precios de Fierro Soles</h1>
-
-<form action="<?=base_url?>precio/delete" method="POST" enctype="multipart/form-data">
-    <table style="width: 75%; text-align: left; border: none;">
-        <tr>
-            <th style="width:250px;">
-                <label class="frm" style="margin-left:10%;" for="tipocam">Eliminar Precios por Fecha</label>
-                <input class="frm" style="margin-left:10%; margin-top:-4%; width:200px;" type="date"  name="fecha" class="fildt"/>
-            </th>
-            <th style="width:250px;">
-                <label class="frm" for="marca">Marca de Producto</label>
-                <?Php $marcas = utils::showMarcaFi(); ?>
-                    <select name="marca" id="">
-                        <?Php while($mar = $marcas->fetch_object()): ?>
-                            <option value="<?=$mar->id?>">
-                                <?=$mar->nombre?>
-                            </option>
-                        <?Php endwhile; ?>
-                    </select>
-            </th>
-            <th>
-                <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
-                    <input type="submit" value="Eliminar" class="button extrae-colort">
-                </div>
-            </th>
-        </tr>
-    </table>
-</form>
-
-<br><br>
+<h1>Precios de Fierro en Soles</h1>
 
 <?Php if(isset($_SESSION['register']) && $_SESSION['register'] == 'complete'): ?>
     <strong class="alert_green">Registro ingresado/modificado Correctamente</strong>
@@ -85,3 +56,32 @@
         </td>
     </tr>
 </table>
+
+
+
+<form action="<?=base_url?>precio/delete" method="POST" enctype="multipart/form-data">
+    <table style="width: 75%; text-align: left; border: none;">
+        <tr>
+            <th style="width:250px;">
+                <label class="frm" style="margin-left:10%;" for="tipocam">Eliminar Precios por Fecha</label>
+                <input class="frm" style="margin-left:10%; margin-top:-4%; width:200px;" type="date"  name="fecha" class="fildt"/>
+            </th>
+            <th style="width:250px;">
+                <label class="frm" for="marca">Marca de Producto</label>
+                <?Php $marcas = utils::showMarcaFi(); ?>
+                    <select name="marca" id="">
+                        <?Php while($mar = $marcas->fetch_object()): ?>
+                            <option value="<?=$mar->id?>">
+                                <?=$mar->nombre?>
+                            </option>
+                        <?Php endwhile; ?>
+                    </select>
+            </th>
+            <th>
+                <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
+                    <input type="submit" value="Eliminar" class="button extrae-colort">
+                </div>
+            </th>
+        </tr>
+    </table>
+</form>

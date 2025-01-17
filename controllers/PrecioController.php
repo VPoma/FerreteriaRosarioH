@@ -133,16 +133,21 @@ class precioController{
 
     public function filtrotabla(){
         if(isset($_POST)){
+            $familia = isset($_POST['familia']) ? $_POST['familia'] : false;
+            $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
+            $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
 
             $precio = new producto();
 
             //Muestra Tabla de Precios de productos FILTRO - 13producto
-            if(strlen(trim($marca)) == 0){
-
+            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
                 echo '<script>window.location="'.base_url.'precio/tabla"</script>';
             }else{
-            $precio->setmarca($marca); 
+            $precio->setFamilia($familia);
+            $precio->setLinea($linea); 
+            $precio->setMarca($marca);
+            $precio->setNombre($nombre);
             $prec = $precio->gettablapreciofill();
             
             }

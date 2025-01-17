@@ -30,11 +30,11 @@
         <?Php $total = number_format($a, 2)?>
 
         <label class="frm"  for="total">Total</label>
-        <input type="text" value="<?=$total?>" readonly/>
+        <input type="text" value="<?=$total?>" name="total" />
 
         <label class="frm"  for="situacion">Situación</label>
         <select name="situacion" id="opcion" onchange="actualizarEstado()">
-            <option value="POR COBRAR">Por Cobrar</option>
+            <option value="POR COBRAR">Por Cobrar - ORDEN</option>
             <option value="A CUENTA">A cuenta</option>
             <option value="CANCELADO">Cancelado</option>
         </select>

@@ -58,8 +58,8 @@
                         <?Php if(isset($_SESSION['admin'])): ?>
                             <h3>Panel Producto</h3>
 
+                            <li><a class="button separa" href="<?=base_url?>producto/gestion">Gestión de Productos (CANTIDAD)</a></li>
                             <li><a class="button separa" href="<?=base_url?>producto/registro">Registrar Producto</a></li>
-                            <li><a class="button separa" href="<?=base_url?>producto/gestion">Gestión de Productos</a></li>
                         <?Php endif;?>
 
                     <?Php elseif( $nombre_controlador == "cuadernocontroller"): ?>
@@ -166,7 +166,7 @@
                     <?Php elseif( $nombre_controlador == "preciocontroller"): ?>
 
                         <?Php if(isset($_SESSION['admin'])): ?>
-                            <h3>Panel Marca de Producto</h3>
+                            <h3>Panel Precio de Producto</h3>
 
                             <li><a class="button separa" href="<?=base_url?>precio/tabla">Tabla de Precios</a></li>
                             <li><a class="button separa" href="<?=base_url?>precio/registro">Actualizar Precio Fierro</a></li>
@@ -177,7 +177,7 @@
                     <?Php elseif( $nombre_controlador == "descuentocontroller"): ?>
 
                         <?Php if(isset($_SESSION['admin'])): ?>
-                            <h3>Panel Marca de Producto</h3>
+                            <h3>Panel Descuento de Producto</h3>
 
                             <li><a class="button separa" href="<?=base_url?>precio/tabla">Tabla de Precios</a></li>
                             <li><a class="button separa" href="<?=base_url?>precio/registro">Actualizar Precio Fierro</a></li>
@@ -187,12 +187,10 @@
 
                     <?Php elseif( $nombre_controlador == "egresocontroller"): ?>
 
-                        <?Php if(isset($_SESSION['admin'])): ?>
                             <h3>Panel Egresos</h3>
 
                             <li><a class="button separa" href="<?=base_url?>egreso/registro">Registrar Egreso de Caja Chica</a></li>
                             <li><a class="button separa" href="<?=base_url?>egreso/gestion">Gestión Egresos de Caja Chica</a></li>
-                        <?Php endif;?>
 
                     <?Php elseif( $nombre_controlador == "ingresocontroller"): ?>
 

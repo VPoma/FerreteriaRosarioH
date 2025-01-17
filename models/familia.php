@@ -38,7 +38,7 @@ class familia{
 
     //Mostrar todos los registros de la tabla
     public function getAll(){
-        $familia = $this->db->query("SELECT * FROM familia WHERE est = 'H' ORDER BY id DESC;");
+        $familia = $this->db->query("SELECT * FROM familia WHERE est = 'H' ORDER BY nombre;");
         return $familia;
     }
 

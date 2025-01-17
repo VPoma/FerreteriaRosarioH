@@ -33,24 +33,26 @@
 
 <table class="tablita">
     <tr>
-        <th>N°</th>
-        <th>Doc</th>
-        <th style="width: 200px;">CLIENTE</th>
-        <th>TOTAL</th>
-        <th>ESTADO</th>
-        <th>SITUACIÓN</th>
-        <th style="width: 100px;">FECHA</th>
+        <th style="width: 20px;">N°</th>
+        <th style="width: 90px;">FECHA</th>
+        <th style="width: 60px;">Doc</th>
+        <th style="width: 100px;">CLIENTE</th>
+        <th style="width: 60px;">TOTAL</th>
+        <th style="width: 90px;">SITUACIÓN</th>
+        <th style="width: 90px;">ESTADO</th>
+        <th style="width: 150px;">OBSERVACIÓN</th>
         <th style="width: 104px;">ACCIÓN</th>
     </tr>
     <?Php while($cu = $cuad->fetch_object()): ?>
     <tr>
         <td><?=$cu->id?></td>
+        <td><?=$cu->fecha?></td>
         <td><?=$cu->numdoc?></td>
         <td><?=$cu->nombrecom?></td>
         <td><?=$cu->total?></td>
-        <td><?=$cu->estado?></td>
         <td><?=$cu->situacion?></td>
-        <td><?=$cu->fecha?></td>
+        <td><?=$cu->estado?></td>
+        <td><?=$cu->descripcion?></td>
         <td>
             <a style="width: 85px;" href="<?=base_url?>cuaderno/detalle&id=<?=$cu->id?>" class="button solid-colort">Detalle</a>
         </td>

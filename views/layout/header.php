@@ -96,11 +96,14 @@
                                         </ul>
                                     <?Php elseif (isset($_SESSION['identity'])): ?>
                                         <ul class="menu-area-main">
-                                            <li class="active"><a href="<?=base_url?>">INICIO</a> </li>
-                                            <li><a href="<?=base_url?>producto/index">PRODUCTOS</a></li>
-                                            <li><a href="<?=base_url?>precio/tabla">PRECIO</a></li>
-                                            <li><a href="<?=base_url?>cuaderno/registroscuaderno">CUADERNO</a></li>
-                                            <li><a href="<?=base_url?>cliente/gestion">CLIENTES</a> </li>
+                                            <li class="active" style="width: 60px;"><a href="<?=base_url?>">INICIO</a> </li>
+                                            <li style="width: 110px;"><a href="<?=base_url?>producto/index">PRODUCTOS</a></li>
+                                            <li style="width: 70px;"><a href="<?=base_url?>precio/tabla">PRECIO</a></li>
+                                            <li style="width: 100px;"><a href="<?=base_url?>cuaderno/registroscuaderno">CUADERNO</a></li>
+                                            <li style="width: 80px;"><a href="<?=base_url?>cliente/gestion">CLIENTES</a> </li>
+                                            <li style="width: 80px;"><a href="<?=base_url?>egreso/gestion">EGRESOS</a></li>
+                                            <li style="width: 85px;"><a href="<?=base_url?>ingreso/gestion">INGRESOS</a></li>
+                                            <li style="width: 90px;"><a href="<?=base_url?>arqueo/index">ARQUEO</a></li>
                                             <li><a href="<?=base_url?>usuario/logini"><?=$_SESSION['identity']->usuariof?></a> </li>
                                         </ul>
                                     <?Php else: ?>
