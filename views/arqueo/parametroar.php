@@ -1,6 +1,6 @@
 <h1>Generar Arqueo</h1>
 
-<form action="<?=base_url?>arqueo/gestion" method="POST" enctype="multipart/form-data">
+<form action="<?=base_url?>arqueo/arqueodiario" method="POST" enctype="multipart/form-data">
 
     <h2>Parametros:</h2>
 
@@ -18,8 +18,16 @@
                 </select>
             </th>
             <th style="width: 150px;">
+                <label class="frm" for="mic">Monto Inicial de Caja</label>
+                <input class="number" type="number" step="0.01" name="mic" value="0.00" required/>
+            </th>
+        </tr>
+        <tr>
+            <th></th>
+            <th style="width: 150px;">
                 <input type="submit" value="Generar Arqueo" name="arqueo"/>
             </th>
+            <th></th>
         </tr>
     </table>
 </form>

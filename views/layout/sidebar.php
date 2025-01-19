@@ -205,7 +205,8 @@
                         <?Php if(isset($_SESSION['admin'])): ?>
                             <h3>Panel Arqueo</h3>
 
-                            <li><a class="button separa" href="<?=base_url?>arqueo/index">Generar Arqueo de Caja Chica</a></li>
+                            <li><a class="button separa" href="<?=base_url?>arqueo/index">Registro Arqueo de Caja Chica</a></li>
+                            <li><a class="button separa" href="<?=base_url?>arqueo/gestion">Gestión Arqueo de Caja Chica</a></li>
                         <?Php endif;?>
                         
                     <?Php else: ?>

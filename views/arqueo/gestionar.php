@@ -1,119 +1,61 @@
-<h1>Arqueo de Caja</h1>
+<h1>Registro de Arqueo de Caja de Chica</h1>
 
-<table class="tablita" style="margin-left:10%;">
-    <tr>
-        <th colspan="9" style="font-size: 20px;">INGRESOS</th>
-    </tr>
+<?Php if(isset($_SESSION['register']) && $_SESSION['register'] == 'complete'): ?>
+    <strong class="alert_green">Registro ingresado/modificado Correctamente</strong>
+<?Php elseif(isset($_SESSION['register']) && $_SESSION['register'] != 'complete'): ?>
+    <strong class="alert_red">Error: Introduce bien los datos</strong>
+<?Php endif; ?>
+<?Php Utils::deleteSession('register');?>
+
+<?Php if(isset($_SESSION['delete']) && $_SESSION['delete'] == 'complete'): ?>
+    <strong class="alert_green">Registro Eliminado correctamente</strong>
+<?Php elseif(isset($_SESSION['delete']) && $_SESSION['delete'] != 'complete'): ?>
+    <strong class="alert_red">Error: Registro No Eliminado</strong>
+<?Php endif; ?>
+<?Php Utils::deleteSession('delete');?>
+
+<table class="tablita">
     <tr>
         <th style="width: 20px;">ID</th>
-        <th style="width: 60px;">TIENDA</th>
-        <th style="width: 20px;">CUADERNO</th>
-        <th style="width: 60px;">TIPO DE PAGO</th>
-        <th style="width: 50px;">INGRESOS</th>
-        <th style="width: 50px;">DEUDAS</th>
-        <th style="width: 70px;">CLIENTE</th>
-        <th style="width: 50px;">TURNO</th>
-        <th style="width: 75px;">FECHA</th>
+        <th style="width: 70px;">Fecha</th>
+        <th style="width: 60px;">Turno</th>
+
+        <th style="width: 50px;">Monto Inicial C.</th>
+        <th style="width: 50px;">Total Ingreso E.</th>
+        <th style="width: 50px;">Total Egreso E.</th>
+        <th style="width: 50px;">Total Deuda</th>
+        <th style="width: 50px;">Total Efectivo</th>
+        <th style="width: 50px;">Total En Caja</th>
+        <th style="width: 60px;">Usuario</th>
+        <th style="width: 80px;">Acciones</th>
     </tr>
-    <?Php while($in = $ingr->fetch_object()): ?>
+    <?Php while($ar = $arqu->fetch_object()): ?>
     <tr>
-        <td style="width: 20px;"><?=$in->id?></td>
-        <td style="width: 60px;"><?=$in->tienda?></td>
-        <td style="width: 20px;"><?=$in->cuaderno?></td>
-        <td style="width: 60px;"><?=$in->tipopago?></td>
-        <td style="width: 50px;"><?=$in->ingresos?></td>
-        <td style="width: 50px;"><?=$in->deudas?></td>
-        <td style="width: 70px;"><?=$in->cliente?></td>
-        <td style="width: 50px;"><?=$in->turno?></td>
-        <td style="width: 75px;"><?=$in->fecha?></td>
+        <td><?=$ar->id?></td>
+        <td><?=$ar->fecha?></td>
+        <td><?=$ar->turno?></td>
+        <td><?=$ar->montoinicialc?></td>
+        <td><?=$ar->totalingresoe?></td>
+        <td><?=$ar->totalegresoe?></td>
+        <td><?=$ar->totaldeuda?></td>
+        <td><?=$ar->totalefectivo?></td>
+        <td><?=$ar->totalcaja?></td>
+        <td><?=$ar->usuario?></td>
+        <td>
+            <a href="<?=base_url?>egreso/eliminar&id=<?=$ar->id?>" class="button extra-colort">Eliminar</a>
+        </td>
     </tr>
     <?Php endwhile; ?>
 </table>
 <table>
     <tr>
-        <th>Total de Ingresos Efectivo</th>
-        <th>Total de Ingresos Transferencia</th>
-        <th>Total de Deudas</th>
-    </tr>
-    <?Php
-        $inef=0;
-        While($icef = $in_calef->fetch_object()){
-            $ingreef = $icef->ingresos;
-            $inef += $ingreef;
-        }
-
-        $intr=0;
-        While($ictr = $in_caltr->fetch_object()){
-            $ingretr = $ictr->ingresos;
-            $intr += $ingretr;
-        }
-
-        $inde=0;
-        While($icde = $in_calde->fetch_object()){
-            $ingrede = $icde->deudas;
-            $inde += $ingrede;
-        }
-    ?>
-    <tr>
-        <td><?=$inef?></td>
-        <td><?=$intr?></td>
-        <td><?=$inde?></td>
+        <!--Paginador-->
+        <td class="text-center" colspan="11">
+        <?Php if(isset($totalPag)): ?>
+            <?Php for($i=1; $i<=$totalPag; $i++): ?>
+                <a href="<?=base_url?>arqueo/gestion&pag=<?=$i?>"><?=$i?></a> -
+            <?Php endfor; ?>
+        <?Php endif; ?>
+        </td>
     </tr>
 </table>
-
-<br>
-
-<table class="tablita" style="margin-left:10%;">
-    <tr>
-        <th colspan="9" style="font-size: 20px;">EGRESOS</th>
-    </tr>
-    <tr>
-        <th style="width: 20px;">ID</th>
-        <th style="width: 60px;">TIENDA</th>
-        <th style="width: 150px;">DESCRIPCIÓN</th>
-        <th style="width: 60px;">TIPO DE PAGO</th>
-        <th style="width: 50px;">MONTO</th>
-        <th style="width: 70px;">USUARIO</th>
-        <th style="width: 50px;">TURNO</th>
-        <th style="width: 65px;">FECHA</th>
-    </tr>
-    <?Php while($eg = $egre->fetch_object()): ?>
-    <tr>
-        <td style="width: 20px;"><?=$eg->id?></td>
-        <td style="width: 60px;"><?=$eg->tienda?></td>
-        <td style="width: 150px;"><?=$eg->descripcion?></td>
-        <td style="width: 60px;"><?=$eg->tipopago?></td>
-        <td style="width: 50px;"><?=$eg->monto?></td>
-        <td style="width: 70px;"><?=$eg->usuario?></td>
-        <td style="width: 50px;"><?=$eg->turno?></td>
-        <td style="width: 65px;"><?=$eg->fecha?></td>
-    </tr>
-    <?Php endwhile; ?>
-</table>
-<table>
-    <tr>
-        <th>Total de Egresos Efectivo</th>
-        <th>Total de Egresos Transferencia</th>
-    </tr>
-    <?Php
-        $monef=0;
-        While($mef = $eg_calef->fetch_object()){
-            $montoef = $mef->monto;
-            $monef += $montoef;
-        }
-
-        $montr=0;
-        While($mtr = $eg_caltr->fetch_object()){
-            $montotr = $mtr->monto;
-            $montr += $montotr;
-        }
-    ?>
-    <tr>
-        <td><?=$monef?></td>
-        <td><?=$montr?></td>
-    </tr>
-</table>
-<?Php
-    $resto = $inef - $monef;
-?>
-<h3 style="margin-right: 3%;">Resto en Caja: <?=$resto?></h3>

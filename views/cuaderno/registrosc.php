@@ -34,13 +34,13 @@
 <table class="tablita">
     <tr>
         <th style="width: 20px;">N°</th>
-        <th style="width: 90px;">FECHA</th>
+        <th style="width: 130px;">FECHA</th>
         <th style="width: 60px;">Doc</th>
-        <th style="width: 100px;">CLIENTE</th>
+        <th style="width: 200px;">CLIENTE</th>
         <th style="width: 60px;">TOTAL</th>
         <th style="width: 90px;">SITUACIÓN</th>
         <th style="width: 90px;">ESTADO</th>
-        <th style="width: 150px;">OBSERVACIÓN</th>
+        <th style="width: 130px;">OBSERVACIÓN</th>
         <th style="width: 104px;">ACCIÓN</th>
     </tr>
     <?Php while($cu = $cuad->fetch_object()): ?>

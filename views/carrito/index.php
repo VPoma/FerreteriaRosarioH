@@ -28,10 +28,11 @@
             <td>
                 <a href="<?=base_url?>producto/ver&id=<?=$producto->id?>"><?=$producto->nombre?> <?=$producto->medida?></a>
             </td>
-            <td>
                 <form action="<?=base_url?>carrito/cantipreci&index=<?=$indice?>" method="POST" enctype="multipart/form-data">
+            <td>
                 <div class="updown-unidades">
-                    <input class="number" type="number" step="0.01" name="preciob" value="<?=$elemento['precio']?>" required/>
+                    <?php $precio = number_format($elemento['precio'], 2, '.', ''); ?>
+                    <input class="number" type="number" step="0.01" name="preciob" value="<?=$precio?>" required/>
                 </div>
             </td>
             <td>
@@ -47,7 +48,7 @@
                 <a href="<?=base_url?>carrito/remove&index=<?=$indice?>" class="buttonB">Quitar</a>
                 </div>
             </td>
-            </form>
+                </form>
         </tr>
         <?Php endforeach; ?>
     </table>

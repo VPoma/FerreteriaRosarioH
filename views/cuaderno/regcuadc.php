@@ -26,11 +26,10 @@
         <input type="text" value="<?=$cli->nombrecom?>" readonly/>
         
         <?Php $stats = Utils::statsCarrito();?>
-        <?Php $a = $stats['total']?>
-        <?Php $total = number_format($a, 2)?>
+        <?php $total = number_format($stats['total'], 2, '.', ''); ?>
 
         <label class="frm"  for="total">Total</label>
-        <input type="text" value="<?=$total?>" name="total" />
+        <input type="number" step="0.01" value="<?=$total?>" name="total"  />
 
         <label class="frm"  for="situacion">Situación</label>
         <select name="situacion" id="opcion" onchange="actualizarEstado()">
@@ -40,7 +39,7 @@
         </select>
 
         <label class="frm"  for="importe">Importe</label>
-        <input type="number" id="texto" step="any" name="importe" value="0.00" disabled/>
+        <input type="number" id="texto" step="0.01" name="importe" value="0.00" disabled/>
 
         <label class="frm" for="tipopago">Tipo de Pago</label>
         <select name="tipopago" id="">

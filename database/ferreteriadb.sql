@@ -246,6 +246,27 @@ CONSTRAINT fk_ingreso_tienda FOREIGN KEY(id_tienda) REFERENCES tienda(id),
 CONSTRAINT fk_ingreso_cliente FOREIGN KEY(id_cliente) REFERENCES cliente(id),
 CONSTRAINT fk_ingreso_cuaderno FOREIGN KEY(id_cuaderno) REFERENCES cuaderno(id)
 )ENGINE=InnoDb;
+
+CREATE TABLE Arqueo(
+id              INT(255) AUTO_INCREMENT NOT NULL,
+id_usuario      INT(255) NOT NULL,
+montoinicialc   FLOAT(200,2) NOT NULL,
+totalingresoe   FLOAT(200,2) NOT NULL,
+totalingresot   FLOAT(200,2) NOT NULL,
+totalegresoe    FLOAT(200,2) NOT NULL,
+totalegresot    FLOAT(200,2) NOT NULL,
+totaldeuda      FLOAT(200,2) NOT NULL,
+totalefectivo   FLOAT(200,2) NOT NULL,
+totaltransfer   FLOAT(200,2) NOT NULL,
+totalcaja       FLOAT(200,2) NOT NULL,
+fecha           DATE,
+hora            TIME,
+turno           CHAR(6),
+est             CHAR(1) NOT NULL,
+CONSTRAINT pk_arqueo PRIMARY KEY(id),
+CONSTRAINT fk_arqueo_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id)
+)ENGINE=InnoDB;
+
 ###INGRESAR DATOS:
 
 ###Usuario
@@ -2321,7 +2342,7 @@ UPDATE producto SET codigo = 'TN0002' WHERE id = 575;
 ### consultas ###
 
 ### MODIFICAR TABLA ###
-DROP TABLE proveedor;
+DROP TABLE arqueo;
 ## Alterar o Modificar Tabla
 ALTER TABLE producto ADD codigo CHAR(6) NULL after id_descuento;
 ALTER TABLE producto ADD preciof FLOAT(100,2) NULL after preciob;
@@ -2415,3 +2436,6 @@ SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on c
 SELECT p.id, p.nombre as 'nombre', p.medida as 'medida', p.imagen as 'imagen', p.preciob as 'precio', m.nombre as 'marca' FROM producto p INNER JOIN marca m ON m.id = p.id_marca WHERE p.est = 'H' ORDER BY CASE WHEN cantidad > 0 THEN 1 ELSE 2 END, p.nombre LIMIT 0,9;
 
 SELECT * FROM producto WHERE est = 'H' ORDER BY CASE WHEN cantidad > 0 THEN 1 ELSE 2 END, nombre LIMIT 0,9;
+
+##INSERT INTO cuaderno VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, {$this->getId_cliente()}, '{$this->getDescripcion()}', {$this->getTotal()}, '{$this->getSituacion()}', {$this->getImporte()}, {$this->getResto()}, CURDATE(), CURRENT_TIME(), NULL, NULL, 'VENDIDO', 'H');
+INSERT INTO cuaderno VALUES(NULL, 1, 1, 2, 'N/A', 1300, 'CANCELADO', 1300, 0, CURDATE(), CURRENT_TIME(), NULL, NULL, 'VENDIDO', 'H');
