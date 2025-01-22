@@ -183,7 +183,7 @@ Class egreso{
         return $egreso->num_rows;
     }
 
-    //Muestra todos los registros de Egreso - 2Egreso
+    //Muestra registros de Egreso para Arqueo - 7Egreso
     Public function getall_Are(){
         $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, e.tipopago, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
                 . "INNER JOIN tienda t on t.id = e.id_tienda "
@@ -193,16 +193,18 @@ Class egreso{
         return $egreso;
     }
 
+    //Muestra el monto de los registros en efectivo de Egreso para Arqueo - 8Egreso
     Public function getall_Are_eg_ef(){
         $sql = "SELECT monto FROM egreso "
-                . "WHERE tipopago = 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+                . "WHERE tipopago = 'EFECTIVO' AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
         $egreso = $this->db->query($sql);
         return $egreso;
     }
 
+    //Muestra el monto de los registros en transferencia de Egreso para Arqueo - 9Egreso
     Public function getall_Are_eg_tr(){
         $sql = "SELECT monto FROM egreso "
-                . "WHERE tipopago = 'TRANSFERENCIA'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+                . "WHERE tipopago = 'TRANSFERENCIA' AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
         $egreso = $this->db->query($sql);
         return $egreso;
     }

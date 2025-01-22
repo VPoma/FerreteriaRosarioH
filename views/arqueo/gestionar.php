@@ -17,9 +17,8 @@
 <table class="tablita">
     <tr>
         <th style="width: 20px;">ID</th>
-        <th style="width: 70px;">Fecha</th>
+        <th style="width: 70px;">Fecha Arq.</th>
         <th style="width: 60px;">Turno</th>
-
         <th style="width: 50px;">Monto Inicial C.</th>
         <th style="width: 50px;">Total Ingreso E.</th>
         <th style="width: 50px;">Total Egreso E.</th>
@@ -27,12 +26,13 @@
         <th style="width: 50px;">Total Efectivo</th>
         <th style="width: 50px;">Total En Caja</th>
         <th style="width: 60px;">Usuario</th>
+        <th style="width: 70px;">Fecha Reg.</th>
         <th style="width: 80px;">Acciones</th>
     </tr>
     <?Php while($ar = $arqu->fetch_object()): ?>
     <tr>
         <td><?=$ar->id?></td>
-        <td><?=$ar->fecha?></td>
+        <td><?=$ar->fechaar?></td>
         <td><?=$ar->turno?></td>
         <td><?=$ar->montoinicialc?></td>
         <td><?=$ar->totalingresoe?></td>
@@ -41,8 +41,20 @@
         <td><?=$ar->totalefectivo?></td>
         <td><?=$ar->totalcaja?></td>
         <td><?=$ar->usuario?></td>
+        <td><?=$ar->fecha?></td>
+        <!--
         <td>
-            <a href="<?=base_url?>egreso/eliminar&id=<?=$ar->id?>" class="button extra-colort">Eliminar</a>
+            <a href="<?=base_url?>arqueo/detalle&id=<?//=$ar->id?>" class="button solid-colort">Detalle</a>
+        </td>
+        -->
+        <td>
+            <form action="<?=base_url?>arqueo/detalle" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<?=$ar->id?>">
+                <input type="hidden" name="fecha" value="<?=$ar->fechaar?>">
+                <input type="hidden" name="turno" value="<?=$ar->turno?>">
+
+                <input type="submit" value="Detalle" class="button solid-colort">
+            </form>
         </td>
     </tr>
     <?Php endwhile; ?>

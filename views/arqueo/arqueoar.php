@@ -133,6 +133,7 @@
     <input type="hidden" name="totalefectivo" value="<?=$inef-$monef?>" />
     <input type="hidden" name="totaltransfer" value="<?=$intr-$montr?>" />
     <input type="hidden" name="totalcaja" value="<?=($inef-$monef)+$montoinicial?>" />
+    <input type="hidden" name="fechaar" value="<?=$fechaarqueo?>" />
     <input type="hidden" name="turno" value="<?=$turnoarqueo?>" />
 
     <div class="fila-2">

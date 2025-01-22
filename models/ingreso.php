@@ -167,29 +167,27 @@ Class ingreso{
         $ingreso = $this->db->query($sql);
         return $ingreso;
     }
-
+    //Muestra el monto de los registros en efectivo de Ingreso para Arqueo - 5Ingreso
     Public function getall_Ari_in_ef(){
         $sql = "SELECT ingresos FROM ingreso "
                 . "WHERE tipopago = 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
         $egreso = $this->db->query($sql);
         return $egreso;
     }
-
+    //Muestra el monto de los registros en transferencia de Ingreso para Arqueo - 6Ingreso
     Public function getall_Ari_in_tr(){
         $sql = "SELECT ingresos FROM ingreso "
                 . "WHERE tipopago = 'TRANSFERENCIA'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
         $egreso = $this->db->query($sql);
         return $egreso;
     }
-
+    //Muestra el monto de los registros en deuda de Ingreso para Arqueo - 7Ingreso
     Public function getall_Ari_in_deu(){
         $sql = "SELECT deudas FROM ingreso "
                 . "WHERE fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
         $egreso = $this->db->query($sql);
         return $egreso;
     }
-
-
 }
 
 ?>

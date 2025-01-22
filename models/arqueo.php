@@ -12,9 +12,10 @@ class Arqueo{
     private $totalefectivo;
     private $totaltransfer;
     private $totalcaja;
+    private $fechaar;
+    private $turno;
     private $fecha;
     private $hora;
-    private $turno;
     private $est;
     //variables extra
     private $limite;
@@ -70,16 +71,20 @@ class Arqueo{
         return $this->totalcaja;
     }
 
+    function getFechaar(){
+        return $this->fechaar;
+    }
+
+    function getTurno(){
+        return $this->turno;
+    }
+
     function getFecha(){
         return $this->fecha;
     }
 
     function getHora(){
         return $this->hora;
-    }
-
-    function getTurno(){
-        return $this->turno;
     }
 
     function getEst(){
@@ -141,16 +146,20 @@ class Arqueo{
         $this->totalcaja = $totalcaja;
     }
 
+    function setFechaar($fechaar){
+        $this->fechaar = $fechaar;
+    }
+
+    function setTurno($turno){
+        $this->turno = $turno;
+    }
+
     function setFecha($fecha){
         $this->fecha = $fecha;
     }
 
     function setHora($hora){
         $this->hora = $hora;
-    }
-
-    function setTurno($turno){
-        $this->turno = $turno;
     }
 
     function setEst($est){
@@ -171,7 +180,7 @@ class Arqueo{
     
     //Guardar Registro Arqueo - 1arqueo
     public function save(){
-        $sql = "INSERT INTO arqueo VALUES(NULL, {$this->getId_Usuario()}, {$this->getMontoinicialc()}, {$this->getTotalingresoe()}, {$this->getTotalingresot()}, {$this->getTotalegresoe()}, {$this->getTotalegresot()}, {$this->getTotaldeuda()}, {$this->getTotalefectivo()}, {$this->getTotaltransfer()}, {$this->getTotalcaja()}, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', 'H');";
+        $sql = "INSERT INTO arqueo VALUES(NULL, {$this->getId_Usuario()}, {$this->getMontoinicialc()}, {$this->getTotalingresoe()}, {$this->getTotalingresot()}, {$this->getTotalegresoe()}, {$this->getTotalegresot()}, {$this->getTotaldeuda()}, {$this->getTotalefectivo()}, {$this->getTotaltransfer()}, {$this->getTotalcaja()}, '{$this->getFechaar()}', '{$this->getTurno()}', CURDATE(), CURRENT_TIME(), 'H');";
         $save = $this->db->query($sql);
 
         $result = false;
@@ -186,7 +195,7 @@ class Arqueo{
     public function getAll(){
         $sql = "SELECT ar.*, u.usuariof as 'usuario' FROM arqueo ar "
                 ."INNER JOIN usuario u ON ar.id_usuario = u.id "
-                ." ORDER BY id DESC;";
+                ."WHERE ar.est = 'H' ORDER BY id DESC;";
         $arqueo = $this->db->query($sql);
         return $arqueo;
     }
@@ -195,6 +204,28 @@ class Arqueo{
     public function getAlltotal(){
         $producto  = $this->db->query("SELECT * FROM arqueo WHERE est = 'H'");
         return $producto->num_rows;
+    }
+
+    //Muestra el registro de arqueo a partir de un id - 4arqueo
+    public function getOne(){
+        $sql = "SELECT ar.*, u.usuariof as 'usuario' FROM arqueo ar "
+                ."INNER JOIN usuario u ON ar.id_usuario = u.id "
+                ."WHERE ar.id = {$this->getId()};";
+        $cuaderno = $this->db->query($sql);
+        return $cuaderno->fetch_object();
+    }
+
+    //Edita para olcutar registro- 5arqueo
+    public function edit_oculta(){
+        $sql = "UPDATE arqueo SET est = 'D' WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
     }
 
 }
