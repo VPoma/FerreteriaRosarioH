@@ -151,7 +151,7 @@ class abastecerController{
             $stats = utils::statsAñadir();
             $total = $stats['total'];
 
-            if($tienda && $usuario && $proveedor && $total){
+            if($tienda && $usuario && $proveedor){
                 $abastecer = new Abastecer();
                 $abastecer->setId_tienda($tienda);
                 $abastecer->setId_Usuario($usuario);

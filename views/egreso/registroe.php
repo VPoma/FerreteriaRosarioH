@@ -25,8 +25,10 @@
 
     <label class="frm" for="tipopago">Tipo de Pago</label>
     <select name="tipopago" id="">
-        <option value="EFECTIVO" <?=isset($egr) && is_object($egr) && $egr->tipopago == "EFECTIVO" ?  'selected' : ''; ?>> EFECTIVO</option>
-        <option value="TRANSFERENCIA" <?=isset($egr) && is_object($egr) && $egr->tipopago == "TRANSFERENCIA" ?  'selected' : ''; ?>> TRANSFERENCIA</option>
+        <option value="EFECTIVO" <?=isset($egr) && is_object($egr) && $egr->tipopago == "EFECTIVO" ?  'selected' : ''; ?>>EFECTIVO</option>
+        <option value="YAPE" <?=isset($egr) && is_object($egr) && $egr->tipopago == "YAPE" ?  'selected' : ''; ?>>YAPE</option>
+        <option value="BCP" <?=isset($egr) && is_object($egr) && $egr->tipopago == "BCP" ?  'selected' : ''; ?>>BCP</option>
+        <option value="CAJA HUANCAYO" <?=isset($egr) && is_object($egr) && $egr->tipopago == "CAJA HUANCAYO" ?  'selected' : ''; ?>>CAJA HUANCAYO</option>
     </select>
 
     <label class="frm" for="monto">Monto</label>

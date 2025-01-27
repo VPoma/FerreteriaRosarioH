@@ -1,4 +1,4 @@
-<h1>Tabla de Precios Soles</h1>
+<h1>Tabla de Stock y Precios</h1>
 
 <form action="<?=base_url?>precio/filtrotabla" method="POST" enctype="multipart/form-data">
     <table style="width: 75%; text-align: left; border: none;">
@@ -73,9 +73,10 @@
         <th style="width: 40px;">MARCA</th>
         <th style="width: 40px;">PRODUCTO</th>
         <th style="width: 40px;">MEDIDA</th>
+        <th style="width: 40px;">STOCK</th>
         <th style="width: 40px;">PRECIO</th>
-        <?Php if(isset($_SESSION['admin'])): ?>
         <th style="width: 40px;">PRECIO F</th>
+        <?Php if(isset($_SESSION['admin'])): ?>
         <th style="width: 40px;">PRECIO C</th>
         <th style="width: 40px;">ACCIONES</th>
         <?Php endif;?>
@@ -86,12 +87,24 @@
         <td><?=$pr->marca?></td>
         <td><?=$pr->nombre?></td>
         <td><?=$pr->medida?></td>
+        <?Php
+        $unidades = $pr->cantidad;
+        // Verifica si el número tiene decimales
+        if (floor($unidades) == $unidades){
+            // Si no tiene decimales, muestra el número sin decimales
+            $cantidad = number_format($unidades, 0);
+        }else{
+            // Si tiene decimales, muestra el número con dos decimales
+            $cantidad = number_format($unidades, 2);
+        }
+        ?>
+        <td><b><?=$cantidad?></b></td>
         <td><b><?=$pr->preciob?></b></td>
-        <?Php if(isset($_SESSION['admin'])): ?>
         <td><?=$pr->preciof?></td>
+        <?Php if(isset($_SESSION['admin'])): ?>
         <td><?=$pr->precioc?></td>
         <td>
-            <a href="<?=base_url?>precio/editar&id=<?=$pr->id?>" class="button solid-colort">E. Precio</a>
+            <a href="<?=base_url?>precio/editar&id=<?=$pr->id?>" class="button solid-colort">Editar</a>
         </td>
         <?Php endif;?>
     </tr>

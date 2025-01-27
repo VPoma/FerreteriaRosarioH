@@ -116,12 +116,12 @@ class precioController{
         $limite = 10;
         $offset = ($pag-1)*$limite;
 
-        //Muestra Tabla de Precios de productos - 12producto
+        //Muestra Tabla de Cantidades y Precios de productos - 12producto
         $precio = new producto();
         $precio->setOffset($offset);
         $precio->setLimite($limite);
 
-        $prec = $precio->gettablaprecio();
+        $prec = $precio->gettablacantiprecio();
 
         $total = $precio->getAlltotal();
 
@@ -140,7 +140,7 @@ class precioController{
 
             $precio = new producto();
 
-            //Muestra Tabla de Precios de productos FILTRO - 13producto
+            //Muestra Tabla de Cantidad y Precios de productos FILTRO - 13producto
             if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
                 echo '<script>window.location="'.base_url.'precio/tabla"</script>';
             }else{
@@ -148,7 +148,7 @@ class precioController{
             $precio->setLinea($linea); 
             $precio->setMarca($marca);
             $precio->setNombre($nombre);
-            $prec = $precio->gettablapreciofill();
+            $prec = $precio->gettablacantipreciofill();
             
             }
 
@@ -198,11 +198,11 @@ class precioController{
             $id = $_GET['id'];
             $edit = true;
 
-            //Busca un producto para modificar el precio - 14producto
+            //Busca un producto para modificar la cantidad y el precio - 14producto
             $precio = new Producto();
             $precio->setId($id);
             
-            $pre = $precio->getOne_precio();
+            $pre = $precio->getOne_cantiprecio();
 
             require_once 'views/precio/editape.php';
         }else{
@@ -210,15 +210,17 @@ class precioController{
         }
     }
 
-    public function editprecio(){
-        //modificar el precio - 15producto
+    public function editcantprec(){
+        //modificar la cantdad y el precio - 15producto
         if(isset($_POST)){
+            $cantidad = isset($_POST['cantidad']) ? $_POST['cantidad'] : false;
             $preciob = isset($_POST['preciob']) ? $_POST['preciob'] : false;
             $preciof = isset($_POST['preciof']) ? $_POST['preciof'] : false;
             $precioc = isset($_POST['precioc']) ? $_POST['precioc'] : false;
 
-            if($preciob && $preciof && $precioc){
+            if($cantidad && $preciob && $preciof && $precioc){
                 $producto = new Producto;
+                $producto->setCantidad($cantidad);
                 $producto->setPreciob($preciob);
                 $producto->setPreciof($preciof);
                 $producto->setPrecioc($precioc);
@@ -226,7 +228,7 @@ class precioController{
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
                     $producto->setId($id);
-                    $save = $producto->edit_precio();
+                    $save = $producto->edit_cantiprecio();
                 }
                 
                 if($save){

@@ -177,7 +177,7 @@ Class ingreso{
     //Muestra el monto de los registros en transferencia de Ingreso para Arqueo - 6Ingreso
     Public function getall_Ari_in_tr(){
         $sql = "SELECT ingresos FROM ingreso "
-                . "WHERE tipopago = 'TRANSFERENCIA'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+                . "WHERE tipopago != 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
         $egreso = $this->db->query($sql);
         return $egreso;
     }

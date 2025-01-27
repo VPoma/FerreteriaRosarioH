@@ -76,7 +76,7 @@
                                         <ul class="menu-area-main">
                                             <li class="active" style="width: 68px;"><a href="<?=base_url?>">INICIO</a> </li>
                                             <li style="width: 120px;"><a href="<?=base_url?>producto/index">PRODUCTOS</a></li>
-                                            <li style="width: 76px;"><a href="<?=base_url?>precio/tabla">PRECIO</a></li>
+                                            <li style="width: 131px;"><a href="<?=base_url?>precio/tabla">STOCK/PRECIO</a></li>
                                             <li style="width: 108px;"><a href="<?=base_url?>cuaderno/registroscuaderno">CUADERNO</a></li>
                                             <li style="width: 90px;"><a href="<?=base_url?>cliente/gestion">CLIENTES</a> </li>
                                             <li style="width: 110px;"><a href="<?=base_url?>abastecer/index">ABASTECER</a> </li>
@@ -98,7 +98,7 @@
                                         <ul class="menu-area-main">
                                             <li class="active" style="width: 60px;"><a href="<?=base_url?>">INICIO</a> </li>
                                             <li style="width: 110px;"><a href="<?=base_url?>producto/index">PRODUCTOS</a></li>
-                                            <li style="width: 70px;"><a href="<?=base_url?>precio/tabla">PRECIO</a></li>
+                                            <li style="width: 131px;"><a href="<?=base_url?>precio/tabla">STOCK/PRECIO</a></li>
                                             <li style="width: 100px;"><a href="<?=base_url?>cuaderno/registroscuaderno">CUADERNO</a></li>
                                             <li style="width: 80px;"><a href="<?=base_url?>cliente/gestion">CLIENTES</a> </li>
                                             <li style="width: 80px;"><a href="<?=base_url?>egreso/gestion">EGRESOS</a></li>

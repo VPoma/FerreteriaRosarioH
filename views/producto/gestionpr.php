@@ -85,7 +85,7 @@
             // Si tiene decimales, muestra el número con dos decimales
             $cantidad = number_format($unidades, 2);
         }
-    ?>
+        ?>
         <td style="width: 70px;"><b><?=$cantidad?></b></td>
         <td style="width: 70px;"><?=$pr->tienda?></td>
         <td style="width: 40px;">

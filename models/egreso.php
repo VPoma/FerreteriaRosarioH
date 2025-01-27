@@ -204,7 +204,7 @@ Class egreso{
     //Muestra el monto de los registros en transferencia de Egreso para Arqueo - 9Egreso
     Public function getall_Are_eg_tr(){
         $sql = "SELECT monto FROM egreso "
-                . "WHERE tipopago = 'TRANSFERENCIA' AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+                . "WHERE tipopago != 'EFECTIVO' AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
         $egreso = $this->db->query($sql);
         return $egreso;
     }

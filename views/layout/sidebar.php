@@ -58,8 +58,8 @@
                         <?Php if(isset($_SESSION['admin'])): ?>
                             <h3>Panel Producto</h3>
 
-                            <li><a class="button separa" href="<?=base_url?>producto/gestion">Gestión de Productos (CANTIDAD)</a></li>
                             <li><a class="button separa" href="<?=base_url?>producto/registro">Registrar Producto</a></li>
+                            <li><a class="button separa" href="<?=base_url?>producto/gestion">Gestión de Productos</a></li>
                         <?Php endif;?>
 
                     <?Php elseif( $nombre_controlador == "cuadernocontroller"): ?>

@@ -44,7 +44,9 @@
         <label class="frm" for="tipopago">Tipo de Pago</label>
         <select name="tipopago" id="">
             <option value="EFECTIVO">EFECTIVO</option>
-            <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+            <option value="YAPE">YAPE</option>
+            <option value="BCP">BCP</option>
+            <option value="CAJA HUANCAYO">CAJA HUANCAYO</option>
         </select>
 
         <label class="frm"  for="descripcion">Descripción (Opcional)</label>

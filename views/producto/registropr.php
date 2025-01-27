@@ -55,7 +55,7 @@
         <input type="text" name="nombre" value="<?=isset($pro) && is_object($pro) ? $pro->nombre : ''; ?>" required/>
 
         <label class="frm" for="medida">Medida de Producto</label>
-        <input type="text" name="medida" value="<?=isset($pro) && is_object($pro) ? $pro->medida : ''; ?>" required/>
+        <input type="text" name="medida" value="<?=isset($pro) && is_object($pro) ? htmlspecialchars($pro->medida, ENT_QUOTES, 'UTF-8') : ''; ?>" required/>
 
         <label class="frm" for="cantidad">Cantidad Unidades</label>
         <input type="number" step="0.01" name="cantidad" value="<?=isset($pro) && is_object($pro) ? $pro->cantidad : ''; ?>" required/>

@@ -2440,3 +2440,8 @@ SELECT * FROM producto WHERE est = 'H' ORDER BY CASE WHEN cantidad > 0 THEN 1 EL
 
 ##INSERT INTO cuaderno VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, {$this->getId_cliente()}, '{$this->getDescripcion()}', {$this->getTotal()}, '{$this->getSituacion()}', {$this->getImporte()}, {$this->getResto()}, CURDATE(), CURRENT_TIME(), NULL, NULL, 'VENDIDO', 'H');
 INSERT INTO cuaderno VALUES(NULL, 1, 1, 2, 'N/A', 1300, 'CANCELADO', 1300, 0, CURDATE(), CURRENT_TIME(), NULL, NULL, 'VENDIDO', 'H');
+
+SELECT * FROM ingreso WHERE tipopago != 'EFECTIVO' AND est = 'H' ORDER BY id DESC;
+
+SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu 
+INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.est = 'H' ORDER BY id DESC LIMIT 0,8;

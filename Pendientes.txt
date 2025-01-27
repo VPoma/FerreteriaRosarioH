@@ -1,8 +1,11 @@
 Tareas:
 
 Pendientes:
-
--registrar el Arqueo(Carga el monto que quedo en caja el día de ayer) Se retiro el monto-opción.
+-Colocar limite de 10 primeros clientes y proveedores a momento de realizar operación.
+-Abastecer: Aumentar en el registro de Abastecer, despues de registrar mostrar ventana de ingreso a almacen.
+-Cuaderno: Añadir input tipo fecha para ingreso manual de fecha en el registro de cuaderno.
+-Cuaderno: Buscar Solucion para el registro de ventas mixtas (venta en Azapampa y Huancan).
+-¿Cuaderno: Añade productos comprados en la tabla de registro?.
 -GENERAR REPORTES Y ESTADISTICOS.
 -Dar facilidad para la creación de codigos de productos!!!
 -Añadir 2 filtros y paginadores más.
@@ -10,6 +13,12 @@ Pendientes:
 -Añadir los 3 precios al carrito.
 
 Culminadas:
+-Producto: Modificar pestaña precio a precio stock, a fin de mostrar el precio y la cantidad y que permita modificar ambos.
+-Cuaderno: Añadir en el registro de Cuaderno Más medio de Pago: Yape, Caja Huancayo, BCP, Efectivo.
+-Productos: Error al actualizar datos de productos, no recepciona la medida deproducto - caso niple 1/2.
+-Precio: Editar Precio, aumentar la medida en el titulo h1 del producto(LISTO).
+-Abastecer: Corregir Registro Abastecer a precio 0 (LISTO).
+-registrar el Arqueo(Carga el monto que quedo en caja el día de ayer) Se retiro el monto-opción(LISTO).
 -Mostrar las canidades con decimales solo si se tienen, si no mostrar valor redondeado(LISTO).
 -Aumentar Filtros en los precios(LISTO).
 -Listar las cantidades de productos(LISTO).

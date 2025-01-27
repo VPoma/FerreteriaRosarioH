@@ -1,6 +1,6 @@
 <?Php if(isset($edit) && isset($pre) && is_object($pre)):?>
-    <h1>Editar Precio: <?=$pre->nombre?></h1>
-    <?Php $url_action = base_url."precio/editprecio&id=".$pre->id;?>
+    <h1>Editar Precio: <?=$pre->nombre?> - <?=$pre->medida?></h1>
+    <?Php $url_action = base_url."precio/editcantprec&id=".$pre->id;?>
 
     <form action="<?=$url_action?>" method="POST" enctype="multipart/form-data">
 
@@ -9,6 +9,9 @@
 
         <label class="frm">Marca de Producto</label>
         <label for="linea"><?=isset($pre) && is_object($pre) ? $pre->marca : ''; ?></label>
+
+        <label class="frm" for="cantidad">Cantidad</label>
+        <input type=number type="number" step=any name="cantidad" value="<?=isset($pre) && is_object($pre) ? $pre->cantidad : '0'; ?>" required/>
 
         <label class="frm" for="preciob">Precio Basico</label>
         <input type=number step=any name="preciob" value="<?=isset($pre) && is_object($pre) ? $pre->preciob : '0'; ?>" required/>
