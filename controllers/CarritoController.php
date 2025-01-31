@@ -52,7 +52,7 @@ Class carritoController{
             }
         }
         
-        echo '<script>window.location="'.base_url.'carrito/index"</script>';
+        echo '<script>window.location="'.base_url.'producto/index"</script>';
     }
 
     public function remove(){

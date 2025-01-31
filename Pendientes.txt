@@ -1,18 +1,22 @@
 Tareas:
 
 Pendientes:
--Colocar limite de 10 primeros clientes y proveedores a momento de realizar operación.
+-Arqueo: Añadir consolidado diario.
 -Abastecer: Aumentar en el registro de Abastecer, despues de registrar mostrar ventana de ingreso a almacen.
--Cuaderno: Añadir input tipo fecha para ingreso manual de fecha en el registro de cuaderno.
--Cuaderno: Buscar Solucion para el registro de ventas mixtas (venta en Azapampa y Huancan).
--¿Cuaderno: Añade productos comprados en la tabla de registro?.
+-FORMULARIO COTIZACIÓN: realizar un formulario que permita realizar cotizaciones, estas podra modificarse y si se desea se podra realizar la venta.
 -GENERAR REPORTES Y ESTADISTICOS.
+-¿Cuaderno: Añadir input tipo fecha para ingreso manual de fecha en el registro de cuaderno.?
+-¿Cuaderno: Añade productos comprados en la tabla de registro?.
 -Dar facilidad para la creación de codigos de productos!!!
 -Añadir 2 filtros y paginadores más.
 -Mejorar botones de interfaz.
 -Añadir los 3 precios al carrito.
 
 Culminadas:
+-AÑADIR HISTORIAL DE SALIDA O INGRESO DE PRODUCTO(LISTO).
+-Ingreso: Añadir el registro de ingreso para operaciones distintos. Solucion para el registro de ventas mixtas A Y H (LISTO).
+-Colocar limite de 10 primeros clientes y proveedores a momento de realizar operación(LISTO).
+-Carrito de compras: modificar a fin que al agregar producto no redireccione defrente al carrito (LISTO).
 -Producto: Modificar pestaña precio a precio stock, a fin de mostrar el precio y la cantidad y que permita modificar ambos.
 -Cuaderno: Añadir en el registro de Cuaderno Más medio de Pago: Yape, Caja Huancayo, BCP, Efectivo.
 -Productos: Error al actualizar datos de productos, no recepciona la medida deproducto - caso niple 1/2.

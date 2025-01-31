@@ -197,6 +197,7 @@
                         <?Php if(isset($_SESSION['admin'])): ?>
                             <h3>Panel Ingresos</h3>
 
+                            <li><a class="button separa" href="<?=base_url?>ingreso/registro">Registrar Ingreso de Caja Chica</a></li>
                             <li><a class="button separa" href="<?=base_url?>ingreso/gestion">Gestión Ingresos de Caja Chica</a></li>
                         <?Php endif;?>
 

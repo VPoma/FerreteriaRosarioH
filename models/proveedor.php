@@ -160,8 +160,16 @@ Class proveedor{
 
     //Busca y muestra a todos los proveedores - 8proveedor
     public function getAllp(){
-        $proveedor = $this->db->query("SELECT p.*, ci.nombre as 'ciudad' FROM proveedor p INNER JOIN ciudad ci ON ci.id = p.id_ciudad WHERE p.est = 'H' ORDER BY id DESC;");
-        return $proveedor;
+        $sql = "SELECT pe.id, pe.numruc, pe.nombrecom, pe.direccion, pe.numcel, ci.nombre as 'ciudad', COALESCE(COUNT(ab.id), 0) AS 'total_comp' " 
+                . "FROM proveedor pe "
+                . "LEFT JOIN abastecer ab ON ab.id_proveedor = pe.id "
+                . "INNER JOIN ciudad ci ON ci.id = pe.id_ciudad "
+                . "WHERE pe.est = 'H' "
+                . "GROUP BY pe.nombrecom "
+                . "ORDER BY total_comp DESC "
+                . "LIMIT 10";
+        $cliente = $this->db->query($sql);
+        return $cliente;
     }
 
     //Busqueda despues de crear para registro de abastecimiento - 9proveedor

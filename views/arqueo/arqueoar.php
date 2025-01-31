@@ -5,27 +5,41 @@
         <th colspan="9" style="font-size: 20px;">INGRESOS</th>
     </tr>
     <tr>
-        <th style="width: 20px;">ID</th>
-        <th style="width: 60px;">TIENDA</th>
-        <th style="width: 20px;">CUADERNO</th>
-        <th style="width: 60px;">TIPO DE PAGO</th>
-        <th style="width: 50px;">INGRESOS</th>
-        <th style="width: 50px;">DEUDAS</th>
-        <th style="width: 70px;">CLIENTE</th>
+        <th style="width: 15px;">ID</th>
+        <th style="width: 50px;">TIENDA</th>
+        <th style="width: 60px;">DESCRIPCIÓN</th>
+        <th style="width: 40px;">PERSONA</th>
+        <th style="width: 40px;">TIPO DE PAGO</th>
+        <th style="width: 40px;">INGRESOS</th>
+        <th style="width: 40px;">DEUDAS</th>
         <th style="width: 50px;">TURNO</th>
         <th style="width: 75px;">FECHA</th>
     </tr>
     <?Php while($in = $ingr->fetch_object()): ?>
     <tr>
-        <td style="width: 20px;"><?=$in->id?></td>
-        <td style="width: 60px;"><?=$in->tienda?></td>
-        <td style="width: 20px;"><?=$in->cuaderno?></td>
-        <td style="width: 60px;"><?=$in->tipopago?></td>
-        <td style="width: 50px;"><?=$in->ingresos?></td>
-        <td style="width: 50px;"><?=$in->deudas?></td>
-        <td style="width: 70px;"><?=$in->cliente?></td>
-        <td style="width: 50px;"><?=$in->turno?></td>
-        <td style="width: 75px;"><?=$in->fecha?></td>
+        <td><?=$in->id?></td>
+        <td><?=$in->tienda?></td>
+        <?Php
+        if(isset($in->cuaderno)){
+            $descripcion = "CUADERNO $in->cuaderno";
+        }else{
+            $descripcion = $in->descripcion;
+        }
+        ?>
+        <td><?=$descripcion?></td>
+        <?Php
+        if(isset($in->cliente)){
+            $persona = "Cliente: $in->cliente";
+        }else{
+            $persona = "Usuario: $in->usuario";
+        }
+        ?>
+        <td><?=$persona?></td>
+        <td><?=$in->tipopago?></td>
+        <td><?=$in->ingresos?></td>
+        <td><?=$in->deudas?></td>
+        <td><?=$in->turno?></td>
+        <td><?=$in->fecha?></td>
     </tr>
     <?Php endwhile; ?>
 </table>
@@ -108,23 +122,18 @@
         <td><?=$inde?></td>
     </tr>
     <tr>
-        <th>Total de Efectivo</th>
-        <th>Total de Transferencia</th>
-        <th>Monto Inicial de Caja</th>
-        <th colspan="2">Total en Caja</th>
+        <th colspan="2">Total de Transferencia</th>
+        <th colspan="3">Total de Efectivo (Caja)</th>
     </tr>
     <tr>
-        <td><?=$inef-$monef?></td>
-        <td><?=$intr-$montr?></td>
-        <td><?=$montoinicial?></td>
-        <td colspan="2"><?=($inef-$monef)+$montoinicial?></td>
+        <td colspan="2"><?=$intr-$montr?></td>
+        <td colspan="3"><?=$inef-$monef?></td>
     </tr>
 </table>
 <br>
 
 <form action="<?=base_url?>arqueo/save" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="usuario" value="<?=$_SESSION['identity']->id?>"/>
-    <input type="hidden" name="montoinicialcaja" value="<?=$montoinicial?>" />
     <input type="hidden" name="totalingresoefectivo" value="<?=$inef?>" />
     <input type="hidden" name="totalingresotransfer" value="<?=$intr?>" />
     <input type="hidden" name="totalegresoefectivo" value="<?=$monef?>" />
@@ -132,7 +141,6 @@
     <input type="hidden" name="totaldeuda" value="<?=$inde?>" />
     <input type="hidden" name="totalefectivo" value="<?=$inef-$monef?>" />
     <input type="hidden" name="totaltransfer" value="<?=$intr-$montr?>" />
-    <input type="hidden" name="totalcaja" value="<?=($inef-$monef)+$montoinicial?>" />
     <input type="hidden" name="fechaar" value="<?=$fechaarqueo?>" />
     <input type="hidden" name="turno" value="<?=$turnoarqueo?>" />
 

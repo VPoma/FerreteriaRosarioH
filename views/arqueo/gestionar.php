@@ -19,12 +19,10 @@
         <th style="width: 20px;">ID</th>
         <th style="width: 70px;">Fecha Arq.</th>
         <th style="width: 60px;">Turno</th>
-        <th style="width: 50px;">Monto Inicial C.</th>
         <th style="width: 50px;">Total Ingreso E.</th>
         <th style="width: 50px;">Total Egreso E.</th>
         <th style="width: 50px;">Total Deuda</th>
         <th style="width: 50px;">Total Efectivo</th>
-        <th style="width: 50px;">Total En Caja</th>
         <th style="width: 60px;">Usuario</th>
         <th style="width: 70px;">Fecha Reg.</th>
         <th style="width: 80px;">Acciones</th>
@@ -34,12 +32,10 @@
         <td><?=$ar->id?></td>
         <td><?=$ar->fechaar?></td>
         <td><?=$ar->turno?></td>
-        <td><?=$ar->montoinicialc?></td>
         <td><?=$ar->totalingresoe?></td>
         <td><?=$ar->totalegresoe?></td>
         <td><?=$ar->totaldeuda?></td>
         <td><?=$ar->totalefectivo?></td>
-        <td><?=$ar->totalcaja?></td>
         <td><?=$ar->usuario?></td>
         <td><?=$ar->fecha?></td>
         <!--

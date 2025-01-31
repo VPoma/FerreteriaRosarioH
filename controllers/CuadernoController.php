@@ -20,11 +20,17 @@ Class cuadernoController{
         if(isset($_POST)){
             $numdoc = isset($_POST['numdoc']) ? $_POST['numdoc'] : false;
             $nombrecom = isset($_POST['nombrecom']) ? $_POST['nombrecom'] : false;
-
+            //Filtro de registros - 4cliente
             $cliente = new cliente();
-            $cliente->setNumdoc($numdoc);
-            $cliente->setNombrecom($nombrecom);
-            $clie = $cliente->getFiltro();
+
+            if(strlen(trim($numdoc)) == 0 && strlen(trim($nombrecom)) == 0){
+                echo '<script>window.location="'.base_url.'cuaderno/eligcliente"</script>';
+            }else{
+
+                $cliente->setNumdoc($numdoc);
+                $cliente->setNombrecom($nombrecom);
+                $clie = $cliente->getFiltro();
+            }
         }
 
         require_once 'views/cuaderno/eligecliec.php';
@@ -142,6 +148,7 @@ Class cuadernoController{
                 //Guarda en la tabla de Ingreso
                 $ingreso = new Ingreso();
                 $ingreso->setId_tienda($tienda);
+                $ingreso->setId_usuario($usuario);
                 $ingreso->setId_cliente($cliente);
                 $ingreso->setId_cuaderno($id_cuaderno);
                 if($situacion == "POR COBRAR"){
@@ -452,6 +459,7 @@ Class cuadernoController{
         if(isset($_POST)){
             $id_cuaderno = isset($_POST['cuaderno']) ? $_POST['cuaderno'] : false;
             $tienda = isset($_POST['tienda']) ? $_POST['tienda'] : false;
+            $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : false;
             $cliente = isset($_POST['cliente']) ? $_POST['cliente'] : false;
             $total = isset($_POST['total']) ? $_POST['total'] : false;
             $importe_c = isset($_POST['importe_c']) ? $_POST['importe_c'] : false;
@@ -491,6 +499,7 @@ Class cuadernoController{
                 //Guarda en la tabla de Ingreso
                 $ingreso = new Ingreso();
                 $ingreso->setId_tienda($tienda);
+                $ingreso->setId_usuario($usuario);
                 $ingreso->setId_cliente($cliente);
                 $ingreso->setId_cuaderno($id_cuaderno);
                 if($situacion == "A CUENTA" && 0 < $importe && $importe <= $total){

@@ -45,12 +45,12 @@ Class productoController{
 
             }else{
 
-            $producto->setFamilia($familia);
-            $producto->setLinea($linea); 
-            $producto->setMarca($marca);
-            $producto->setNombre($nombre);
+                $producto->setFamilia($familia);
+                $producto->setLinea($linea); 
+                $producto->setMarca($marca);
+                $producto->setNombre($nombre);
 
-            $product = $producto->getfillRandom();
+                $product = $producto->getfillRandom();
 
             }
 
@@ -262,12 +262,6 @@ Class productoController{
         }
 
         echo '<script>window.location="'.base_url.'producto/gestion"</script>';
-    }
-
-    
-    public function venta(){
-        
-        echo "<h1>Realizar Ventas</h1>";
     }
 
 }

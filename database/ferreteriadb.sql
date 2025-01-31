@@ -232,17 +232,20 @@ CONSTRAINT fk_egreso_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id)
 CREATE TABLE Ingreso(
 id              INT(255) AUTO_INCREMENT NOT NULL,
 id_tienda       INT(255) NOT NULL,
-id_cliente      INT(255) NOT NULL,
-id_cuaderno     INT(255) NOT NULL,
+id_usuario      INT(255),
+id_cliente      INT(255),
+id_cuaderno     INT(255),
 tipopago        char(13),
 ingresos        FLOAT(200,2),
 deudas          FLOAT(200,2),
 fecha           DATE,
 hora            TIME,
 turno           CHAR(6),
+descripcion     VARCHAR(250),
 est             CHAR(1) NOT NULL,
 CONSTRAINT pk_ingreso PRIMARY KEY(id),
 CONSTRAINT fk_ingreso_tienda FOREIGN KEY(id_tienda) REFERENCES tienda(id),
+CONSTRAINT fk_ingreso_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id),
 CONSTRAINT fk_ingreso_cliente FOREIGN KEY(id_cliente) REFERENCES cliente(id),
 CONSTRAINT fk_ingreso_cuaderno FOREIGN KEY(id_cuaderno) REFERENCES cuaderno(id)
 )ENGINE=InnoDb;
@@ -2351,8 +2354,16 @@ ALTER TABLE producto ADD precioc FLOAT(100,2) NULL after preciof;
 ALTER TABLE cuaderno ADD situacion VARCHAR(50) NULL after total;
 ALTER TABLE cuaderno ADD resto FLOAT(100,2) NULL after importe;
 
-ALTER TABLE egreso ADD tipopago CHAR(13) NOT NULL after descripcion;
+ALTER TABLE ingreso ADD descripcion VARCHAR(250) NULL after turno;
 
+### Agrega Columna y llave foranea ###
+ALTER TABLE ingreso ADD id_usuario INT(255) NULL after id_tienda;
+
+ALTER TABLE ingreso 
+ADD CONSTRAINT fk_ingreso_usuario
+FOREIGN KEY (id_usuario) 
+REFERENCES usuario(id);
+########################################
 ALTER TABLE cuaderno CHANGE COLUMN resto importe FLOAT(100,2) NULL;
 ALTER TABLE producto_cuaderno ADD precio FLOAT(100,2) NULL after id_producto;
 
@@ -2445,3 +2456,76 @@ SELECT * FROM ingreso WHERE tipopago != 'EFECTIVO' AND est = 'H' ORDER BY id DES
 
 SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu 
 INNER JOIN cliente ci on cu.id_cliente = ci.id WHERE cu.est = 'H' ORDER BY id DESC LIMIT 0,8;
+
+##Muestra en base a selección de producto su historial de Salida de Almacen
+SELECT cu.id, cu.fecha_sal, fa.nombre, li.nombre, ca.nombre, p.nombre, p.medida, pc.cantidad 
+FROM producto_cuaderno pc 
+INNER JOIN cuaderno cu ON cu.id = pc.id_cuaderno
+INNER JOIN producto p ON p.id = pc.id_producto
+INNER JOIN familia fa ON fa.id = p.id_familia
+INNER JOIN linea li ON li.id = p.id_linea
+INNER JOIN marca ca ON ca.id = p.id_marca
+WHERE pc.id_producto = 237;
+
+#AND cu.fecha_sal IS NOT NULL;
+#ORDER BY CASE WHEN cu.fecha_sal != null THEN 1 ELSE 2 END
+
+
+-- Consulta COMBINADA Solucion Segumiento
+SELECT cu.fecha_sal as 'fecha', 'cuaderno' AS 'fuente', fa.nombre as 'familia', li.nombre as 'linea', ca.nombre as 'marca', p.nombre, p.cantidad, pc.cantidad as 'cantidad'
+FROM producto_cuaderno pc
+INNER JOIN cuaderno cu ON cu.id = pc.id_cuaderno
+INNER JOIN producto p ON p.id = pc.id_producto
+INNER JOIN familia fa ON fa.id = p.id_familia
+INNER JOIN linea li ON li.id = p.id_linea
+INNER JOIN marca ca ON ca.id = p.id_marca
+WHERE pc.id_producto = 20 AND pc.est = 'H'
+UNION 
+SELECT ab.fecha_ent as 'fecha', 'abastecer' AS 'fuente', fa.nombre as 'familia', li.nombre as 'linea', ca.nombre as 'marca', p.nombre, p.cantidad, pa.cantidad as 'cantidad'
+FROM producto_abastecer pa
+INNER JOIN abastecer ab ON ab.id = pa.id_abastecer
+INNER JOIN producto p ON p.id = pa.id_producto
+INNER JOIN familia fa ON fa.id = p.id_familia
+INNER JOIN linea li ON li.id = p.id_linea
+INNER JOIN marca ca ON ca.id = p.id_marca
+WHERE pa.id_producto = 20 AND pa.est = 'H'
+ORDER BY fecha DESC;
+
+
+SELECT cu.fecha_sal as 'fecha', 'cuaderno' AS 'fuente', fa.nombre as 'familia', li.nombre as 'linea', ca.nombre as 'marca', p.nombre, p.cantidad, pc.cantidad as 'cantidad'
+FROM producto_cuaderno pc
+INNER JOIN cuaderno cu ON cu.id = pc.id_cuaderno
+INNER JOIN producto p ON p.id = pc.id_producto
+INNER JOIN familia fa ON fa.id = p.id_familia
+INNER JOIN linea li ON li.id = p.id_linea
+INNER JOIN marca ca ON ca.id = p.id_marca
+WHERE pc.id_producto = 20 AND pc.est = 'H'
+UNION
+SELECT ab.fecha_ent as 'fecha', 'abastecer' AS 'fuente', fa.nombre as 'familia', li.nombre as 'linea', ca.nombre as 'marca', p.nombre, p.cantidad, pa.cantidad as 'cantidad'
+FROM producto_abastecer pa
+INNER JOIN abastecer ab ON ab.id = pa.id_abastecer
+INNER JOIN producto p ON p.id = pa.id_producto
+INNER JOIN familia fa ON fa.id = p.id_familia
+INNER JOIN linea li ON li.id = p.id_linea
+INNER JOIN marca ca ON ca.id = p.id_marca
+WHERE pa.id_producto = 20 AND pa.est = 'H'
+ORDER BY fecha DESC;
+
+SELECT p.*, ci.nombre as 'ciudad' FROM proveedor p INNER JOIN ciudad ci ON ci.id = p.id_ciudad WHERE p.est = 'H' ORDER BY id DESC LIMIT 10;
+
+SELECT p.id, p.nombre, COALESCE(SUM(pc.cantidad), 0) AS total_vendido
+FROM producto p
+LEFT JOIN producto_cuaderno pc ON pc.id_producto = p.id
+GROUP BY p.id, p.nombre
+ORDER BY total_vendido DESC;
+
+
+
+SELECT c.id, c.nombrecom, COALESCE(COUNT(cu.id), 0) AS total_ventas
+FROM cliente c
+LEFT JOIN cuaderno cu ON cu.id_cliente = c.id
+GROUP BY c.id, c.nombrecom
+ORDER BY total_ventas DESC
+LIMIT 10;
+
+INSERT INTO ingreso VALUES(NULL, 1, 1, NULL, NULL, 'EFECTIVO', 500, NULL, CURDATE(), CURRENT_TIME(), 'MAÑANA', 'Pago Tienda Huancan', 'H');

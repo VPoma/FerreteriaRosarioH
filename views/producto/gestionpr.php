@@ -51,7 +51,21 @@
         </tr>
     </table>
 </form>
-<br><br>
+<br>
+
+<?Php if(isset($_SESSION['register']) && $_SESSION['register'] == 'complete'): ?>
+    <strong class="alert_green">Registro ingresado/modificado Correctamente</strong>
+<?Php elseif(isset($_SESSION['register']) && $_SESSION['register'] != 'complete'): ?>
+    <strong class="alert_red">Error: Introduce bien los datos</strong>
+<?Php endif; ?>
+<?Php Utils::deleteSession('register');?>
+
+<?Php if(isset($_SESSION['delete']) && $_SESSION['delete'] == 'complete'): ?>
+    <strong class="alert_green">Registro Eliminado correctamente</strong>
+<?Php elseif(isset($_SESSION['delete']) && $_SESSION['delete'] != 'complete'): ?>
+    <strong class="alert_red">Error: Registro No Eliminado</strong>
+<?Php endif; ?>
+<?Php Utils::deleteSession('delete');?>
 
 <table class="tablita">
     <tr>

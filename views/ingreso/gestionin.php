@@ -18,30 +18,50 @@
     <tr>
         <th style="width: 20px;">ID</th>
         <th style="width: 60px;">TIENDA</th>
-        <th style="width: 20px;">CUADERNO</th>
+        <th style="width: 100px;">DESCRIPCIÓN</th>
+        <th style="width: 80px;">PERSONA</th>
         <th style="width: 60px;">TIPO DE PAGO</th>
-        <th style="width: 50px;">INGRESOS</th>
-        <th style="width: 50px;">DEUDAS</th>
-        <th style="width: 70px;">CLIENTE</th>
+        <th style="width: 40px;">INGRESOS</th>
+        <th style="width: 40px;">DEUDAS</th>
         <th style="width: 50px;">TURNO</th>
-        <th style="width: 75px;">FECHA</th>
-        <th style="width: 30px;">ACCIONES</th>
+        <th style="width: 70px;">FECHA</th>
+        <th style="width: 50px;">ACCIONES</th>
     </tr>
     <?Php while($in = $ingr->fetch_object()): ?>
     <tr>
-        <td style="width: 20px;"><?=$in->id?></td>
-        <td style="width: 60px;"><?=$in->tienda?></td>
-        <td style="width: 20px;"><?=$in->cuaderno?></td>
-        <td style="width: 60px;"><?=$in->tipopago?></td>
-        <td style="width: 50px;"><?=$in->ingresos?></td>
-        <td style="width: 50px;"><?=$in->deudas?></td>
-        <td style="width: 70px;"><?=$in->cliente?></td>
-        <td style="width: 50px;"><?=$in->turno?></td>
-        <td style="width: 75px;"><?=$in->fecha?></td>
-        <td style="width: 30px;">
-            <a href="<?=base_url?>egreso/editar&id=<?=$in->id?>" class="button solid-colort">Editar</a>
-            <a href="<?=base_url?>egreso/eliminar&id=<?=$in->id?>" class="button extra-colort">Eliminar</a>
-        </td>
+        <td><?=$in->id?></td>
+        <td><?=$in->tienda?></td>
+        <?Php
+        if(isset($in->cuaderno)){
+            $descripcion = "CUADERNO $in->cuaderno";
+        }else{
+            $descripcion = $in->descripcion;
+        }
+        ?>
+        <td><?=$descripcion?></td>
+        <?Php
+        if(isset($in->cliente)){
+            $persona = "Cliente: $in->cliente";
+        }else{
+            $persona = "Usuario: $in->usuario";
+        }
+        ?>
+        <td><?=$persona?></td>
+        <td><?=$in->tipopago?></td>
+        <td><?=$in->ingresos?></td>
+        <td><?=$in->deudas?></td>
+        <td><?=$in->turno?></td>
+        <td><?=$in->fecha?></td>
+        <?Php if (isset($in->cuaderno)): ?>
+            <td>
+                Sin Acción: Sujeto a Reg. Cuaderno
+            </td>
+        <?Php else: ?>
+            <td>
+                <a href="<?=base_url?>ingreso/editar&id=<?=$in->id?>" class="button solid-colort">Editar</a>
+                <a href="<?=base_url?>ingreso/eliminar&id=<?=$in->id?>" class="button extra-colort">Eliminar</a>
+            </td>
+        <?Php endif; ?>
     </tr>
     <?Php endwhile; ?>
 </table>

@@ -3,7 +3,6 @@
 class Arqueo{
     private $id;
     private $id_usuario;
-    private $montoinicialc;
     private $totalingresoe;
     private $totalingresot;
     private $totalegresoe;
@@ -11,7 +10,6 @@ class Arqueo{
     private $totaldeuda;
     private $totalefectivo;
     private $totaltransfer;
-    private $totalcaja;
     private $fechaar;
     private $turno;
     private $fecha;
@@ -33,10 +31,6 @@ class Arqueo{
 
     function getId_Usuario(){
         return $this->id_usuario;
-    }
-
-    function getMontoinicialc(){
-        return $this->montoinicialc;
     }
 
     function getTotalingresoe(){
@@ -65,10 +59,6 @@ class Arqueo{
 
     function getTotaltransfer(){
         return $this->totaltransfer;
-    }
-
-    function getTotalcaja(){
-        return $this->totalcaja;
     }
 
     function getFechaar(){
@@ -110,10 +100,6 @@ class Arqueo{
         $this->id_usuario = $id_usuario;
     }
 
-    function setMontoinicialc($montoinicialc){
-        $this->montoinicialc = $montoinicialc;
-    }
-
     function setTotalingresoe($totalingresoe){
         $this->totalingresoe = $totalingresoe;
     }
@@ -140,10 +126,6 @@ class Arqueo{
 
     function setTotaltransfer($totaltransfer){
         $this->totaltransfer = $totaltransfer;
-    }
-
-    function setTotalcaja($totalcaja){
-        $this->totalcaja = $totalcaja;
     }
 
     function setFechaar($fechaar){
@@ -180,7 +162,7 @@ class Arqueo{
     
     //Guardar Registro Arqueo - 1arqueo
     public function save(){
-        $sql = "INSERT INTO arqueo VALUES(NULL, {$this->getId_Usuario()}, {$this->getMontoinicialc()}, {$this->getTotalingresoe()}, {$this->getTotalingresot()}, {$this->getTotalegresoe()}, {$this->getTotalegresot()}, {$this->getTotaldeuda()}, {$this->getTotalefectivo()}, {$this->getTotaltransfer()}, {$this->getTotalcaja()}, '{$this->getFechaar()}', '{$this->getTurno()}', CURDATE(), CURRENT_TIME(), 'H');";
+        $sql = "INSERT INTO arqueo VALUES(NULL, {$this->getId_Usuario()}, {$this->getTotalingresoe()}, {$this->getTotalingresot()}, {$this->getTotalegresoe()}, {$this->getTotalegresot()}, {$this->getTotaldeuda()}, {$this->getTotalefectivo()}, {$this->getTotaltransfer()}, '{$this->getFechaar()}', '{$this->getTurno()}', CURDATE(), CURRENT_TIME(), 'H');";
         $save = $this->db->query($sql);
 
         $result = false;

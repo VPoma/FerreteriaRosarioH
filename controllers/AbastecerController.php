@@ -73,9 +73,15 @@ class abastecerController{
             $nombrecom = isset($_POST['nombrecom']) ? $_POST['nombrecom'] : false;
 
             $proveedor = new Proveedor();
-            $proveedor->setNumruc($numruc);
-            $proveedor->setNombrecom($nombrecom);
-            $provee = $proveedor->getFiltro();
+
+            if(strlen(trim($numruc)) == 0 && strlen(trim($nombrecom)) == 0){
+                echo '<script>window.location="'.base_url.'abastecer/eligprovee"</script>';
+            }else{
+
+                $proveedor->setNumruc($numruc);
+                $proveedor->setNombrecom($nombrecom);
+                $provee = $proveedor->getFiltro();
+            }
         }
 
         require_once 'views/abastecer/eligeprove.php';

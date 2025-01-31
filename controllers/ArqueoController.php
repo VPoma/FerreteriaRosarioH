@@ -14,9 +14,6 @@ Class arqueoController{
         if(isset($_POST)){
             $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
             $turno = isset($_POST['turno']) ? $_POST['turno'] : false;
-            $mic = isset($_POST['mic']) ? $_POST['mic'] : false;
-
-            $montoinicial = $mic;
 
             $ingreso = new Ingreso();
 
@@ -52,7 +49,6 @@ Class arqueoController{
     public function save(){
         if(isset($_POST)){
             $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : false;
-            $montoinicialcaja = isset($_POST['montoinicialcaja']) ? $_POST['montoinicialcaja'] : false;
             $totalingresoefectivo = isset($_POST['totalingresoefectivo']) ? $_POST['totalingresoefectivo'] : false;
             $totalingresotransfer = isset($_POST['totalingresotransfer']) ? $_POST['totalingresotransfer'] : false;
             $totalegresoefectivo = isset($_POST['totalegresoefectivo']) ? $_POST['totalegresoefectivo'] : false;
@@ -60,14 +56,12 @@ Class arqueoController{
             $totaldeuda = isset($_POST['totaldeuda']) ? $_POST['totaldeuda'] : false;
             $totalefectivo = isset($_POST['totalefectivo']) ? $_POST['totalefectivo'] : false;
             $totaltransfer = isset($_POST['totaltransfer']) ? $_POST['totaltransfer'] : false;
-            $totalcaja = isset($_POST['totalcaja']) ? $_POST['totalcaja'] : false;
             $fechaar = isset($_POST['fechaar']) ? $_POST['fechaar'] : false;
             $turno = isset($_POST['turno']) ? $_POST['turno'] : false;
 
             if($usuario){
                 $arqueo = new Arqueo();
                 $arqueo->setId_Usuario($usuario);
-                $arqueo->setMontoinicialc($montoinicialcaja);
                 $arqueo->setTotalingresoe($totalingresoefectivo);
                 $arqueo->setTotalingresot($totalingresotransfer);
                 $arqueo->setTotalegresoe($totalegresoefectivo);
@@ -75,7 +69,6 @@ Class arqueoController{
                 $arqueo->setTotaldeuda($totaldeuda);
                 $arqueo->setTotalefectivo($totalefectivo);
                 $arqueo->setTotaltransfer($totaltransfer);
-                $arqueo->setTotalcaja($totalcaja);
                 $arqueo->setFechaar($fechaar);
                 $arqueo->setTurno($turno);
 

@@ -149,8 +149,8 @@ class cliente{
                 . "INNER JOIN ciudad ci ON ci.id = c.id_ciudad "
                 . "WHERE c.numdoc like '%{$this->getNumdoc()}%' "
                 . "AND c.nombrecom like '%{$this->getNombrecom()}%' AND c.est = 'H' ORDER BY id DESC;";
-        $ticket = $this->db->query($sql);
-        return $ticket;
+        $cliente = $this->db->query($sql);
+        return $cliente;
     }
 
     //Muestra un solo registro en base a un id - 5cliente
@@ -176,7 +176,16 @@ class cliente{
     
     //Saca todos los clientes para el controlador cuaderno - 7cliente
     public function getAllc(){
-        $cliente = $this->db->query("SELECT c.*, td.documento, ci.nombre as 'ciudad' FROM cliente c INNER JOIN tipodoc td ON td.id = c.id_tipodoc INNER JOIN ciudad ci ON ci.id = c.id_ciudad WHERE c.est = 'H' ORDER BY id DESC;");
+        $sql = "SELECT c.id, c.numdoc, c.nombrecom, c.direccion, c.numcel, td.documento, ci.nombre as 'ciudad', COALESCE(COUNT(cu.id), 0) AS 'total_ventas' " 
+                . "FROM cliente c "
+                . "LEFT JOIN cuaderno cu ON cu.id_cliente = c.id "
+                . "INNER JOIN tipodoc td ON td.id = c.id_tipodoc " 
+                . "INNER JOIN ciudad ci ON ci.id = c.id_ciudad "
+                . "WHERE c.est = 'H' "
+                . "GROUP BY c.nombrecom "
+                . "ORDER BY total_ventas DESC "
+                . "LIMIT 10";
+        $cliente = $this->db->query($sql);
         return $cliente;
     }
 

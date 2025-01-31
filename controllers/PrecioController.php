@@ -1,6 +1,7 @@
 <?Php
 require_once 'models/precio.php';
 require_once 'models/producto.php';
+require_once 'models/prodcuabs.php';
 
 class precioController{
 
@@ -193,7 +194,6 @@ class precioController{
     }
 
     public function editar(){
-
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $edit = true;
@@ -245,6 +245,28 @@ class precioController{
         }
         echo '<script>window.location="'.base_url.'precio/tabla"</script>';
         
+    }
+
+    public function historialstock(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $histS = true;
+
+            $precio = new Producto();
+            $precio->setId($id);
+            //Busca un producto para modificar la cantidad y el precio - 14producto
+            $pre = $precio->getOne_cantiprecio();
+
+            //Mostrar listado de productos que salieron e ingrsaron a almacen - 1prodcuabs
+            $prodcuadbs = new Prodcuadbs();
+            $prodcuadbs->setId_producto($id);
+            
+            $pca = $prodcuadbs->buscaprodie();
+
+            require_once 'views/precio/hstock.php';
+        }else{
+            echo '<script>window.location="'.base_url.'precio/tabla"</script>';
+        }
     }
 
 }

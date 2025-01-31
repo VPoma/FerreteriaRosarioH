@@ -22,6 +22,7 @@
     
     <input type="hidden" value="<?=$cua->id?>" name="cuaderno"/>
     <input type="hidden" value="<?=$cua->id_tienda?>" name="tienda">
+    <input type="hidden" value="<?=$cua->id_usuario?>" name="usuario">
     <input type="hidden" value="<?=$cua->id_cliente?>" name="cliente">
     <input type="hidden" value="<?=$cua->total?>" name="total"/>
     <input type="hidden" value="<?=$cua->importe?>" name="importe_c"/>

@@ -3,6 +3,7 @@
 Class ingreso{
     private $id;
     private $id_tienda;
+    private $id_usuario;
     private $id_cliente;
     private $id_cuaderno;
     private $tipopago;
@@ -11,6 +12,7 @@ Class ingreso{
     private $fecha;
     private $hora;
     private $turno;
+    private $descripcion;
     private $est;
     //variables extra
     private $limite;
@@ -28,6 +30,10 @@ Class ingreso{
 
     function getId_tienda(){
         return $this->id_tienda;
+    }
+
+    function getId_usuario(){
+        return $this->id_usuario;
     }
 
     function getId_cliente(){
@@ -62,6 +68,10 @@ Class ingreso{
         return $this->turno;
     }
 
+    function getDescripcion(){
+        return $this->descripcion;
+    }
+
     function getEst(){
         return $this->est;
     }
@@ -80,6 +90,10 @@ Class ingreso{
 
     function setId_tienda($id_tienda){
         $this->id_tienda = $id_tienda;
+    }
+
+    function setId_usuario($id_usuario){
+        $this->id_usuario = $id_usuario;
     }
 
     function setId_cliente($id_cliente){
@@ -114,6 +128,10 @@ Class ingreso{
         $this->turno = $this->db->real_escape_string($turno);
     }
 
+    function setDescripcion($descripcion){
+        $this->descripcion = $this->db->real_escape_string($descripcion);
+    }
+
     function setEst($est){
         $this->est = $this->db->real_escape_string($est);
     }
@@ -128,9 +146,9 @@ Class ingreso{
     //
 
     //Consutas
-    //Guardar Registro de Ingresos - 1Egreso
+    //Guardar Registro de Ingresos - 1Ingreso
     public function save(){
-        $insert = "INSERT INTO ingreso VALUES(NULL, {$this->getId_tienda()}, {$this->getId_cliente()}, {$this->getId_cuaderno()}, '{$this->getTipopago()}', {$this->getIngresos()}, {$this->getDeudas()}, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', 'H');";
+        $insert = "INSERT INTO ingreso VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, {$this->getId_cliente()}, {$this->getId_cuaderno()}, '{$this->getTipopago()}', {$this->getIngresos()}, {$this->getDeudas()}, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', 'N/A', 'H');";
         $save = $this->db->query($insert);
         $result = false;
         if($save){
@@ -142,10 +160,11 @@ Class ingreso{
 
     //Muestra todos los registros de Ingreso - 2Ingreso
     Public function getall(){
-        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno' FROM ingreso i "
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, i.descripcion, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno', u.usuariof as 'usuario' FROM ingreso i "
                 . "INNER JOIN tienda t on t.id = i.id_tienda "
-                . "INNER JOIN cliente c on c.id = i.id_cliente "
-                . "INNER JOIN cuaderno cu on cu.id = i.id_cuaderno "
+                . "LEFT JOIN usuario u on u.id = i.id_usuario "
+                . "LEFT JOIN cliente c on c.id = i.id_cliente "
+                . "LEFT JOIN cuaderno cu on cu.id = i.id_cuaderno "
                 . "WHERE i.est = 'H' ORDER BY id DESC LIMIT {$this->getOffset()},{$this->getLimite()};";
         $ingreso = $this->db->query($sql);
         return $ingreso;
@@ -159,10 +178,11 @@ Class ingreso{
 
     //Muestra todos los registros de Ingreso para arqueo en base a fecha y turno - 4Ingreso
     Public function getall_Ari(){
-        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno' FROM ingreso i "
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, i.descripcion, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno', u.usuariof as 'usuario' FROM ingreso i "
                 . "INNER JOIN tienda t on t.id = i.id_tienda "
-                . "INNER JOIN cliente c on c.id = i.id_cliente "
-                . "INNER JOIN cuaderno cu on cu.id = i.id_cuaderno "
+                . "LEFT JOIN usuario u on u.id = i.id_usuario "
+                . "LEFT JOIN cliente c on c.id = i.id_cliente "
+                . "LEFT JOIN cuaderno cu on cu.id = i.id_cuaderno "
                 . "WHERE i.fecha = '{$this->getFecha()}' AND i.turno = '{$this->getTurno()}' AND i.est = 'H' ORDER BY id DESC;";
         $ingreso = $this->db->query($sql);
         return $ingreso;
@@ -171,23 +191,71 @@ Class ingreso{
     Public function getall_Ari_in_ef(){
         $sql = "SELECT ingresos FROM ingreso "
                 . "WHERE tipopago = 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
-        $egreso = $this->db->query($sql);
-        return $egreso;
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
     }
     //Muestra el monto de los registros en transferencia de Ingreso para Arqueo - 6Ingreso
     Public function getall_Ari_in_tr(){
         $sql = "SELECT ingresos FROM ingreso "
                 . "WHERE tipopago != 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
-        $egreso = $this->db->query($sql);
-        return $egreso;
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
     }
     //Muestra el monto de los registros en deuda de Ingreso para Arqueo - 7Ingreso
     Public function getall_Ari_in_deu(){
         $sql = "SELECT deudas FROM ingreso "
                 . "WHERE fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
-        $egreso = $this->db->query($sql);
-        return $egreso;
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
     }
+
+    //Guardar Registro de Ingresos no cuaderno - 8Ingreso
+    public function savein(){
+        $insert = "INSERT INTO ingreso VALUES(NULL, {$this->getId_tienda()}, {$this->getId_usuario()}, NULL, NULL, '{$this->getTipopago()}', {$this->getIngresos()},0.00, CURDATE(), CURRENT_TIME(), '{$this->getTurno()}', '{$this->getDescripcion()}', 'H');";
+        $save = $this->db->query($insert);
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    //Busca un solo registro de Ingreso a travez de id - 9Ingreso
+    public function getOne(){
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.turno, i.descripcion, t.nombre as 'tienda' FROM ingreso i "
+                . "INNER JOIN tienda t on t.id = i.id_tienda "
+                . "WHERE i.id = {$this->getId()};";
+        $ingreso = $this->db->query($sql);
+        return $ingreso->fetch_object();
+    }
+
+    //Editar registro de ingreso - 10Ingreso
+    public function edit(){
+        $sql = "UPDATE ingreso SET descripcion = '{$this->getDescripcion()}', tipopago = '{$this->getTipopago()}', ingresos = {$this->getingresos()} WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    //Editar A fin de Ocultar - 11Ingreso
+    public function edit_oculta(){
+        $sql = "UPDATE ingreso SET est = 'D' WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
 }
 
 ?>

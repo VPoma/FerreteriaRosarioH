@@ -70,6 +70,8 @@
 <table class="tablita">
     <tr>
         <th style="width: 20px;">ID</th>
+        <th style="width: 40px;">FAMILIA</th>
+        <th style="width: 40px;">LINEA</th>
         <th style="width: 40px;">MARCA</th>
         <th style="width: 40px;">PRODUCTO</th>
         <th style="width: 40px;">MEDIDA</th>
@@ -78,12 +80,14 @@
         <th style="width: 40px;">PRECIO F</th>
         <?Php if(isset($_SESSION['admin'])): ?>
         <th style="width: 40px;">PRECIO C</th>
-        <th style="width: 40px;">ACCIONES</th>
         <?Php endif;?>
+        <th style="width: 40px;">ACCIONES</th>
     </tr>
     <?Php while($pr = $prec->fetch_object()): ?>
     <tr>
         <td><?=$pr->id?></td>
+        <td><?=$pr->familia?></td>
+        <td><?=$pr->linea?></td>
         <td><?=$pr->marca?></td>
         <td><?=$pr->nombre?></td>
         <td><?=$pr->medida?></td>
@@ -103,10 +107,13 @@
         <td><?=$pr->preciof?></td>
         <?Php if(isset($_SESSION['admin'])): ?>
         <td><?=$pr->precioc?></td>
-        <td>
-            <a href="<?=base_url?>precio/editar&id=<?=$pr->id?>" class="button solid-colort">Editar</a>
-        </td>
         <?Php endif;?>
+        <td>
+            <?Php if(isset($_SESSION['admin'])): ?>
+            <a href="<?=base_url?>precio/editar&id=<?=$pr->id?>" class="button solid-colort">Editar</a>
+            <?Php endif;?>
+            <a href="<?=base_url?>precio/historialstock&id=<?=$pr->id?>" class="button solid-colort">H. Stock</a>
+        </td>
     </tr>
     <?Php endwhile; ?>
 </table>
