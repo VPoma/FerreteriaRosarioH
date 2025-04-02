@@ -41,12 +41,16 @@
             </th>
             <th style="width:200px;">
                 <label class="frm" style="margin-left:5%;" for="nombre">Producto</label>
-                <input style="margin-left:5%; width:150px;" type="text"  name="nombre" class="fildt"/>
+                <input style="margin-left:5%; width:180px;" type="text"  name="nombre" class="fildt"/>
+            </th>
+            <th style="width:200px;">
+                <label class="frm" style="margin-left:5%;" for="nombre">Medida</label>
+                <input style="margin-left:5%; width:120px;" type="text"  name="medida" class="fildt"/>
             </th>
             <th>
-            <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
-                <input type="submit" value="Buscar" class="button solid-colort">
-            </div>
+                <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
+                    <input type="submit" value="Buscar" class="button solid-colort">
+                </div>
             </th>
         </tr>
     </table>

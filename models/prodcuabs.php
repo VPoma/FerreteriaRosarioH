@@ -22,7 +22,7 @@ Class prodcuadbs{
 
     //Mostrar listado de productos que salieron e ingrsaron a almacen - 1prodcuabs
     public function buscaprodie(){
-        $sql = "SELECT cu.id as 'id', cu.fecha as 'fechareg', cu.fecha_sal as 'fecha', 'cuaderno' AS 'fuente', pc.cantidad as 'cantidad' "
+        $sql = "SELECT cu.id as 'id', cu.fecha as 'fechareg', cu.fecha_sal as 'fecha', 'cuaderno' AS 'fuente', pc.cantidad as 'cantidad', cu.estado "
                 . "FROM producto_cuaderno pc "
                 . "INNER JOIN cuaderno cu ON cu.id = pc.id_cuaderno "
                 . "INNER JOIN producto p ON p.id = pc.id_producto "
@@ -31,7 +31,7 @@ Class prodcuadbs{
                 . "INNER JOIN marca ca ON ca.id = p.id_marca "
                 . "WHERE pc.id_producto = {$this->getId_producto()} AND pc.est = 'H' "
                 . "UNION "
-                . "SELECT ab.id as 'id', ab.fecha as 'fechareg', ab.fecha_ent as 'fecha', 'abastecer' AS 'fuente', pa.cantidad as 'cantidad' "
+                . "SELECT ab.id as 'id', ab.fecha as 'fechareg', ab.fecha_ent as 'fecha', 'abastecer' AS 'fuente', pa.cantidad as 'cantidad', ab.estado "
                 . "FROM producto_abastecer pa "
                 . "INNER JOIN abastecer ab ON ab.id = pa.id_abastecer "
                 . "INNER JOIN producto p ON p.id = pa.id_producto "

@@ -1,6 +1,6 @@
 <?Php if(isset($cua)):?>
 
-<h2>Venta N° <?=$cua->id?></h2>
+<h2>Venta N° <?=$cua->id_cua?></h2>
 
 <h3>Datos del Pago:</h3>
 <table>
@@ -47,7 +47,9 @@
                 <label class="frm" for="tipopago">Tipo de Pago</label>
                 <select name="tipopago" id="">
                     <option value="EFECTIVO">EFECTIVO</option>
-                    <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                    <option value="YAPE">YAPE</option>
+                    <option value="BCP">BCP</option>
+                    <option value="CAJA HUANCAYO">CAJA HUANCAYO</option>
                 </select>
             </th>
         </tr>

@@ -105,12 +105,12 @@
         <?Php endif;?>
 
         <?Php if($abs->estado == "INGRESADO"):?>
-        <form action="<?=base_url?>views/constancia_tik.php" method="GET">
+        <form action="<?=base_url?>views/constancia_tik.php" method="GET" target="_blank">
             <input type="hidden" value="<?=$abs->id?>" name="id"/>
             <input type="submit" value="Imprimir" name="Imprimir" class="button solide-colort"/>
         </form>
         <?Php elseif($abs->estado != "INGRESADO"):?>
-        <a href="<?=base_url?>abastecer/entrega&id=<?=$abs->id?>" class="button solide-colort">Recepción</a>
+        <a href="<?=base_url?>abastecer/entrega&id=<?=$abs->id?>" class="button solide-colort">Ingreso</a>
         <?Php endif;?>
 
     </div>

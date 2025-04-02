@@ -1,7 +1,7 @@
-<h1>DETALLE DE LA VENTA N° <?=$cua->id?></h1>
+<h1>DETALLE DE NOTA DE VENTA N° <?=$cua->id_cua?></h1>
 
 <?Php if(isset($cua)):?>
-        <h3>Datos de la Venta:</h3>
+        <h3>Datos de Nota de Venta:</h3>
             <table>
                 <tr>
                     <th>Tienda</th>
@@ -84,34 +84,59 @@
                     <td>
                         S/.<?=$prod->precio?>
                     </td>
+                    <?Php
+                    $unidades = $prod->cantidad;
+                    // Verifica si el número tiene decimales
+                    if (floor($unidades) == $unidades){
+                        // Si no tiene decimales, muestra el número sin decimales
+                        $cantidad = number_format($unidades, 0);
+                    }else{
+                        // Si tiene decimales, muestra el número con dos decimales
+                        $cantidad = number_format($unidades, 2);
+                    }
+                    ?>
                     <td>
-                        <?=$prod->cantidad?>
+                        <?=$cantidad?>
                     </td>
                 </tr>
             <?Php endwhile;?>
         </table>
     <br>
 
-    <div class="fila-1">
-    
-        <?Php if(isset($_SESSION['admin'])): ?>
-            <a href="<?=base_url?>cuaderno/eliminar&id=<?=$cua->id?>" class="button extrae-colort">Anular</a>
-        <?Php endif;?>
-        
-        <?php if($cua->situacion != "CANCELADO"):?>
-        <a href="<?=base_url?>cuaderno/pago&id=<?=$cua->id?>" class="button solide-colort">Pago</a>
-        <?Php endif;?>
-
-        <?Php if($cua->estado == "ENTREGADO"):?>
-        <form action="<?=base_url?>views/comprobante_tik.php" method="GET">
-            <input type="hidden" value="<?=$cua->id?>" name="id"/>
-            <input type="submit" value="Imprimir" name="Imprimir" class="button solide-colort"/>
-        </form>
-        <?Php elseif($cua->estado != "ENTREGADO"):?>
-        <a href="<?=base_url?>cuaderno/entrega&id=<?=$cua->id?>" class="button solide-colort">Entrega</a>
-        <?Php endif;?>
-
-    </div>
+    <table  style="margin-left: 13%;">
+        <tr>
+            <?Php if(isset($_SESSION['admin']) && $cua->estado != "ANULADO"): ?>
+            <th>
+                <a href="<?=base_url?>cuaderno/eliminar&id=<?=$cua->id?>" class="button extrae-colort" style="margin-left: 6%; width:85px;">Anular</a>
+            </th>
+            <th>
+                <a href="<?=base_url?>cuaderno/editacua&id=<?=$cua->id?>" class="button solide-colort" style="margin-left: 6%; width:95px;">Editar C.</a>
+            </th>
+            <?Php endif;?>
+            <th>
+                <?php if($cua->situacion != "CANCELADO"):?>
+                    <a href="<?=base_url?>cuaderno/pago&id=<?=$cua->id?>" class="button solide-colort" style="margin-left: 6%; width:80px;">Pago</a>
+                <?Php endif;?>
+            </th>
+            <th>
+                <form action="<?=base_url?>views/comprobante_tik.php" method="GET" target="_blank">
+                    <input type="hidden" value="<?=$cua->id?>" name="id"/>
+                    <input type="submit" value="Imprimir" name="Imprimir" class="button solide-colort" style="margin-left: 6%; width:90px;"/>
+                </form>
+            </th>
+            <?Php if($cua->estado != "ENTREGADO AZAPAMPA" && $cua->estado != "ENTREGADO HUANCAN" && $cua->estado != "ANULADO"):?>
+            <th>
+                <a href="<?=base_url?>cuaderno/entregaH&id=<?=$cua->id?>" class="button solide-colort" style="margin-left: 6%; width:150px;">Entr. Huancan</a>
+            </th>
+            <th>
+                <a href="<?=base_url?>cuaderno/entrega&id=<?=$cua->id?>" class="button solide-colort" style="margin-left: 6%; width:155px;">Entr. Azapampa</a>
+            </th>
+            <?Php endif;?>
+            <th>
+                <a href="<?=base_url?>cuaderno/Comprobante" class="button solide-colort" style="margin-left: 6%; width:155px;">Comprobante E.</a>
+            </th>
+        </tr>
+    </table>
     
 <?Php endif; ?>
     <br><br>

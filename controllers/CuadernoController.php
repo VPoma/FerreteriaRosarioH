@@ -78,7 +78,20 @@ Class cuadernoController{
         $clien = $cliente->getclienregcuad();
         $cid=$clien->id;
 
-        echo '<script>window.location="'.base_url.'cuaderno/registrocuad&id='.$cid.'"</script>';
+        echo '<script>window.location="'.base_url.'cuaderno/eligecotcuad&id='.$cid.'"</script>';
+    }
+
+    public function eligecotcuad(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $elig = true;
+
+            $id_cli = $id;
+
+            require_once 'views/cuaderno/coticuad.php';
+        }else{
+            echo '<script>window.location="'.base_url.'cuaderno/eligcliente"</script>';
+        }
     }
 
     public function registrocuad(){
@@ -88,6 +101,7 @@ Class cuadernoController{
 
             $cliente = new Cliente();
             $cliente->setId($id);
+            //Muestra un solo registro en base a un id - 5cliente
             $cli = $cliente->getOne();
 
             require_once 'views/cuaderno/regcuadc.php';
@@ -108,9 +122,16 @@ Class cuadernoController{
             $total = isset($_POST['total']) ? $_POST['total'] : false;
             $cero = 00.00;
 
-            if($tienda && $usuario && $cliente && $total){
+            if($tienda && $usuario && $cliente){
                 //Guardar Cuaderno
                 $cuaderno = new Cuaderno();
+
+                //Busca el id del ultimo registro generado de Cuaderno - 36cuaderno
+                $cuad = $cuaderno->getidcuadernoulty();
+                $id_cuadulty = $cuad->id_cua;
+                $id_cuad = floatval($id_cuadulty) + 1;
+
+                $cuaderno->setId_cua($id_cuad);
                 $cuaderno->setId_tienda($tienda);
                 $cuaderno->setId_Usuario($usuario);
                 $cuaderno->setId_Cliente($cliente);
@@ -138,6 +159,7 @@ Class cuadernoController{
                 //Guardar Cuaderno - 1cuaderno
                 $save = $cuaderno->save();
 
+                //Busca el id del ultimo registro generado - 18cuaderno
                 $cua = $cuaderno->getidcuadulty();
                 $id_cuaderno = $cua->id;
 
@@ -260,15 +282,17 @@ Class cuadernoController{
 
         if(isset($_POST)){
             $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
+            $ncuad = isset($_POST['ncuad']) ? $_POST['ncuad'] : false;
 
             $cuaderno = new Cuaderno();
 
-            if(strlen(trim($fecha)) == 0){
+            if(strlen(trim($fecha)) == 0 && strlen(trim($ncuad)) == 0){
                 echo '<script>window.location="'.base_url.'cuaderno/registroscuaderno"</script>';
 
             }else{
 
                 $cuaderno->setFecha($fecha);
+                $cuaderno->setId_cua($ncuad);
 
                 if(isset($_SESSION['admin'])){
                     //sacar los pedidos totales
@@ -317,6 +341,7 @@ Class cuadernoController{
 
             $cuaderno = new Cuaderno();
             $cuaderno->setId($id);
+            //Busca un solo registro a travez de id - 9cuaderno
             $cua = $cuaderno->getOne();
 
             require_once 'views/cuaderno/anularc.php';
@@ -327,18 +352,66 @@ Class cuadernoController{
     }
 
     public function delete(){
-        //Edita para olcutar registro- 10cuaderno
+        
         if(isset($_GET['id'])){
             $id = $_GET['id'];
             $cuaderno = new Cuaderno();
             $cuaderno->setId($id);
-            $delete = $cuaderno->edit_oculta(); 
-            
-            if($delete){
-                $_SESSION['delete'] = 'complete';
+            //Busca un solo registro a travez de id - 9cuaderno
+            $cua = $cuaderno->getOne();
+
+            if($cua->estado == "ENTREGADO AZAPAMPA"){
+
+                $cuaderno = new Cuaderno();
+                $cuaderno->setId($id);
+                //Edita para olcutar registro - 10cuaderno
+                $delete = $cuaderno->edit_oculta(); 
+
+                $ingreso = new Ingreso();
+                $ingreso->setId_cuaderno($id);
+                //Editar A fin de Ocultar Ingreso Cuaderno - 16Ingreso
+                $delete_ingreso = $ingreso->edit_oculta_ci();
+
+                //Busca los datos para sumar la cantidad de stock - 14cuaderno
+                $producto_cuaderno = new Cuaderno();
+                $prodcua = $producto_cuaderno->getProdBycuad_resta($id);
+
+                //Edita y suma la cantidad de productos  - 10producto
+                $producto = new producto();
+                while($pr = $prodcua->fetch_object()){
+                    $producto->setId($pr->id);
+                    $cantidadprod = $pr->cantidad;
+                    $cantidadcuad = $pr->cantiresta;
+                    $suma = $cantidadprod + $cantidadcuad;
+                    $producto->setCantidad($suma);
+                    //Edita y resta o suma la cantidad de productos  - 10producto
+                    $update = $producto->salida();
+                }
+
+                if($delete && $delete_ingreso && $update){
+                    $_SESSION['delete'] = 'complete';
+                }else{
+                    $_SESSION['delete'] = 'failed';
+                }
+
             }else{
-                $_SESSION['delete'] = 'failed';
+
+                $cuaderno = new Cuaderno();
+                $cuaderno->setId($id);
+                //Edita para olcutar registro- 10cuaderno
+                $delete = $cuaderno->edit_oculta(); 
+
+                $ingreso = new Ingreso();
+                $ingreso->setId_cuaderno($id);
+                $delete_ingreso = $ingreso->edit_oculta_ci();
+
+                if($delete && $delete_ingreso){
+                    $_SESSION['delete'] = 'complete';
+                }else{
+                    $_SESSION['delete'] = 'failed';
+                }
             }
+
         }else{
             $_SESSION['delete'] = 'failed';
         }
@@ -378,13 +451,33 @@ Class cuadernoController{
         if(isset($_GET['id'])){
             $id = $_GET['id'];
 
-            $cua = $id;
-            /*
+            //$cua = $id;
+            
             $cuaderno = new Cuaderno();
             $cuaderno->setId($id);
-            $cua = $cuaderno->getOne();*/
+            //Busca un solo registro a travez de id - 9cuaderno
+            $cua = $cuaderno->getOne();
 
             require_once 'views/cuaderno/entregac.php';
+        }else{
+            echo '<script>window.location="'.base_url.'cuaderno/registroscuaderno"</script>';
+        }
+
+    }
+
+    public function entregaH(){
+        
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+
+            //$cua = $id;
+            
+            $cuaderno = new Cuaderno();
+            $cuaderno->setId($id);
+            //Busca un solo registro a travez de id - 9cuaderno
+            $cua = $cuaderno->getOne();
+
+            require_once 'views/cuaderno/entregaH.php';
         }else{
             echo '<script>window.location="'.base_url.'cuaderno/registroscuaderno"</script>';
         }
@@ -438,6 +531,32 @@ Class cuadernoController{
         echo '<script>window.location="'.base_url.'cuaderno/detalle&id='.$id_cuaderno.'"</script>';
     }
 
+    public function salidaH(){
+        if(isset($_POST)){
+            $id_cuaderno = isset($_POST['cuaderno']) ? $_POST['cuaderno'] : false;
+
+            if($id_cuaderno){
+                //Cambiar el estado a Entregado - 13cuaderno
+                $cuaderno = New cuaderno();
+                $cuaderno->setId($id_cuaderno);
+                $save = $cuaderno->entregarH();
+
+                if($save){
+                    $_SESSION['register'] = "complete";
+                }else{
+                    $_SESSION['register'] = "failed";
+                }
+            }else{
+                $_SESSION['register'] = "failed";
+            }
+            
+        }else{
+            $_SESSION['register'] = "failed";
+        }
+        
+        echo '<script>window.location="'.base_url.'cuaderno/detalle&id='.$id_cuaderno.'"</script>';
+    }
+
     public function pago(){
         
         if(isset($_GET['id'])){
@@ -446,6 +565,7 @@ Class cuadernoController{
             //Sacar Datos del Cuaderno
             $cuaderno = new Cuaderno();
             $cuaderno->setId($id);
+            //Busca un solo registro a travez de id - 9cuaderno
             $cua = $cuaderno->getOne();
 
             require_once 'views/cuaderno/pagoc.php';
@@ -549,6 +669,94 @@ Class cuadernoController{
         }
         
         echo '<script>window.location="'.base_url.'cuaderno/detalle&id='.$id_cuaderno.'"</script>';
+    }
+
+    public function editacua(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $edit = true;
+
+            $cuaderno = new Cuaderno();
+            $cuaderno->setId($id);
+            //Busca un solo registro a travez de id - 9cuaderno
+            $cua = $cuaderno->getOne();
+
+            require_once 'views/cuaderno/editacua.php';
+        }else{
+            echo '<script>window.location="'.base_url.'cuaderno/registroscuaderno"</script>';
+        }
+    }
+
+    public function updatecuaderno(){
+        if(isset($_POST)){
+            $id_cua = isset($_POST['id_cua']) ? $_POST['id_cua'] : false;
+            $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : false;
+            $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
+            $situacion = isset($_POST['situacion']) ? $_POST['situacion'] : false;
+            $total = isset($_POST['total']) ? $_POST['total'] : false;
+            $importe = isset($_POST['importe']) ? $_POST['importe'] : false;
+            $resto = isset($_POST['resto']) ? $_POST['resto'] : false;
+            $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
+            $fecha_sal = isset($_POST['fecha_sal']) ? $_POST['fecha_sal'] : false;
+
+            if(!$fecha_sal){
+                $cuaderno = new Cuaderno();
+                $cuaderno->setId($id_cua);
+                $cuaderno->setId_Usuario($usuario);
+                $cuaderno->setdescripcion($descripcion);
+                $cuaderno->setSituacion($situacion);
+                $cuaderno->setTotal($total);
+                $cuaderno->setImporte($importe);
+                $cuaderno->setResto($resto);
+                $cuaderno->setFecha($fecha);
+
+                //Edita Datos del Cuaderno - 41cuaderno
+                $save = $cuaderno->editacua();
+
+                if($save){
+                    $_SESSION['edit'] = "complete";
+                }else{
+                    $_SESSION['edit'] = "failed";
+                }
+
+            }elseif($fecha_sal){
+                $cuaderno = new Cuaderno();
+                $cuaderno->setId($id_cua);
+                $cuaderno->setId_Usuario($usuario);
+                $cuaderno->setdescripcion($descripcion);
+                $cuaderno->setSituacion($situacion);
+                $cuaderno->setTotal($total);
+                $cuaderno->setImporte($importe);
+                $cuaderno->setResto($resto);
+                $cuaderno->setFecha($fecha);
+                $cuaderno->setFecha_sal($fecha_sal);
+
+                //Edita Datos del Cuaderno con fecha salida - 42cuaderno
+                $save = $cuaderno->editacuafs();
+                
+                if($save){
+                    $_SESSION['edit'] = "complete";
+                }else{
+                    $_SESSION['edit'] = "failed";
+                }
+
+            }else{
+                $_SESSION['edit'] = "failed";
+            }
+
+        }else{
+            $_SESSION['edit'] = "failed";
+        }
+
+        echo '<script>window.location="'.base_url.'cuaderno/detalle&id='.$id_cua.'"</script>';
+    }
+
+    public function Comprobante(){
+        echo "<h1>Error 357: no se encuentra la información consignada</h1>";
+
+        echo "<h2>Error 64: no existe conexion a base de datos alguna</h2>";
+
+        echo "<h3>Error 709: error de ingreso</h3>";
     }
 
 }

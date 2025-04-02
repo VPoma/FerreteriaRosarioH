@@ -13,6 +13,13 @@ $t1 = $tab1->fetch_object();
 $tab2 = mysqli_query($db, "SELECT pc.id_producto, pc.precio, pc.cantidad, p.nombre, p.medida, m.nombre as 'marca' FROM producto_cuaderno pc "
                                         . "INNER JOIN producto p ON p.id = pc.id_producto "
                                         . "INNER JOIN marca m ON m.id = p.id_marca WHERE pc.id_cuaderno = $id_cuaderno");                                    
+$tab3 = mysqli_query($db, "SELECT p.codigo, pc.id_producto, pc.precio, pc.cantidad, p.nombre, p.medida, m.nombre as 'marca' FROM producto_cuaderno pc "
+                                        . "INNER JOIN producto p ON p.id = pc.id_producto "
+                                        . "INNER JOIN marca m ON m.id = p.id_marca WHERE pc.id_cuaderno = $id_cuaderno");
+
+$tab4 = mysqli_query($db, "SELECT p.codigo, pc.id_producto, pc.precio, pc.cantidad, p.nombre, p.medida, m.nombre as 'marca' FROM producto_cuaderno pc "
+                                        . "INNER JOIN producto p ON p.id = pc.id_producto "
+                                        . "INNER JOIN marca m ON m.id = p.id_marca WHERE pc.id_cuaderno = $id_cuaderno"); 
 
 ?>
 <!DOCTYPE html>

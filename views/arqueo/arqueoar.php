@@ -2,7 +2,7 @@
 
 <table class="tablita" style="margin-left:10%;">
     <tr>
-        <th colspan="9" style="font-size: 20px;">INGRESOS</th>
+        <th colspan="10" style="font-size: 20px;">INGRESOS</th>
     </tr>
     <tr>
         <th style="width: 15px;">ID</th>
@@ -13,6 +13,7 @@
         <th style="width: 40px;">INGRESOS</th>
         <th style="width: 40px;">DEUDAS</th>
         <th style="width: 50px;">TURNO</th>
+        <th style="width: 60px">OBSERVACIÓN</th>  
         <th style="width: 75px;">FECHA</th>
     </tr>
     <?Php while($in = $ingr->fetch_object()): ?>
@@ -39,6 +40,7 @@
         <td><?=$in->ingresos?></td>
         <td><?=$in->deudas?></td>
         <td><?=$in->turno?></td>
+        <td><?=$in->describecu?></td>
         <td><?=$in->fecha?></td>
     </tr>
     <?Php endwhile; ?>

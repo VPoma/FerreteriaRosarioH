@@ -3,6 +3,10 @@
 <form action="<?=base_url?>producto/filtroindex" method="POST" enctype="multipart/form-data">
     <table style="width: 75%; text-align: left; border: none;">
         <tr>
+            <th style="width:120px;">
+                <label class="frm" style="margin-left:5%;" for="codigo">Codigo</label>
+                <input style="margin-left:5%; width:70px;" type="text"  name="codigo" class="fildt"/>
+            </th>
             <th style="width:200px;">
             <label class="frm" for="familia">Familia</label>
                 <?Php $familias = utils::showFamilia(); ?>
@@ -41,12 +45,16 @@
             </th>
             <th style="width:200px;">
                 <label class="frm" style="margin-left:5%;" for="nombre">Producto</label>
-                <input style="margin-left:5%; width:150px;" type="text"  name="nombre" class="fildt"/>
+                <input style="margin-left:5%; width:180px;" type="text"  name="nombre" class="fildt"/>
+            </th>
+            <th style="width:200px;">
+                <label class="frm" style="margin-left:5%;" for="nombre">Medida</label>
+                <input style="margin-left:5%; width:120px;" type="text"  name="medida" class="fildt"/>
             </th>
             <th>
-            <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
-                <input type="submit" value="Buscar" class="button solid-colort">
-            </div>
+                <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
+                    <input type="submit" value="Buscar" class="button solid-colort">
+                </div>
             </th>
         </tr>
     </table>
@@ -61,6 +69,7 @@
         <?Php else: ?>
             <img src="<?=base_url?>assets/images/ferre.jpg" alt="" />
         <?Php endif; ?>
+        <h3 style="margin-bottom: -20px; margin-top: -40px; font-size: 15px;"><b><?=$prod->codigo?></b></h3>
         <h4 style="margin-bottom: -20px; margin-top: -20px;"><b><?=$prod->linea?></b></h4>
         <h4 style="margin-bottom: -20px; margin-top: -20px;"><b><?=$prod->marca?></b></h4>
         <h3 style="font-size: 11px; margin-bottom: -10px;"><b><?=$prod->nombre?></b></h3>

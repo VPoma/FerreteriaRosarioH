@@ -318,6 +318,13 @@ class abastecer{
         $producto = $this->db->query($sql);
         return $producto;
     }
+
+    //Busca en base a un usuario - 17abastecer
+    public function getOneByUser(){
+        $sql = "SELECT id, total, situacion, importe, resto, fecha, estado FROM abastecer WHERE id_usuario = {$this->getId_usuario()} ORDER BY id DESC LIMIT 1;";
+        $abastecer= $this->db->query($sql);
+        return $abastecer->fetch_object();
+    }
 }
 
 ?>

@@ -54,7 +54,7 @@
             <!--<a href="<?=base_url?>cuaderno/eligcliente" class="button extrae-colort">
                 Regresar
             </a>-->
-            <input type="submit" value="Confirmar Venta" class="button solide-colort" style="width:200px;">
+            <input type="submit" value="Confirmar Adquisición" class="button solide-colort" style="width:200px;">
         </div>
 
         <br>
@@ -63,7 +63,7 @@
 
     <?Php else: ?>
         <h1>Logueese Primero!!!</h1>
-        <p>Necesitas estar logueado en la WEB para poder realizar tu pedido</p>
+        <p>Necesitas estar logueado en la WEB para poder realizar El Abastecimiento</p>
 <?Php endif;?>
 
 <script>

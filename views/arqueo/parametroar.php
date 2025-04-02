@@ -8,13 +8,14 @@
         <tr>
             <th style="width: 150px;">
                 <label class="frm" for="fecha">Fecha</label>
-                <input type="date" name="fecha" style="width: 200px;">
+                <input type="date" name="fecha" id="MyInput" style="width: 200px;">
             </th>
             <th style="width: 150px;">
                 <label class="frm" for="turno">Turno</label>
                 <select name="turno" style="width: 200px;">
-                    <option value="MAÑANA">Mañana</option>
-                    <option value="TARDE">Tarde</option>
+                    <option value="MAÑANA">MAÑANA</option>
+                    <option value="TARDE">TARDE</option>
+                    <option value="CIERRE">CIERRE</option>
                 </select>
             </th>
             <th style="width: 150px;">
@@ -23,3 +24,7 @@
         </tr>
     </table>
 </form>
+
+<script>
+    MyInput.valueAsDate = new Date();
+</script>

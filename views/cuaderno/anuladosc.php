@@ -26,7 +26,7 @@
     </tr>
     <?Php while($cu = $cuad->fetch_object()): ?>
     <tr>
-        <td><?=$cu->id?></td>
+        <td><?=$cu->id_cua?></td>
         <td><?=$cu->nombrecom?></td>
         <td><?=$cu->descripcion?></td>
         <td><?=$cu->total?></td>

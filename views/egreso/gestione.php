@@ -36,10 +36,16 @@
         <td style="width: 70px;"><?=$eg->usuario?></td>
         <td style="width: 50px;"><?=$eg->turno?></td>
         <td style="width: 65px;"><?=$eg->fecha?></td>
-        <td style="width: 30px;">
-            <a href="<?=base_url?>egreso/editar&id=<?=$eg->id?>" class="button solid-colort">Editar</a>
-            <a href="<?=base_url?>egreso/eliminar&id=<?=$eg->id?>" class="button extra-colort">Eliminar</a>
-        </td>
+        <?Php if (!isset($_SESSION['admin'])): ?>
+            <td>
+                <b>Sin Acción. Solo ADM!</b>
+            </td>
+        <?Php else: ?>
+            <td>
+                <a href="<?=base_url?>egreso/editar&id=<?=$eg->id?>" class="button solid-colort">Editar</a>
+                <a href="<?=base_url?>egreso/eliminar&id=<?=$eg->id?>" class="button extra-colort">Eliminar</a>
+            </td>
+        <?Php endif; ?>
     </tr>
     <?Php endwhile; ?>
 </table>

@@ -1,25 +1,53 @@
 Tareas:
 
 Pendientes:
--Arqueo: Añadir consolidado diario.
--Abastecer: Aumentar en el registro de Abastecer, despues de registrar mostrar ventana de ingreso a almacen.
--FORMULARIO COTIZACIÓN: realizar un formulario que permita realizar cotizaciones, estas podra modificarse y si se desea se podra realizar la venta.
--GENERAR REPORTES Y ESTADISTICOS.
+
+-FACTURACIÓN ELECTRONICA
+
+-Impresiones: Probar en producción las impresiones.
 -¿Cuaderno: Añadir input tipo fecha para ingreso manual de fecha en el registro de cuaderno.?
 -¿Cuaderno: Añade productos comprados en la tabla de registro?.
--Dar facilidad para la creación de codigos de productos!!!
--Añadir 2 filtros y paginadores más.
 -Mejorar botones de interfaz.
 -Añadir los 3 precios al carrito.
 
 Culminadas:
+-Cuaderno: Añadir el usuario vendedor en la tabla de registro de cuaderno.
+-Cuaderno, Ingreso, abastecer, egreso: Implementar cambiador de fecha de cuaderno y que afecte a todas las tablas relacionadas.
+-Añadir 2 filtros y paginadores más.
+-Dar facilidad para la creación de codigos de productos!!!
+-Cuaderno, Abastecer: Añadir filtro por Número de cuaderno y abastecer,
+-CUADERNO: quitamos la edición total.
+-GENERAR REPORTES Y ESTADISTICOS, implementar más REPORTES. (va todo CLIENTES  Y PRODUCTOS, DERREPENTE AUMENTAN MAS INDICADORES)
+-Abastecer: Mejorar el Anular.
+-Ingreso y Egreso: Cambiar la posición de monto y descripción.
+-Tickets: Total en negrita y mas grande, Colocar las OBS en la parte final del Ticket.
+-Tickets: Colocar eN nEGRITA LOS eSTADOS DE LOS TICKETS, POR ENTREGA O POR COBRAR.
+-Tickets: Colocar en Negrita la cantidad de las ventas y reordenarla.
+-Arqueo: Acortar las fechas y el orden de la fecha, quitar fecha, el orden de los items invertir, Descripción más pequeña.
+-Arqueo: Aumentar espacio para firmar.
+-Arqueo: Quitar encabezado del reporte de arqueo.
+-Arqueo: descripción mas pequeña.
+-Abastecer: Corregir tikets
+-Cotización: Mejorar el formato de Cotización para imprimir.
+-Cuaderno, Productos, Abastecer: Visualizar los códigos en el cuaderno y listado de productos(en todo).
+-Cuaderno, ingreso, egreso, abastecer, prod_cuad, prod_abs: Verificar y mejorar el Anular.
+-Cuaderno: Añadir en la gestion de cuaderno el resto de la deuda(LISTO).
+-Cuaderno: añadir medios de pago en #pago(LISTO).
+-Cuaderno, Abastecer: Añadir la fecha actual en la ventana de ingreso o salida de productos.
+-FORMULARIO COTIZACIÓN: realizar un formulario que permita realizar cotizaciones, estas podra modificarse y si se desea se podra realizar la venta.
+-ABASTECER: Aumentar filtros al listado de abastecer, cambiar elformato numerico de cantidad(LISTO).
+-ARQUEO: Mejorar formato de impresión de arqueo(LISTO).
+-ABASTECER: Aumentar en el registro de Abastecer, despues de registrar mostrar ventana de ingreso a almacen(LISTO).
+-Filtros: Se aumento Medida en los filtros de producto y precio (LISTO).
+-Arqueo: Imprimir Arqueos(LISTO).
+-Arqueo: Añadir consolidado diario de CIERRE (LISTO).
 -AÑADIR HISTORIAL DE SALIDA O INGRESO DE PRODUCTO(LISTO).
 -Ingreso: Añadir el registro de ingreso para operaciones distintos. Solucion para el registro de ventas mixtas A Y H (LISTO).
 -Colocar limite de 10 primeros clientes y proveedores a momento de realizar operación(LISTO).
 -Carrito de compras: modificar a fin que al agregar producto no redireccione defrente al carrito (LISTO).
--Producto: Modificar pestaña precio a precio stock, a fin de mostrar el precio y la cantidad y que permita modificar ambos.
--Cuaderno: Añadir en el registro de Cuaderno Más medio de Pago: Yape, Caja Huancayo, BCP, Efectivo.
--Productos: Error al actualizar datos de productos, no recepciona la medida deproducto - caso niple 1/2.
+-Producto: Modificar pestaña precio a precio stock, a fin de mostrar el precio y la cantidad y que permita modificar ambos(LISTO).
+-Cuaderno: Añadir en el registro de Cuaderno Más medio de Pago: Yape, Caja Huancayo, BCP, Efectivo (LISTO).
+-Productos: Error al actualizar datos de productos, no recepciona la medida deproducto - caso niple 1/2(LISTO).
 -Precio: Editar Precio, aumentar la medida en el titulo h1 del producto(LISTO).
 -Abastecer: Corregir Registro Abastecer a precio 0 (LISTO).
 -registrar el Arqueo(Carga el monto que quedo en caja el día de ayer) Se retiro el monto-opción(LISTO).

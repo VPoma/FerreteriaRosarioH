@@ -143,6 +143,9 @@ total           FLOAT(200,2) NOT NULL,
 situacion       varchar(50),
 importe         FLOAT(200,2),
 resto           FLOAT(200,2),
+id_cot          INT(255),
+fecha_cot       DATE,
+hora_cot        TIME,
 fecha           DATE,
 hora            TIME,
 fecha_sal       DATE,
@@ -160,7 +163,7 @@ id              INT(255) AUTO_INCREMENT NOT NULL,
 id_cuaderno     INT(255) NOT NULL,
 id_producto     INT(255) NOT NULL,
 precio          FLOAT(100,2),
-cantidad        INT(255) NOT NULL,
+cantidad        FLOAT(100,2),
 est             CHAR(1) NOT NULL,
 CONSTRAINT pk_producto_cuaderno PRIMARY KEY(id),
 CONSTRAINT fk_producto_cuaderno_cuaderno FOREIGN KEY(id_cuaderno) REFERENCES cuaderno(id),
@@ -2356,14 +2359,23 @@ ALTER TABLE cuaderno ADD resto FLOAT(100,2) NULL after importe;
 
 ALTER TABLE ingreso ADD descripcion VARCHAR(250) NULL after turno;
 
-### Agrega Columna y llave foranea ###
+#### Agrega Columna y llave foranea ####
 ALTER TABLE ingreso ADD id_usuario INT(255) NULL after id_tienda;
 
 ALTER TABLE ingreso 
 ADD CONSTRAINT fk_ingreso_usuario
 FOREIGN KEY (id_usuario) 
 REFERENCES usuario(id);
-########################################
+#########################################
+
+
+############# CAMBIOS PARA COTIZAR Y EDITAR ######################
+ALTER TABLE cuaderno ADD fecha_cot DATE NULL after resto;
+ALTER TABLE cuaderno ADD hora_cot TIME NULL after resto;
+ALTER TABLE cuaderno ADD id_cot INT(255) NULL after resto;
+ALTER TABLE cuaderno ADD id_cua INT(255) NULL after id;
+##################################################################
+
 ALTER TABLE cuaderno CHANGE COLUMN resto importe FLOAT(100,2) NULL;
 ALTER TABLE producto_cuaderno ADD precio FLOAT(100,2) NULL after id_producto;
 
@@ -2529,3 +2541,84 @@ ORDER BY total_ventas DESC
 LIMIT 10;
 
 INSERT INTO ingreso VALUES(NULL, 1, 1, NULL, NULL, 'EFECTIVO', 500, NULL, CURDATE(), CURRENT_TIME(), 'MAÑANA', 'Pago Tienda Huancan', 'H');
+
+
+SELECT cu.*, ci.nombrecom, ci.numdoc FROM cuaderno cu INNER JOIN cliente ci on cu.id_cliente = ci.id 
+WHERE cu.fecha = '2025-02-14' AND cu.estado = 'COTIZADO' AND cu.id_usuario = 1 AND cu.est = 'H' ORDER BY id DESC;
+
+select id_cot from cuaderno ORDER BY id_cot DESC LIMIT 1;
+
+
+SELECT p.id, p.nombre, p.medida, p.imagen, p.preciob, p.cantidad, l.nombre as 'linea', m.nombre as 'marca' FROM producto p
+                INNER JOIN linea l ON l.id = p.id_linea
+                INNER JOIN marca m ON m.id = p.id_marca
+                WHERE p.id = 576;
+
+SELECT p.id, p.cantidad, pc.cantidad as 'cantiresta' FROM producto p
+                INNER JOIN producto_cuaderno pc ON p.id = pc.id_producto
+                WHERE pc.id_cuaderno = 49
+
+SELECT p.id, c.id_cot, p.nombre, p.medida, p.imagen, p.preciob, pc.cantidad, l.nombre as 'linea', m.nombre as 'marca' FROM producto p
+                INNER JOIN producto_cuaderno pc ON p.id = pc.id_producto
+                INNER JOIN cuaderno c ON c.id = pc.id_cuaderno
+                INNER JOIN linea l ON l.id = p.id_linea
+                INNER JOIN marca m ON m.id = p.id_marca
+                WHERE pc.id_cuaderno = 66
+
+SELECT c.id, c.id_cot, c.total, c.fecha_cot, c.estado, td.documento, cl.id as 'id_clie', cl.numdoc, cl.nombrecom
+                FROM cuaderno c
+                INNER JOIN cliente cl ON cl.id = c.id_cliente
+                INNER JOIN tipodoc td ON td.id = cl.id_tipodoc
+                WHERE c.id_cot = 22;
+
+DELETE FROM producto_cuaderno WHERE id_cuaderno = 5;
+UPDATE producto_cuaderno SET est = 'D' WHERE id_cuaderno = 68;
+
+UPDATE cuaderno SET total = 11 WHERE id = 72;
+
+SELECT id_cua from cuaderno ORDER BY id_cua DESC LIMIT 1;
+
+SELECT c.id, c.id_cot, c.total, c.hora_cot, c.fecha_cot, c.estado, td.documento, cl.numdoc, cl.nombrecom
+                FROM cuaderno c
+                INNER JOIN cliente cl ON cl.id = c.id_cliente
+                INNER JOIN tipodoc td ON td.id = cl.id_tipodoc
+                WHERE c.id = 73;
+
+UPDATE cuaderno SET estado = 'ENTREGADO AZAPAMPA' WHERE estado = 'E_AZAPAMPA';
+
+
+SELECT cu.id as 'id', cu.fecha as 'fechareg', cu.fecha_sal as 'fecha', 'cuaderno' AS 'fuente', pc.cantidad as 'cantidad'
+FROM producto_cuaderno pc
+INNER JOIN cuaderno cu ON cu.id = pc.id_cuaderno
+INNER JOIN producto p ON p.id = pc.id_producto
+INNER JOIN familia fa ON fa.id = p.id_familia
+INNER JOIN linea li ON li.id = p.id_linea
+INNER JOIN marca ca ON ca.id = p.id_marca
+WHERE pc.id_producto = {$this->getId_producto()} AND pc.est = 'H'
+UNION 
+SELECT ab.id as 'id', ab.fecha as 'fechareg', ab.fecha_ent as 'fecha', 'abastecer' AS 'fuente', pa.cantidad as 'cantidad'
+FROM producto_abastecer pa
+INNER JOIN abastecer ab ON ab.id = pa.id_abastecer
+INNER JOIN producto p ON p.id = pa.id_producto
+INNER JOIN familia fa ON fa.id = p.id_familia
+INNER JOIN linea li ON li.id = p.id_linea
+INNER JOIN marca ca ON ca.id = p.id_marca
+WHERE pa.id_producto = {$this->getId_producto()} AND pa.est = 'H'
+ORDER BY fecha DESC;
+
+SELECT p.id, p.codigo ,p.nombre, p.medida, m.nombre as 'marca', COALESCE(SUM(pc.cantidad), 0) AS 'total_ventas'
+FROM producto p 
+LEFT JOIN producto_cuaderno pc ON pc.id_producto = p.id 
+INNER JOIN marca m ON p.id_marca = m.id
+INNER JOIN cuaderno cu ON cu.id = pc.id_cuaderno
+WHERE cu.fecha BETWEEN '2025-03-15' AND '2025-03-15' AND p.est = 'H' AND pc.est = 'H' 
+GROUP BY p.id, p.nombre 
+ORDER BY total_ventas 
+DESC LIMIT 10;
+
+SELECT * FROM producto_cuaderno WHERE id_producto = 5;
+
+SELECT i.id, i.tipopago, i.ingresos, i.turno, i.descripcion, t.nombre as 'tienda', cu.id FROM ingreso i
+                INNER JOIN tienda t on t.id = i.id_tienda
+                INNER JOIN cuaderno cu on cu.id = i.id_cuaderno
+                WHERE i.id = 100;

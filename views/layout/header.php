@@ -35,6 +35,7 @@
         src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
+    <script src="<?=base_url?>assets/js/chart.js"></script>
     
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -73,38 +74,46 @@
                                     <!--<ul class="menu-area-main">-->
 
                                     <?Php if (isset($_SESSION['admin'])): ?>
-                                        <ul class="menu-area-main">
-                                            <li class="active" style="width: 68px;"><a href="<?=base_url?>">INICIO</a> </li>
-                                            <li style="width: 120px;"><a href="<?=base_url?>producto/index">PRODUCTOS</a></li>
-                                            <li style="width: 131px;"><a href="<?=base_url?>precio/tabla">STOCK/PRECIO</a></li>
-                                            <li style="width: 108px;"><a href="<?=base_url?>cuaderno/registroscuaderno">CUADERNO</a></li>
-                                            <li style="width: 90px;"><a href="<?=base_url?>cliente/gestion">CLIENTES</a> </li>
-                                            <li style="width: 110px;"><a href="<?=base_url?>abastecer/index">ABASTECER</a> </li>
-                                            <li style="width: 115px;"><a href="<?=base_url?>proveedor/gestion">PROVEEDOR</a> </li>
-                                            <li><a href="<?=base_url?>usuario/logini"><?=$_SESSION['identity']->usuariof?></a> </li>
+                                        <ul class="menu-area-main" style="text-align: center;">
+                                            <li class="active" style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>">INICIO</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>precio/tabla">STOCK/PRECIO</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>producto/index">PRODUCTOS</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>cotizacion/regiscotizacion">COTIZACIÓN</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>cuaderno/registroscuaderno">CUADERNO</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>cliente/gestion">CLIENTES</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>abastecer/index">ABASTECER</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>proveedor/gestion">PROVEEDOR</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>estadisticos/index">ESTADÍSTICAS</a> </li>
                                         </ul>
                                         <ul style="margin-left: -20px;" class="menu-area-main">
-                                            <li style="width: 75px;"><a href="<?=base_url?>ciudad/gestion">CIUDAD</a></li>
-                                            <li style="width: 75px;"><a href="<?=base_url?>tienda/gestion">TIENDA</a></li>
-                                            <li style="width: 80px;"><a href="<?=base_url?>familia/gestion">FAMILIA</a> </li>
-                                            <li style="width: 60px;"><a href="<?=base_url?>linea/gestion">LINEA</a> </li>
-                                            <li style="width: 75px;"><a href="<?=base_url?>marca/gestion">MARCA</a> </li>
-                                            <li style="width: 85px;"><a href="<?=base_url?>usuario/gestion">USUARIO</a></li>
-                                            <li style="width: 95px;"><a href="<?=base_url?>egreso/gestion">EGRESOS</a></li>
-                                            <li style="width: 95px;"><a href="<?=base_url?>ingreso/gestion">INGRESOS</a></li>
-                                            <li style="width: 95px;"><a href="<?=base_url?>arqueo/index">ARQUEO</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>ciudad/gestion">CIUDAD</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>tienda/gestion">TIENDA</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>familia/gestion">FAMILIA</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>linea/gestion">LINEA</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>marca/gestion">MARCA</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>usuario/gestion">USUARIO</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>egreso/gestion">EGRESOS</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>ingreso/gestion">INGRESOS</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>arqueo/index">ARQUEO</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>usuario/logini"><?=$_SESSION['identity']->usuariof?></a> </li>
                                         </ul>
                                     <?Php elseif (isset($_SESSION['identity'])): ?>
-                                        <ul style="margin-left: -40px;" class="menu-area-main">
-                                            <li class="active" style="width: 64px;"><a href="<?=base_url?>">INICIO</a> </li>
-                                            <li style="width: 114px;"><a href="<?=base_url?>producto/index">PRODUCTOS</a></li>
-                                            <li style="width: 135px;"><a href="<?=base_url?>precio/tabla">STOCK/PRECIO</a></li>
-                                            <li style="width: 104px;"><a href="<?=base_url?>cuaderno/registroscuaderno">CUADERNO</a></li>
-                                            <li style="width: 84px;"><a href="<?=base_url?>cliente/gestion">CLIENTES</a> </li>
-                                            <li style="width: 84px;"><a href="<?=base_url?>egreso/gestion">EGRESOS</a></li>
-                                            <li style="width: 91px;"><a href="<?=base_url?>ingreso/gestion">INGRESOS</a></li>
-                                            <li style="width: 82px;"><a href="<?=base_url?>arqueo/index">ARQUEO</a></li>
-                                            <li><a href="<?=base_url?>usuario/logini"><?=$_SESSION['identity']->usuariof?></a> </li>
+                                        <ul class="menu-area-main">
+                                        <li class="active" style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>">INICIO</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>precio/tabla">STOCK/PRECIO</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>producto/index">PRODUCTOS</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>cotizacion/regiscotizacion">COTIZACIÓN</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>cuaderno/registroscuaderno">CUADERNO</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>cliente/gestion">CLIENTES</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>abastecer/index">ABASTECER</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>proveedor/gestion">PROVEEDOR</a> </li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>estadisticos/index">ESTADÍSTICAS</a> </li>
+                                        </ul>
+                                        <ul style="margin-left: -20px;" class="menu-area-main">
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>egreso/gestion">EGRESOS</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>ingreso/gestion">INGRESOS</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>arqueo/index">ARQUEO</a></li>
+                                            <li style="padding:0; margin:0; margin-left: 10px;"><a style="padding:0; margin:0; font-size: 14.5px;" href="<?=base_url?>usuario/logini"><?=$_SESSION['identity']->usuariof?></a> </li>
                                         </ul>
                                     <?Php else: ?>
                                         <ul class="menu-area-main">

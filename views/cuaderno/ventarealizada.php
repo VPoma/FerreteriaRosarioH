@@ -1,8 +1,8 @@
 <?Php if(isset($_SESSION['pedido']) && $_SESSION['pedido'] == 'complete'):?>
-    <h1>Venta Realizada Con Exito</h1>
+    <h1>Nota de Venta Realizada Con Exito</h1>
 
     <?Php if(isset($cua)):?>
-        <h3>Datos de la Venta:</h3>
+        <h3>Datos de Nota de Venta:</h3>
             <table>
                 <tr>
                     <th>N° de Venta</th>
@@ -10,7 +10,7 @@
                     <th>Fecha</th>
                 </tr>
                 <tr>
-                    <td><?=$cua->id?></td>
+                    <td><?=$cua->id_cua?></td>
                     <td><?=$cua->total?></td>
                     <td><?=$cua->fecha?></td>
                 </tr>
@@ -58,23 +58,45 @@
                     <td>
                         S/.<?=$prod->precio?>
                     </td>
+                    <?Php
+                    $unidades = $prod->cantidad;
+                    // Verifica si el número tiene decimales
+                    if (floor($unidades) == $unidades){
+                        // Si no tiene decimales, muestra el número sin decimales
+                        $cantidad = number_format($unidades, 0);
+                    }else{
+                        // Si tiene decimales, muestra el número con dos decimales
+                        $cantidad = number_format($unidades, 2);
+                    }
+                    ?>
                     <td>
-                        <?=$prod->cantidad?>
+                        <?=$cantidad?>
                     </td>
                 </tr>
             <?Php endwhile;?>
         </table>
     <br>
 
-    <div class="fila-1">
+    <table  style="margin-left: 13%;">
+    
+        <tr>
+            <th>
+                <a href="<?=base_url?>cuaderno/entregaH&id=<?=$cua->id?>" class="button solide-colort">Entr. Huancan</a>
+            </th>
+            <th>
+                <a href="<?=base_url?>cuaderno/entrega&id=<?=$cua->id?>" class="button solide-colort">Entr. Azapampa</a>
+            </th>
+            <th>
+                <a href="<?=base_url?>cuaderno/Comprobante" class="button solide-colort" style="margin-left: 6%; width:160px;">Comprobante E.</a>
+            </th>
+            <th>
+                <a href="<?=base_url?>cuaderno/registroscuaderno" class="button solide-colort" style="margin-left: 6%">Continuar</a>
+            </th>
+        </tr>
 
-        <a href="<?=base_url?>cuaderno/entrega&id=<?=$cua->id?>" class="button solide-colort">Entrega</a>
-
-        <a href="<?=base_url?>cuaderno/registroscuaderno" class="button solide-colort" style="margin-left: 6%">Continuar</a>
-
-    </div>
+    </table>
 
     <?Php endif; ?>
 <?Php elseif(isset($_SESSION['pedido']) && $_SESSION['pedido'] != 'complete'):?>
-    <h1>Tu Pedido No ha podido Realizarse</h1>
+    <h1>La Nota de Venta No ha podido Realizarse</h1>
 <?Php endif; ?>

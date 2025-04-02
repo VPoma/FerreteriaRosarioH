@@ -62,6 +62,13 @@
                             <li><a class="button separa" href="<?=base_url?>producto/gestion">Gestión de Productos</a></li>
                         <?Php endif;?>
 
+                    <?Php elseif( $nombre_controlador == "cotizacioncontroller"): ?>
+                        <h3>Panel Cotizaciones</h3>
+                        <li><a class="button separa" href="<?=base_url?>cotizacion/regiscotizacion">Registros de Cotizaciones</a></li>
+                        <?Php if(isset($_SESSION['admin'])): ?>
+                        <li><a class="button separa" href="<?=base_url?>cotizacion/anuladoscoti">Registros Anulados</a></li>
+                        <?Php endif;?>
+
                     <?Php elseif( $nombre_controlador == "cuadernocontroller"): ?>
                         <h3>Panel Cuaderno</h3>
                         <li><a class="button separa" href="<?=base_url?>cuaderno/registroscuaderno">Registros de Venta</a></li>
@@ -103,7 +110,7 @@
                         <li><a class="button separa" href="<?=base_url?>añadir/index">Ver abastecimiento (<?=$stats['count']?>)</a></li>
 
                         <h3>Panel Abastecer</h3>
-                        <li><a class="button separa" href="<?=base_url?>abastecer/index">Listado de Abastecimiento</a></li>
+                        <li><a class="button separa" href="<?=base_url?>abastecer/index">Productos para Abastecimiento</a></li>
                         <li><a class="button separa" href="<?=base_url?>abastecer/registrosabastecer">Registros de Abastecimiento</a></li>
                         <?Php if(isset($_SESSION['admin'])): ?>
                         <li><a class="button separa" href="<?=base_url?>abastecer/anulados">Registros Anulados</a></li>
@@ -115,6 +122,10 @@
                         <h3>Listado Abastecimiento</h3>
                         <?php $stats = Utils::statsAñadir();?>
                         <li><a class="button separa" href="<?=base_url?>añadir/index">Ver Listado (<?=$stats['count']?>)</a></li>
+
+                    <?Php elseif( $nombre_controlador == "estadisticoscontroller"): ?>
+                        <h3>Panel Estadísticas</h3>
+                        <li><a class="button separa" href="<?=base_url?>estadisticos/index">Generar Reporte Estadístico</a></li>
 
                     <!--Paneles Inferiores-->
 
@@ -165,14 +176,12 @@
 
                     <?Php elseif( $nombre_controlador == "preciocontroller"): ?>
 
-                        <?Php if(isset($_SESSION['admin'])): ?>
-                            <h3>Panel Precio de Producto</h3>
+                            <h3>Panel Precio - Stock</h3>
 
                             <li><a class="button separa" href="<?=base_url?>precio/tabla">Tabla de Precios</a></li>
                             <li><a class="button separa" href="<?=base_url?>precio/registro">Actualizar Precio Fierro</a></li>
                             <li><a class="button separa" href="<?=base_url?>precio/gestion">Gestión de Precio Fierro</a></li>
                             <li><a class="button separa" href="<?=base_url?>descuento/gestion">Gestión Descuento</a></li
-                        <?Php endif;?>
 
                     <?Php elseif( $nombre_controlador == "descuentocontroller"): ?>
 
@@ -194,21 +203,17 @@
 
                     <?Php elseif( $nombre_controlador == "ingresocontroller"): ?>
 
-                        <?Php if(isset($_SESSION['admin'])): ?>
                             <h3>Panel Ingresos</h3>
 
                             <li><a class="button separa" href="<?=base_url?>ingreso/registro">Registrar Ingreso de Caja Chica</a></li>
                             <li><a class="button separa" href="<?=base_url?>ingreso/gestion">Gestión Ingresos de Caja Chica</a></li>
-                        <?Php endif;?>
 
                     <?Php elseif( $nombre_controlador == "arqueocontroller"): ?>
 
-                        <?Php if(isset($_SESSION['admin'])): ?>
                             <h3>Panel Arqueo</h3>
 
                             <li><a class="button separa" href="<?=base_url?>arqueo/index">Registro Arqueo de Caja Chica</a></li>
                             <li><a class="button separa" href="<?=base_url?>arqueo/gestion">Gestión Arqueo de Caja Chica</a></li>
-                        <?Php endif;?>
                         
                     <?Php else: ?>
                         <h1>Seguimos probando</h1>

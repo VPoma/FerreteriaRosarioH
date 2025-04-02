@@ -3,6 +3,10 @@
 <form action="<?=base_url?>precio/filtrotabla" method="POST" enctype="multipart/form-data">
     <table style="width: 75%; text-align: left; border: none;">
         <tr>
+            <th style="width:120px;">
+                <label class="frm" style="margin-left:5%;" for="codigo">Codigo</label>
+                <input style="margin-left:5%; width:70px;" type="text"  name="codigo" class="fildt"/>
+            </th>
             <th style="width:200px;">
             <label class="frm" for="familia">Familia</label>
                 <?Php $familias = utils::showFamilia(); ?>
@@ -41,12 +45,16 @@
             </th>
             <th style="width:200px;">
                 <label class="frm" style="margin-left:5%;" for="nombre">Producto</label>
-                <input style="margin-left:5%; width:150px;" type="text"  name="nombre" class="fildt"/>
+                <input style="margin-left:5%; width:180px;" type="text"  name="nombre" class="fildt"/>
+            </th>
+            <th style="width:200px;">
+                <label class="frm" style="margin-left:5%;" for="nombre">Medida</label>
+                <input style="margin-left:5%; width:120px;" type="text"  name="medida" class="fildt"/>
             </th>
             <th>
-            <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
-                <input type="submit" value="Buscar" class="button solid-colort">
-            </div>
+                <div class="fila-2" style="margin-right: 13%; margin-top: 30px;">
+                    <input type="submit" value="Buscar" class="button solid-colort">
+                </div>
             </th>
         </tr>
     </table>
@@ -70,22 +78,24 @@
 <table class="tablita">
     <tr>
         <th style="width: 20px;">ID</th>
+        <th style="width: 20px;">CODIGO</th>
         <th style="width: 40px;">FAMILIA</th>
         <th style="width: 40px;">LINEA</th>
         <th style="width: 40px;">MARCA</th>
         <th style="width: 40px;">PRODUCTO</th>
-        <th style="width: 40px;">MEDIDA</th>
+        <th style="width: 30px;">MEDIDA</th>
         <th style="width: 40px;">STOCK</th>
         <th style="width: 40px;">PRECIO</th>
-        <th style="width: 40px;">PRECIO F</th>
+        <th style="width: 50px;">PRECIOF</th>
         <?Php if(isset($_SESSION['admin'])): ?>
-        <th style="width: 40px;">PRECIO C</th>
+        <th style="width: 50px;">PRECIOC</th>
         <?Php endif;?>
         <th style="width: 40px;">ACCIONES</th>
     </tr>
     <?Php while($pr = $prec->fetch_object()): ?>
     <tr>
         <td><?=$pr->id?></td>
+        <td><?=$pr->codigo?></td>
         <td><?=$pr->familia?></td>
         <td><?=$pr->linea?></td>
         <td><?=$pr->marca?></td>
@@ -109,9 +119,7 @@
         <td><?=$pr->precioc?></td>
         <?Php endif;?>
         <td>
-            <?Php if(isset($_SESSION['admin'])): ?>
             <a href="<?=base_url?>precio/editar&id=<?=$pr->id?>" class="button solid-colort">Editar</a>
-            <?Php endif;?>
             <a href="<?=base_url?>precio/historialstock&id=<?=$pr->id?>" class="button solid-colort">H. Stock</a>
         </td>
     </tr>

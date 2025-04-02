@@ -67,13 +67,13 @@ $tab2 = mysqli_query($db, "SELECT pa.id_producto, pa.precio, pa.cantidad, p.nomb
             <div>
                 <table class="rostik">
                     <tr>
-                        <th style="width: 250px;">DISTRIBUIDORA "ROSARIO"</th>
+                        <th style="width: 250px;">REAL HOMECENTER S.A.C</th>
                     </tr>
                     <tr>
-                        <th style="width: 250px;">AV. PANAMERICANA SUR N°1387</th>
+                        <th style="width: 250px;">CALLE REAL N° 2417 - CHILCA</th>
                     </tr>
                     <tr>
-                        <th style="width: 250px;">RUC: 10712327311</th>
+                        <th style="width: 250px;">RUC: 20613397052</th>
                     </tr>
                 </table>
                 <br>

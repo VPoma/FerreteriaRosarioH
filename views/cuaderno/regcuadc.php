@@ -1,6 +1,6 @@
 <?Php if(isset($_SESSION['identity'])): ?>
     <?Php if(isset($reg) && isset($cli) && is_object($cli)):?>
-        <h1>DATOS PARA VENTA</h1>
+        <h1>DATOS PARA NOTA DE VENTA</h1>
         <?Php $url_action = base_url."cuaderno/regcuaderno";?>
     <?Php endif;?>
 
@@ -29,7 +29,7 @@
         <?php $total = number_format($stats['total'], 2, '.', ''); ?>
 
         <label class="frm"  for="total">Total</label>
-        <input type="number" step="0.01" value="<?=$total?>" name="total"  />
+        <input type="number" step="0.01" value="<?=$total?>" name="total" readonly/>
 
         <label class="frm"  for="situacion">Situación</label>
         <select name="situacion" id="opcion" onchange="actualizarEstado()">
@@ -68,7 +68,7 @@
 
     <?Php else: ?>
         <h1>Logueese Primero!!!</h1>
-        <p>Necesitas estar logueado en la WEB para poder realizar tu pedido</p>
+        <p>Necesitas estar logueado en la WEB para poder realizar tu Nota de Venta</p>
 <?Php endif;?>
 
 <script>

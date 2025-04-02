@@ -138,17 +138,21 @@ class precioController{
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
             $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
+            $medida = isset($_POST['medida']) ? $_POST['medida'] : false;
+            $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : false;
 
             $precio = new producto();
 
             //Muestra Tabla de Cantidad y Precios de productos FILTRO - 13producto
-            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
+            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre) ) == 0 && strlen(trim($medida)) == 0 && strlen(trim($codigo)) == 0){
                 echo '<script>window.location="'.base_url.'precio/tabla"</script>';
             }else{
             $precio->setFamilia($familia);
             $precio->setLinea($linea); 
             $precio->setMarca($marca);
             $precio->setNombre($nombre);
+            $precio->setMedida($medida);
+            $precio->setCodigo($codigo);
             $prec = $precio->gettablacantipreciofill();
             
             }
@@ -257,7 +261,7 @@ class precioController{
             //Busca un producto para modificar la cantidad y el precio - 14producto
             $pre = $precio->getOne_cantiprecio();
 
-            //Mostrar listado de productos que salieron e ingrsaron a almacen - 1prodcuabs
+            //Mostrar listado de productos que salieron e ingresaron a almacen - 1prodcuabs
             $prodcuadbs = new Prodcuadbs();
             $prodcuadbs->setId_producto($id);
             

@@ -20,6 +20,7 @@ Class egresoController{
             $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
             $tipopago = isset($_POST['tipopago']) ? $_POST['tipopago'] : false;
             $monto = isset($_POST['monto']) ? $_POST['monto'] : false;
+            $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
 
             if($descripcion && $tipopago && $monto){
                 $egreso = new Egreso;
@@ -41,6 +42,10 @@ Class egresoController{
                 }
 
                 $egreso->setTurno($turno);
+
+                if($fecha){
+                    $egreso->setFecha($fecha);
+                }
                 
                 
                 if(isset($_GET['id'])){

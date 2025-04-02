@@ -1,6 +1,7 @@
-<h1>Carrito de Venta</h1>
+<h1>Carrito de Productos</h1>
 
 <?Php if(isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1) :?>
+
     <table>
         <tr>
             <th><b>IMAGEN</b></th>
@@ -52,19 +53,27 @@
         </tr>
         <?Php endforeach; ?>
     </table>
-<div class="fila-3">
-    <?Php $stats = Utils::statsCarrito();?>
-    <?Php $a = $stats['total']?>
-    <?Php $total = number_format($a, 2)?>
-    <h3>Precio Total: S/. <?=$total?> </h3>
-</div>
 
-<div class="fila-1">
-    <a href="<?=base_url?>carrito/delete_all" class="button carro-vaciar">Vaciar Carrito</a>
-    <a href="<?=base_url?>cuaderno/eligcliente" class="button carro-pedido"> Realizar Venta</a>
-</div>
+    <div class="fila-3">
+        <?Php $stats = Utils::statsCarrito();?>
+        <?Php $a = $stats['total']?>
+        <?Php $total = number_format($a, 2)?>
+        <h3>Precio Total: S/. <?=$total?> </h3>
+    </div>
 
-
+    <?Php if(isset($_SESSION['cotiza'])) :?>
+        <?Php $coti =  $_SESSION['cotiza']->id_cot?>
+        <h1>Editar los productos de la Cotinzación N°: <?=$coti?></h1>
+        <div class="fila-1">
+            <a href="<?=base_url?>carrito/delete_all" class="button carro-vaciar">Cancelar</a>
+            <a href="<?=base_url?>cotizacion/editarcoti&id=<?=$coti?>" class="button carro-pedido">Cotizar</a>
+        </div>
+    <?Php else: ?>
+        <div class="fila-1">
+            <a href="<?=base_url?>carrito/delete_all" class="button carro-vaciar">Vaciar Carrito</a>
+            <a href="<?=base_url?>cuaderno/eligcliente" class="button carro-pedido">Continuar</a>
+        </div>
+    <?Php endif; ?>
 
 <?Php else: ?>
     <h2>El Carrito Está Vacio, añade algun producto</h2>

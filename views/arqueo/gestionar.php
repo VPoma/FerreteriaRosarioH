@@ -38,20 +38,16 @@
         <td><?=$ar->totalefectivo?></td>
         <td><?=$ar->usuario?></td>
         <td><?=$ar->fecha?></td>
+        <td>
+            <a href="<?=base_url?>arqueo/detalle&id=<?=$ar->id?>&fecha=<?=$ar->fechaar?>&turno=<?=$ar->turno?>" class="button solid-colort">Detalle</a>
+        </td>
         <!--
         <td>
-            <a href="<?=base_url?>arqueo/detalle&id=<?//=$ar->id?>" class="button solid-colort">Detalle</a>
-        </td>
-        -->
-        <td>
-            <form action="<?=base_url?>arqueo/detalle" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?=$ar->id?>">
-                <input type="hidden" name="fecha" value="<?=$ar->fechaar?>">
-                <input type="hidden" name="turno" value="<?=$ar->turno?>">
-
+            <form action="<?//=base_url?>arqueo/detalle&id=<?//=$ar->id?>&fecha=<?//=$ar->fechaar?>&turno=<?//=$ar->turno?>" method="GET">
                 <input type="submit" value="Detalle" class="button solid-colort">
             </form>
         </td>
+        -->
     </tr>
     <?Php endwhile; ?>
 </table>

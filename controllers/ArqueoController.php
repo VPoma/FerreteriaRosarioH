@@ -15,33 +15,60 @@ Class arqueoController{
             $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
             $turno = isset($_POST['turno']) ? $_POST['turno'] : false;
 
-            $ingreso = new Ingreso();
+            if($turno != "CIERRE" ){
+                $ingreso = new Ingreso();
 
-            $ingreso->setFecha($fecha);
-            $ingreso->setTurno($turno);
-            //Muestra todos los registros de Ingreso para arqueo en base a fecha y turno - 4Ingreso
-            $ingr =  $ingreso->getall_Ari();
-            //Muestra el monto de los registros en efectivo de Ingreso para Arqueo - 5Ingreso
-            $in_calef = $ingreso->getall_Ari_in_ef();
-            //Muestra el monto de los registros en transferencia de Ingreso para Arqueo - 6Ingres
-            $in_caltr = $ingreso->getall_Ari_in_tr();
-            //Muestra el monto de los registros en deuda de Ingreso para Arqueo - 7Ingreso
-            $in_calde = $ingreso->getall_Ari_in_deu();
-            
-            $egreso = new Egreso();
+                $ingreso->setFecha($fecha);
+                $ingreso->setTurno($turno);
+                //Muestra todos los registros de Ingreso para arqueo en base a fecha y turno - 4Ingreso
+                $ingr =  $ingreso->getall_Ari();
+                //Muestra el monto de los registros en efectivo de Ingreso para Arqueo - 5Ingreso
+                $in_calef = $ingreso->getall_Ari_in_ef();
+                //Muestra el monto de los registros en transferencia de Ingreso para Arqueo - 6Ingres
+                $in_caltr = $ingreso->getall_Ari_in_tr();
+                //Muestra el monto de los registros en deuda de Ingreso para Arqueo - 7Ingreso
+                $in_calde = $ingreso->getall_Ari_in_deu();
+                
+                $egreso = new Egreso();
 
-            $egreso->setFecha($fecha);
-            $egreso->setTurno($turno);
-            //Muestra registros de Egreso para Arqueo - 7Egreso
-            $egre = $egreso->getall_Are();
-            //Muestra el monto de los registros en efectivo de Egreso para Arqueo - 8Egreso
-            $eg_calef = $egreso->getall_Are_eg_ef();
-            //Muestra el monto de los registros en transferencia de Egreso para Arqueo - 9Egreso
-            $eg_caltr = $egreso->getall_Are_eg_tr();
+                $egreso->setFecha($fecha);
+                $egreso->setTurno($turno);
+                //Muestra registros de Egreso para Arqueo - 7Egreso
+                $egre = $egreso->getall_Are();
+                //Muestra el monto de los registros en efectivo de Egreso para Arqueo - 8Egreso
+                $eg_calef = $egreso->getall_Are_eg_ef();
+                //Muestra el monto de los registros en transferencia de Egreso para Arqueo - 9Egreso
+                $eg_caltr = $egreso->getall_Are_eg_tr();
 
-            $fechaarqueo = $fecha;
-            $turnoarqueo = $turno;
-    
+                $fechaarqueo = $fecha;
+                $turnoarqueo = $turno;
+            }else{
+                $ingreso = new Ingreso();
+
+                $ingreso->setFecha($fecha);
+                //Muestra todos los registros de Ingreso para arqueo en base a fecha - 12Ingreso
+                $ingr =  $ingreso->getall_Arit();
+                //Muestra el monto total de los registros en efectivo de Ingreso para Arqueo - 13Ingreso
+                $in_calef = $ingreso->getall_Ari_in_eft();
+                //Muestra el monto total de los registros en transferencia de Ingreso para Arqueo - 14Ingreso
+                $in_caltr = $ingreso->getall_Ari_in_trt();
+                //Muestra el monto total de los registros en deuda de Ingreso para Arqueo - 15Ingreso
+                $in_calde = $ingreso->getall_Ari_in_deut();
+                
+                $egreso = new Egreso();
+
+                $egreso->setFecha($fecha);
+                //Muestra registros de Egreso para Arqueo - 7Egreso
+                $egre = $egreso->getall_Aret();
+                //Muestra el monto de los registros en efectivo de Egreso para Arqueo - 8Egreso
+                $eg_calef = $egreso->getall_Are_eg_eft();
+                //Muestra el monto de los registros en transferencia de Egreso para Arqueo - 9Egreso
+                $eg_caltr = $egreso->getall_Are_eg_trt();
+
+                $fechaarqueo = $fecha;
+                $turnoarqueo = $turno;
+            }
+
             require_once 'views/arqueo/arqueoar.php';
         }
     }
@@ -117,10 +144,10 @@ Class arqueoController{
     }
 
     public function detalle(){
-        if(isset($_POST)){
-            $id = isset($_POST['id']) ? $_POST['id'] : false;
-            $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
-            $turno = isset($_POST['turno']) ? $_POST['turno'] : false;
+        if(isset($_GET)){
+            $id =  $_GET['id'];
+            $fecha = $_GET['fecha'];
+            $turno = $_GET['turno'];
 
             //Sacar Datos del Cuaderno
             $arqueo = new Arqueo();
@@ -128,19 +155,34 @@ Class arqueoController{
             //Busca un solo registro a travez de id - 9cuaderno
             $arq = $arqueo->getOne();
 
-            //Rellenando los Ingresos
-            $ingreso = new Ingreso();
-            $ingreso->setFecha($fecha);
-            $ingreso->setTurno($turno);
-            //Muestra todos los registros de Ingreso para arqueo en base a fecha y turno - 4Ingreso
-            $ingr =  $ingreso->getall_Ari();
+            if($turno != "CIERRE" ){
+                //Rellenando los Ingresos
+                $ingreso = new Ingreso();
+                $ingreso->setFecha($fecha);
+                $ingreso->setTurno($turno);
+                //Muestra todos los registros de Ingreso para arqueo en base a fecha y turno - 4Ingreso
+                $ingr =  $ingreso->getall_Ari();
+                //Rellenando los Egresos
+                $egreso = new Egreso();
+                $egreso->setFecha($fecha);
+                $egreso->setTurno($turno);
+                //Muestra registros de Egreso para Arqueo en base a fecha y turno - 7Egreso
+                $egre = $egreso->getall_Are();
+            }else{
+                //Rellenando los Ingresos
+                $ingreso = new Ingreso();
+                $ingreso->setFecha($fecha);
+                //Muestra todos los registros de Ingreso para arqueo en base a fecha - 12Ingreso
+                $ingr =  $ingreso->getall_Arit();
+                //Rellenando los Egresos
+                $egreso = new Egreso();
+                $egreso->setFecha($fecha);
+                //Muestra registros totales de Egreso para Arqueo en base a fecha - 10Egreso
+                $egre = $egreso->getall_Aret();
+            }
 
-            //Rellenando los Egresos
-            $egreso = new Egreso();
-            $egreso->setFecha($fecha);
-            $egreso->setTurno($turno);
-            //Muestra registros de Egreso para Arqueo - 7Egreso
-            $egre = $egreso->getall_Are();
+            $fe = $fecha;
+            $tu = $turno;
 
             require_once 'views/arqueo/detallear.php';
         }else{
@@ -186,7 +228,6 @@ Class arqueoController{
         echo '<script>window.location="'.base_url.'arqueo/gestion"</script>';
     }
 
-    
 }
 
 ?>

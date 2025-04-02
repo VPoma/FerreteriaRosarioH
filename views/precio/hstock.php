@@ -1,4 +1,21 @@
 <h1>Historial de Ingresos y Egresos del Produto N° <?=$pre->id?></h1>
+
+<table  style="margin-left: 18%;">
+    <tr>
+        <th>
+            <form action="<?=base_url?>views/reportestock.php" method="GET" target="_blank">
+                <input type="hidden" value="<?=$pre->id?>" name="id"/>
+                <input type="submit" value="Imprimir" name="Imprimir" class="button solide-colort"/>
+            </form>
+        </th>
+        <th>
+            <a href="<?=base_url?>precio/tabla" class="button extrae-colort">Regresar</a>
+        </th>
+    </tr>
+</table>
+
+<br>
+
 <table>
     <tr>
         <th style="width: 15px;">CODIGO</th>
@@ -57,10 +74,12 @@
         <td><?=$cuabs?></td>
         <td><?=$p->fechareg?></td>
         <?Php
-        $fuente = $p->fuente;
+        $est = $p->estado;
 
-        if($fuente == 'cuaderno'){
+        if($est == 'ENTREGADO AZAPAMPA'){
             $estado = 'SALIÓ'; 
+        }elseif($est == 'ANULADO'){
+            $estado = 'ANULADO';
         }else{
             $estado = 'INGRESÓ';
         }
@@ -91,15 +110,3 @@
     </tr>
     <?Php endwhile; ?>
 </table>
-<br><br>
-
-<form action="<?=base_url?>views/reportestock.php" method="GET">
-    <input type="hidden" value="<?=$pre->id?>" name="id"/>
-    <input type="submit" value="Imprimir" name="Imprimir" class="button solide-colort"/>
-</form>
-
-<div class="fila-2">
-    <a href="<?=base_url?>precio/tabla" class="button extrae-colort">
-        Regresar
-    </a>
-</div>

@@ -17,10 +17,10 @@ Class productoController{
         $producto = new Producto;
         $producto->setOffset($offset);
         $producto->setLimite($limite);
-
+         //Mostrar listado de productos con imagenes (para el carrito) - 1producto
         $product = $producto->getRandom();
     
-    //Saca la cantidad de lineas - 0producto
+        //Saca la cantidad de lineas - 0producto
         $total = $producto->getAlltotal();
 
         $totalP = ceil($total/$limite);
@@ -36,10 +36,12 @@ Class productoController{
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
             $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
+            $medida = isset($_POST['medida']) ? $_POST['medida'] : false;
+            $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : false;
 
             $producto = new producto();
 
-            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
+            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0 && strlen(trim($medida)) == 0 && strlen(trim($codigo)) == 0){
                 
                 echo '<script>window.location="'.base_url.'producto/index"</script>';
 
@@ -49,7 +51,9 @@ Class productoController{
                 $producto->setLinea($linea); 
                 $producto->setMarca($marca);
                 $producto->setNombre($nombre);
-
+                $producto->setMedida($medida);
+                $producto->setCodigo($codigo);
+                //Mostrar listado de productos con imagenes CON FILTRO (para el carrito) - 2producto
                 $product = $producto->getfillRandom();
 
             }
@@ -185,10 +189,11 @@ Class productoController{
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
             $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
+            $medida = isset($_POST['medida']) ? $_POST['medida'] : false;
 
             $producto = new producto();
 
-            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
+            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0 && strlen(trim($medida)) == 0){
                 
                 echo '<script>window.location="'.base_url.'producto/gestion"</script>';
 
@@ -198,6 +203,7 @@ Class productoController{
             $producto->setLinea($linea); 
             $producto->setMarca($marca);
             $producto->setNombre($nombre);
+            $producto->setMedida($medida);
             //MUESTRA TODOS LOS REGISTROS CON FILTRO - LISTADO - 18producto
             $prod = $producto->getAllfiltro();
 

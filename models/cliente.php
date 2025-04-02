@@ -182,7 +182,7 @@ class cliente{
                 . "INNER JOIN tipodoc td ON td.id = c.id_tipodoc " 
                 . "INNER JOIN ciudad ci ON ci.id = c.id_ciudad "
                 . "WHERE c.est = 'H' "
-                . "GROUP BY c.nombrecom "
+                . "GROUP BY c.id, c.nombrecom "
                 . "ORDER BY total_ventas DESC "
                 . "LIMIT 10";
         $cliente = $this->db->query($sql);

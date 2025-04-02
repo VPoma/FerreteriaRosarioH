@@ -18,14 +18,15 @@
     <tr>
         <th style="width: 20px;">ID</th>
         <th style="width: 60px;">TIENDA</th>
-        <th style="width: 100px;">DESCRIPCIÓN</th>
+        <th style="width: 80px;">DESCRIPCION</th>
         <th style="width: 80px;">PERSONA</th>
-        <th style="width: 60px;">TIPO DE PAGO</th>
+        <th style="width: 60px;">T.PAGO</th>
         <th style="width: 40px;">INGRESOS</th>
         <th style="width: 40px;">DEUDAS</th>
         <th style="width: 50px;">TURNO</th>
-        <th style="width: 70px;">FECHA</th>
-        <th style="width: 50px;">ACCIONES</th>
+        <th style="width: 80px;">FECHA</th>
+        <th style="width: 70px;">OBSERVACIÓN</th>
+        <th style="width: 80px;">ACCIONES</th>
     </tr>
     <?Php while($in = $ingr->fetch_object()): ?>
     <tr>
@@ -33,7 +34,7 @@
         <td><?=$in->tienda?></td>
         <?Php
         if(isset($in->cuaderno)){
-            $descripcion = "CUADERNO $in->cuaderno";
+            $descripcion = "<b>CUADERNO $in->cuaderno</b>";
         }else{
             $descripcion = $in->descripcion;
         }
@@ -52,14 +53,24 @@
         <td><?=$in->deudas?></td>
         <td><?=$in->turno?></td>
         <td><?=$in->fecha?></td>
-        <?Php if (isset($in->cuaderno)): ?>
+        <?Php
+        if(isset($in->describecu)){
+            $observacion = $in->describecu;
+        }else{
+            $observacion = $in->descripcion;
+        }
+        ?>
+        <td><?=$observacion?></td>
+        <?Php if (!isset($_SESSION['admin'])): ?>
             <td>
-                Sin Acción: Sujeto a Reg. Cuaderno
+                <b>Sin Acción. Solo ADM!</b>
             </td>
         <?Php else: ?>
             <td>
-                <a href="<?=base_url?>ingreso/editar&id=<?=$in->id?>" class="button solid-colort">Editar</a>
-                <a href="<?=base_url?>ingreso/eliminar&id=<?=$in->id?>" class="button extra-colort">Eliminar</a>
+                <a href="<?=base_url?>ingreso/editar&id=<?=$in->id?>" class="button solid-colort" style="width: 88px; margin-left: 2px;" >Editar</a>
+                <?Php if (!isset($in->cuaderno)): ?>
+                    <a href="<?=base_url?>ingreso/eliminar&id=<?=$in->id?>" class="button extra-colort" style="width: 88px; margin-left: 2px;">Eliminar</a>
+                <?Php endif; ?>
             </td>
         <?Php endif; ?>
     </tr>

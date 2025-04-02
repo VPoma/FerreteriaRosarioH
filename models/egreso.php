@@ -153,7 +153,7 @@ Class egreso{
 
     //Editar registro de egreso - 4Egreso
     public function edit(){
-        $sql = "UPDATE egreso SET descripcion = '{$this->getDescripcion()}', tipopago = '{$this->getTipopago()}', monto = {$this->getMonto()} WHERE id = {$this->getId()};";
+        $sql = "UPDATE egreso SET descripcion = '{$this->getDescripcion()}', tipopago = '{$this->getTipopago()}', monto = {$this->getMonto()}, fecha = '{$this->getFecha()}' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
 
         $result = false;
@@ -183,7 +183,7 @@ Class egreso{
         return $egreso->num_rows;
     }
 
-    //Muestra registros de Egreso para Arqueo - 7Egreso
+    //Muestra registros de Egreso para Arqueo en base a fecha y turno - 7Egreso
     Public function getall_Are(){
         $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, e.tipopago, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
                 . "INNER JOIN tienda t on t.id = e.id_tienda "
@@ -205,6 +205,32 @@ Class egreso{
     Public function getall_Are_eg_tr(){
         $sql = "SELECT monto FROM egreso "
                 . "WHERE tipopago != 'EFECTIVO' AND fecha = '{$this->getFecha()}' AND turno = '{$this->getTurno()}' AND est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
+    //Muestra registros totales de Egreso para Arqueo en base a fecha - 10Egreso
+    Public function getall_Aret(){
+        $sql = "SELECT e.id, e.descripcion, e.monto, e.fecha, e.turno, e.tipopago, t.nombre as 'tienda', u.usuariof as 'usuario' FROM egreso e "
+                . "INNER JOIN tienda t on t.id = e.id_tienda "
+                . "INNER JOIN usuario u on u.id = e.id_usuario "
+                . "WHERE e.fecha = '{$this->getFecha()}' AND e.est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
+    //Muestra el monto total de los registros en efectivo de Egreso para Arqueo - 11Egreso
+    Public function getall_Are_eg_eft(){
+        $sql = "SELECT monto FROM egreso "
+                . "WHERE tipopago = 'EFECTIVO' AND fecha = '{$this->getFecha()}' AND est = 'H' ORDER BY id DESC;";
+        $egreso = $this->db->query($sql);
+        return $egreso;
+    }
+
+    //Muestra el monto total de los registros en transferencia de Egreso para Arqueo - 12Egreso
+    Public function getall_Are_eg_trt(){
+        $sql = "SELECT monto FROM egreso "
+                . "WHERE tipopago != 'EFECTIVO' AND fecha = '{$this->getFecha()}' AND est = 'H' ORDER BY id DESC;";
         $egreso = $this->db->query($sql);
         return $egreso;
     }

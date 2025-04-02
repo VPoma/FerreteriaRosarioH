@@ -47,7 +47,7 @@
             <td><?=$ci->ciudad?></td>
             <td><?=$ci->numcel?></td>
             <td>
-                <a href="<?=base_url?>cuaderno/registrocuad&id=<?=$ci->id?>" class="button solid-colort">Elegir</a>
+                <a href="<?=base_url?>cuaderno/eligecotcuad&id=<?=$ci->id?>" class="button solid-colort">Elegir</a>
             </td>
         </tr>
         <?Php endwhile; ?>

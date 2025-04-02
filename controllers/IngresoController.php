@@ -24,10 +24,10 @@ Class ingresoController{
         $ingreso->setOffset($offset);
         $ingreso->setLimite($limite);
 
-        //Muestra todos los registros de Egreso - 2Egreso
+        //Muestra todos los registros de Egreso - 2Ingreso
         $ingr = $ingreso->getAll();
 
-        //Saca la cantidad de lineas - 3egreso
+        //Saca la cantidad de lineas - Inegreso
         $total = $ingreso->getAlltotal();
 
         $totalP = ceil($total/$limite);
@@ -47,8 +47,9 @@ Class ingresoController{
             $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
             $tipopago = isset($_POST['tipopago']) ? $_POST['tipopago'] : false;
             $monto = isset($_POST['monto']) ? $_POST['monto'] : false;
+            $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
 
-            if($descripcion && $tipopago && $monto){
+            if($tipopago && $monto){
 
                 //Guarda en la tabla de Ingreso
                 $ingreso = new Ingreso();
@@ -56,9 +57,9 @@ Class ingresoController{
                 $ingreso->setId_usuario($usuario);
                 $ingreso->setTipopago($tipopago);
                 $ingreso->setIngresos($monto);
+
                 date_default_timezone_set('America/Lima');
                 $horaturno = (int)date("H");
-
                 if ($horaturno >= 7 && $horaturno < 14) {
                     $turno = "MAÑANA";
                 } elseif ($horaturno >= 14 && $horaturno < 18) {
@@ -68,12 +69,15 @@ Class ingresoController{
                 }
                 $ingreso->setTurno($turno);
                 $ingreso->setDescripcion($descripcion);
+                if($fecha){
+                    $ingreso->setFecha($fecha);
+                }
                 
                 if(isset($_GET['id'])){
                     $id = $_GET['id'];
                     $ingreso->setId($id);
 
-                    //Editar registro de egreso - 4Egreso
+                    //Editar registro de ingreso - 10Ingreso
                     $save = $ingreso->edit();
                 }else{
                     //Guardar Registro de Ingresos - 1Ingreso
@@ -137,7 +141,7 @@ Class ingresoController{
             $ingreso = new Ingreso();
             $ingreso->setId($id);
             
-            //Edita para ocultar un registro - 6cliente
+            ///Editar A fin de Ocultar - 11Ingreso
             $delete = $ingreso->edit_oculta(); 
             
             if($delete){
@@ -150,6 +154,22 @@ Class ingresoController{
         }
 
         echo '<script>window.location="'.base_url.'ingreso/gestion"</script>';
+    }
+
+    public function editaingr(){
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            $edit = true;
+
+            $ingreso = new Ingreso();
+            $ingreso->setId($id);
+            //Busca un solo registro a travez de id - 9cuaderno
+            $ingr = $ingreso->getOne();
+
+            require_once 'views/cuaderno/editacua.php';
+        }else{
+            echo '<script>window.location="'.base_url.'cuaderno/registroscuaderno"</script>';
+        }
     }
 
 }

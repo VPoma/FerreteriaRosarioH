@@ -165,7 +165,7 @@ Class proveedor{
                 . "LEFT JOIN abastecer ab ON ab.id_proveedor = pe.id "
                 . "INNER JOIN ciudad ci ON ci.id = pe.id_ciudad "
                 . "WHERE pe.est = 'H' "
-                . "GROUP BY pe.nombrecom "
+                . "GROUP BY pe.id, pe.nombrecom "
                 . "ORDER BY total_comp DESC "
                 . "LIMIT 10";
         $cliente = $this->db->query($sql);

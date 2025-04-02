@@ -4,7 +4,6 @@ require_once 'models/producto.php';
 require_once 'models/abastecer.php';
 
 class abastecerController{
-    //Muestra todos los productos para ABASTECER - 8producto
     public function index(){
         //Paginador
         if(isset($_GET['pag'])){
@@ -19,7 +18,7 @@ class abastecerController{
         $producto = new Producto;
         $producto->setOffset($offset);
         $producto->setLimite($limite);
-
+        //Muestra todos los productos para ABASTECER - 8producto
         $prod = $producto->getAllab();
         
         //Saca la cantidad de lineas - 0
@@ -31,26 +30,32 @@ class abastecerController{
         require_once  'views/abastecer/gestionab.php';
     }
 
-    //Muestra todos los productos para ABASTECER FILTRADO  - 9producto
     public function filtroindex(){
         if(isset($_POST)){
+            $familia = isset($_POST['familia']) ? $_POST['familia'] : false;
             $linea = isset($_POST['linea']) ? $_POST['linea'] : false;
             $marca = isset($_POST['marca']) ? $_POST['marca'] : false;
             $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : false;
+            $medida = isset($_POST['medida']) ? $_POST['medida'] : false;
+            $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : false;
 
             $producto = new producto();
 
-            if(strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0){
+            if(strlen(trim($familia)) == 0 && strlen(trim($linea)) == 0 && strlen(trim($marca)) == 0 && strlen(trim($nombre)) == 0 && strlen(trim($medida)) == 0 && strlen(trim($codigo)) == 0){
                 
                 echo '<script>window.location="'.base_url.'abastecer/index"</script>';
 
             }else{
 
-            $producto->setLinea($linea); 
-            $producto->setMarca($marca);
-            $producto->setNombre($nombre);
-
-            $prod = $producto->getFillab();
+                $producto->setFamilia($familia);
+                $producto->setLinea($linea); 
+                $producto->setMarca($marca);
+                $producto->setNombre($nombre);
+                $producto->setMedida($medida);
+                $producto->setCodigo($codigo);
+                
+                //Muestra todos los productos para ABASTECER FILTRADO  - 9producto
+                $prod = $producto->getFillab();
 
             }
 
@@ -189,21 +194,37 @@ class abastecerController{
                 $save_pa = $abastecer->save_pa();
 
                 if($save && $save_pa){
-                    $_SESSION['register'] = "complete";
+                    $_SESSION['pedido'] = "complete";
                 }else{
-                    $_SESSION['register'] = "failed";
+                    $_SESSION['pedido'] = "failed";
                 }
                 
             }else{
-                $_SESSION['register'] = "failed";
+                $_SESSION['pedido'] = "failed";
             }
         }else{
-            $_SESSION['register'] = "failed";
+            $_SESSION['pedido'] = "failed";
         }
 
-        echo '<script>window.location="'.base_url.'abastecer/registrosabastecer"</script>';
+        echo '<script>window.location="'.base_url.'abastecer/Arealizada"</script>';
         unset($_SESSION['añadir']);
 
+    }
+
+    public function Arealizada(){
+        if(isset($_SESSION['identity'])){
+            $identity = $_SESSION['identity'];
+            $abastecer = new Abastecer();
+            $abastecer->setId_Usuario($identity->id);
+            //Busca en base a un usuario - 17abastecer
+            $abs = $abastecer->getOneByUser();
+            
+            //Sacar Productos del Cuaderno - 12abastecer
+            $producto_abastecer= new Abastecer();
+            $prodabs = $producto_abastecer->getProductosByabastecer($abs->id);
+
+        }
+        require_once 'views/abastecer/abastrealizado.php';
     }
 
     public function registrosabastecer(){
@@ -305,6 +326,7 @@ class abastecerController{
 
             $abastecer = new Abastecer();
             $abastecer->setId($id);
+            //Saca datos del registro de cuaderno en base a un id - 11abastecer
             $abs = $abastecer->getOne();
 
             require_once 'views/abastecer/anulara.php';
@@ -320,14 +342,53 @@ class abastecerController{
             $id = $_GET['id'];
             $abastecer = new Abastecer();
             $abastecer->setId($id);
-            //Edita para olcutar registro - 13abastecer
-            $delete = $abastecer->edit_oculta(); 
-            
-            if($delete){
-                $_SESSION['delete'] = 'complete';
+            //Saca datos del registro de cuaderno en base a un id - 11abastecer
+            $abs = $abastecer->getOne();
+
+            if($abs->estado == "INGRESADO"){
+
+                $abastecer = new Abastecer();
+                $abastecer->setId($id);
+                //Edita para olcutar registro - 13abastecer
+                $delete = $abastecer->edit_oculta();
+
+                //Recibe cantidad de productos a stock - 16abastecer
+                $producto_abastecer = new Abastecer();
+                $prodabs = $producto_abastecer->getProdByabs_suma($id);
+
+                //Edita y resta la cantidad de productos  - 10producto - en esta caso suma
+                $producto = new producto();
+                while($pr = $prodabs->fetch_object()){
+                    $producto->setId($pr->id);
+                    $cantidadprod = $pr->cantidad;
+                    $cantidadcuad = $pr->cantisuma;
+                    $resta = $cantidadprod - $cantidadcuad;
+                    $producto->setCantidad($resta);
+                    //Edita y resta o suma la cantidad de productos  - 10producto
+                    $update = $producto->salida();
+                }
+
+                if($delete && $update){
+                    $_SESSION['delete'] = 'complete';
+                }else{
+                    $_SESSION['delete'] = 'failed';
+                }
+
+
             }else{
-                $_SESSION['delete'] = 'failed';
+                $abastecer = new Abastecer();
+                $abastecer->setId($id);
+                //Edita para olcutar registro - 13abastecer
+                $delete = $abastecer->edit_oculta();
+            
+            
+                if($delete){
+                    $_SESSION['delete'] = 'complete';
+                }else{
+                    $_SESSION['delete'] = 'failed';
+                }
             }
+            
         }else{
             $_SESSION['delete'] = 'failed';
         }

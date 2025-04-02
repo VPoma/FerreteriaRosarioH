@@ -11,6 +11,8 @@
         <div class="data">
             <h2 style="text-align: left; margin-left:-20px; margin-top:15px;">LINEA: <?=$product->linea?></h2>
             <h3 style="text-align: left; margin-left:-20px; margin-top:-40px;">MARCA: <?=$product->marca?></h3>
+            <h3 style="text-align: left; margin-left:-20px; margin-top:-40px;">CODIGO: <?=$product->codigo?></h3>
+            <br>
             <p class="price" style="margin-top:-20px;"><b>PRECIO: S/. <?=$product->preciob?></b></p>
             <p class="price" style="margin-top:5px;"><b>STOCK: <?=$product->cantidad?></b></p>
             <br>

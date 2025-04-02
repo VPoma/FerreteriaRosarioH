@@ -1,5 +1,5 @@
 <?Php if(isset($delete) && isset($cua) && is_object($cua)):?>
-    <h1>Anular Venta N° <?=$cua->id?></h1>
+    <h1>Anular Venta N° <?=$cua->id_cua?></h1>
     <?Php $url_action = base_url."cuaderno/delete&id=".$cua->id;?>
 <?Php else:?>
     <?Php require_once 'views/cuaderno/registrosc.php'; ?>

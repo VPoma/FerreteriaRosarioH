@@ -1,5 +1,9 @@
 <?Php if(isset($edit) && isset($ing) && is_object($ing)):?>
-    <h1>Editar Ingreso: <?=$ing->descripcion?></h1>
+    <?Php if(isset($ing->cuaderno)):?>
+        <h1>Editar Ingreso: Cuaderno N° <?=$ing->cuaderno?></h1>
+    <?Php else:?>
+        <h1>Editar Ingreso: <?=$ing->descripcion?></h1>
+    <?Php endif;?>
     <?Php $url_action = base_url."ingreso/savein&id=".$ing->id;?>
 <?Php else:?>
     <h1>Nuevo Ingreso</h1>
@@ -20,8 +24,8 @@
 
     <input type="hidden" value="<?=$_SESSION['identity']->id?>" name="usuario"/>
 
-    <label class="frm" for="descripcion">Descripción</label>
-    <input type="text" name="descripcion" value="<?=isset($ing) && is_object($ing) ? $ing->descripcion : ''; ?>" required/>
+    <label class="frm" for="monto">Monto</label>
+    <input type="number" step="any" name="monto" value="<?=isset($ing) && is_object($ing) ? $ing->ingresos : ''; ?>" required/>
 
     <label class="frm" for="tipopago">Tipo de Pago</label>
     <select name="tipopago" id="">
@@ -31,9 +35,16 @@
         <option value="CAJA HUANCAYO" <?=isset($ing) && is_object($ing) && $ing->tipopago == "CAJA HUANCAYO" ?  'selected' : ''; ?>>CAJA HUANCAYO</option>
     </select>
 
-    <label class="frm" for="monto">Monto</label>
-    <input type="number" step="any" name="monto" value="<?=isset($ing) && is_object($ing) ? $ing->ingresos : ''; ?>" required/>
+    <?Php if(!isset($ing->cuaderno)):?>
+        <label class="frm" for="descripcion">Descripción</label>
+        <input type="text" name="descripcion" value="<?=isset($ing) && is_object($ing) ? $ing->descripcion : ''; ?>" required/>
+    <?Php endif;?>
 
+    <?Php if(isset($edit)):?>
+        <label class="frm" for="fecha">Fecha</label>
+        <input type="date" name="fecha" value="<?=isset($ing) && is_object($ing) ? $ing->fecha : ''; ?>" required/>
+    <?Php endif;?>
+    
     <input type="submit" value="Guardar">
 
     <div class="fila-2">

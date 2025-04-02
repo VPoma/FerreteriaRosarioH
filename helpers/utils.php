@@ -76,6 +76,13 @@ class Utils{
         return $tdoc;
     }
 
+    public static function showUsuario(){
+        require_once 'models/usuario.php';
+        $usuario = new Usuario();
+        $usuarios = $usuario->getAll();
+        return $usuarios;
+    }
+
     public static function statsCarrito(){
         $stats = array(
             'count' => 0.00,

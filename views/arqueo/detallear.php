@@ -1,7 +1,7 @@
 <h1>DETALLE ARQUEO N° <?=$arq->id?></h1>
 
 <?Php if(isset($arq)):?>
-<h3>Resumen de Arqueo</h3>
+<h2>Resumen de Arqueo Fecha: <?=$arq->fechaar?> - Turno: <?=$arq->turno?></h2>
     <table>
         <tr>
             <th>Total de Ingresos Efectivo</th>
@@ -29,7 +29,7 @@
 <br>
     <table class="tablita" style="margin-left:10%;">
         <tr>
-            <th colspan="9" style="font-size: 20px;">INGRESOS</th>
+            <th colspan="10 style="font-size: 20px;">INGRESOS</th>
         </tr>
         <tr>
             <th style="width: 15px;">ID</th>
@@ -40,6 +40,7 @@
             <th style="width: 40px;">INGRESOS</th>
             <th style="width: 40px;">DEUDAS</th>
             <th style="width: 50px;">TURNO</th>
+            <th style="width: 60px">OBSERVACIÓN</th>  
             <th style="width: 75px;">FECHA</th>
         </tr>
         <?Php while($in = $ingr->fetch_object()): ?>
@@ -66,6 +67,7 @@
             <td><?=$in->ingresos?></td>
             <td><?=$in->deudas?></td>
             <td><?=$in->turno?></td>
+            <td><?=$in->describecu?></td>
             <td><?=$in->fecha?></td>
         </tr>
         <?Php endwhile; ?>
@@ -98,15 +100,31 @@
         <?Php endwhile; ?>
     </table>
 <br>
-    <div class="fila-1">
     
+<?Php endif; ?>
+
+<br>
+
+<table  style="margin-left: 18%;">
+    <tr>
+        <th>
         <?Php if(isset($_SESSION['admin'])): ?>
             <a href="<?=base_url?>arqueo/eliminar&id=<?=$arq->id?>" class="button extrae-colort">Anular</a>
         <?Php endif;?>
+        </th>
+        <th>
+            <form action="<?=base_url?>views/reportearqueo.php" method="GET" target="_blank">
+                <input type="hidden" value="<?=$arq->id?>" name="id"/>
+                <input type="hidden" value="<?=$fe?>" name="fecha"/>
+                <input type="hidden" value="<?=$tu?>" name="turno"/>
+                <input type="submit" value="Imprimir" name="Imprimir" class="button solide-colort"/>
+            </form>
+        </th>
+    </tr>
+</table>
 
-    </div>
-    
-<?Php endif; ?>
-    <br><br>
+<br>
 
-<a href="<?=base_url?>arqueo/gestion" class="button extrae-colort" style="margin-left: 6%">Regresar</a>
+<div class="fila-2">
+    <a href="<?=base_url?>arqueo/gestion" class="button extrae-colort" style="margin-left: 6%"> Regresar</a>
+</div>

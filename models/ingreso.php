@@ -160,7 +160,7 @@ Class ingreso{
 
     //Muestra todos los registros de Ingreso - 2Ingreso
     Public function getall(){
-        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, i.descripcion, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno', u.usuariof as 'usuario' FROM ingreso i "
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, i.descripcion, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id_cua as 'cuaderno', cu.descripcion as 'describecu', u.usuariof as 'usuario' FROM ingreso i "
                 . "INNER JOIN tienda t on t.id = i.id_tienda "
                 . "LEFT JOIN usuario u on u.id = i.id_usuario "
                 . "LEFT JOIN cliente c on c.id = i.id_cliente "
@@ -178,7 +178,7 @@ Class ingreso{
 
     //Muestra todos los registros de Ingreso para arqueo en base a fecha y turno - 4Ingreso
     Public function getall_Ari(){
-        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, i.descripcion, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id as 'cuaderno', u.usuariof as 'usuario' FROM ingreso i "
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, i.descripcion, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id_cua as 'cuaderno', cu.descripcion as 'describecu', u.usuariof as 'usuario' FROM ingreso i "
                 . "INNER JOIN tienda t on t.id = i.id_tienda "
                 . "LEFT JOIN usuario u on u.id = i.id_usuario "
                 . "LEFT JOIN cliente c on c.id = i.id_cliente "
@@ -223,8 +223,9 @@ Class ingreso{
 
     //Busca un solo registro de Ingreso a travez de id - 9Ingreso
     public function getOne(){
-        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.turno, i.descripcion, t.nombre as 'tienda' FROM ingreso i "
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.turno, i.descripcion, i.fecha, t.nombre as 'tienda', cu.id_cua as 'cuaderno' FROM ingreso i "
                 . "INNER JOIN tienda t on t.id = i.id_tienda "
+                . "LEFT JOIN cuaderno cu on cu.id = i.id_cuaderno "
                 . "WHERE i.id = {$this->getId()};";
         $ingreso = $this->db->query($sql);
         return $ingreso->fetch_object();
@@ -232,7 +233,7 @@ Class ingreso{
 
     //Editar registro de ingreso - 10Ingreso
     public function edit(){
-        $sql = "UPDATE ingreso SET descripcion = '{$this->getDescripcion()}', tipopago = '{$this->getTipopago()}', ingresos = {$this->getingresos()} WHERE id = {$this->getId()};";
+        $sql = "UPDATE ingreso SET descripcion = '{$this->getDescripcion()}', tipopago = '{$this->getTipopago()}', ingresos = {$this->getingresos()}, fecha = '{$this->getFecha()}' WHERE id = {$this->getId()};";
         $save = $this->db->query($sql);
 
         $result = false;
@@ -246,6 +247,52 @@ Class ingreso{
     //Editar A fin de Ocultar - 11Ingreso
     public function edit_oculta(){
         $sql = "UPDATE ingreso SET est = 'D' WHERE id = {$this->getId()};";
+        $save = $this->db->query($sql);
+
+        $result = false;
+        if($save){
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    //Muestra todos los registros de Ingreso para arqueo en base a fecha - 12Ingreso
+    Public function getall_Arit(){
+        $sql = "SELECT i.id, i.tipopago, i.ingresos, i.deudas, i.fecha, i.turno, i.descripcion, t.nombre as 'tienda', c.nombrecom as 'cliente', cu.id_cua as 'cuaderno', cu.descripcion as 'describecu', u.usuariof as 'usuario' FROM ingreso i "
+                . "INNER JOIN tienda t on t.id = i.id_tienda "
+                . "LEFT JOIN usuario u on u.id = i.id_usuario "
+                . "LEFT JOIN cliente c on c.id = i.id_cliente "
+                . "LEFT JOIN cuaderno cu on cu.id = i.id_cuaderno "
+                . "WHERE i.fecha = '{$this->getFecha()}' AND i.est = 'H' ORDER BY id DESC;";
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
+    }
+    //Muestra el monto total de los registros en efectivo de Ingreso para Arqueo - 13Ingreso
+    Public function getall_Ari_in_eft(){
+        $sql = "SELECT ingresos FROM ingreso "
+                . "WHERE tipopago = 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND est = 'H' ORDER BY id DESC;";
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
+    }
+    //Muestra el monto total de los registros en transferencia de Ingreso para Arqueo - 14Ingreso
+    Public function getall_Ari_in_trt(){
+        $sql = "SELECT ingresos FROM ingreso "
+                . "WHERE tipopago != 'EFECTIVO'  AND fecha = '{$this->getFecha()}' AND est = 'H' ORDER BY id DESC;";
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
+    }
+    //Muestra el monto total de los registros en deuda de Ingreso para Arqueo - 15Ingreso
+    Public function getall_Ari_in_deut(){
+        $sql = "SELECT deudas FROM ingreso "
+                . "WHERE fecha = '{$this->getFecha()}' AND est = 'H' ORDER BY id DESC;";
+        $ingreso = $this->db->query($sql);
+        return $ingreso;
+    }
+
+    //Editar A fin de Ocultar Ingreso Cuaderno - 16Ingreso
+    public function edit_oculta_ci(){
+        $sql = "UPDATE ingreso SET est = 'D' WHERE id_cuaderno = {$this->getId_cuaderno()};";
         $save = $this->db->query($sql);
 
         $result = false;
